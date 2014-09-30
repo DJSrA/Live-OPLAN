@@ -8,7 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{BASE_TAG}}
-
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/1.0.19/firebase.js"></script>
+    <!-- EmberFire -->
+    <script src="https://cdn.firebase.com/libs/emberfire/1.1.3/emberfire.min.js"></script>
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/aa-pos.css">
   </head>
@@ -20,6 +23,27 @@
     <script src="assets/aa-pos.js"></script>
     <script>
       window.AAPOS = require('aa-pos/app')['default'].create({{APP_CONFIG}});
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="posts">
+    <h2>New Post</h2>
+    <ul class="post-publish">
+      <li>
+        {{input value=post.title placeholder="Title"}}
+      </li>
+      <li>
+        {{textarea value=post.body placeholder="Body"}}
+      </li>
+      <li>
+        <button {{action "publishPost"}}>Publish</button>
+      </li>
+    </ul>
+    <section>
+    {{#each post in arrangedContent}}
+      <div>{{post.title}}</div>
+      <div>{{post.body}}</div>
+    {{/each}}
+    </section>
     </script>
   </body>
 </html>
