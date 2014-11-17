@@ -1,10 +1,12 @@
 var CustomerList = Parse.View.extend ({
 
 	events: {
-
+		'click .new-customer-submit' : 'addCustomer',
 	},
 
 	template: _.template($('.customer-list-view').text()),
+	newCustomerTemplate: _.template($('.new-customer-list-item').text()),
+	customerListTemplate: _.template($('.customer-list-item').text()),
 
 	initialize: function() {
 		$('.app-container').html(this.el);
@@ -13,8 +15,50 @@ var CustomerList = Parse.View.extend ({
 	},
 
 	render: function() {
+		$(this.el).html('');
 		$(this.el).append(this.template());
+		this.drawNewCustomerInput();
+		this.getCustomers();
+	},
 
+	drawNewCustomerInput: function() {
+		$('.add-customer-bound').html('');
+		$('.add-customer-bound').append(this.newCustomerTemplate());
+	},
+
+	checkCustomer: function() {
+		var that = this;
+		this.query.each(function(customer){
+			if(customer.attributes.name == $('.customer-name').val() && customer.attributes.city == $('.customer-city').val() && customer.attributes.state == $('.customer-state').val() && customer.attributes.streetAddress == $('.customer-address').val()){
+				alert('this customer already exists');
+			}else {
+				that.addCustomer();
+			}
+		})
+	},
+	addCustomer: function() {
+		var that = this;
+
+		var Customer = Parse.Object.extend('customer');
+		var customer = new Customer();
+		customer.set('name', $('.customer-name').val());
+		customer.set('city', $('.customer-city').val());
+		customer.set('state', $('.customer-state').val());
+		customer.set('streetAddress', $('.customer-address').val());
+
+		customer.save().then(function(){
+			that.drawNewCustomerInput();
+			that.getCustomers();
+		})
+	},
+
+	getCustomers: function() {
+		var that = this;
+		$('.customer-list').html('');
+		this.query = new Parse.Query('customer');
+		this.query.each(function(customer){
+			$('.customer-list').append(that.customerListTemplate({ customer: customer.attributes }))
+		})
 	},
 
 

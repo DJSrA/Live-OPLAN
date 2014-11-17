@@ -17,10 +17,12 @@
 var InventoryList = Parse.View.extend ({
 
 	events: {
-
+		'click span.item-type' : 'itemTypeDetail'
 	},
 
 	template: _.template($('.inventory-list-view').text()),
+	listItemTemplate: _.template($('.inventory-list-item-view').text()),
+	listItemDetailTemplate: _.template($('.inventory-list-detail-view').text()),
 
 	initialize: function() {
 		$('.app-container').html(this.el);
@@ -29,7 +31,55 @@ var InventoryList = Parse.View.extend ({
 	},
 
 	render: function() {
-		$(this.el).append(this.template({model: "inventoryList"}))
+		$(this.el).append(this.template());
+		this.getItemTypes();
+	},
+
+	getItemTypes: function() {
+		var that = this;
+		var query = new Parse.Query('itemType');
+		query.find(function(itemTypes){
+			itemTypes.forEach(function(itemType){
+				var query = new Parse.Query('itemInstance');
+				query.equalTo('itemInstanceCode', undefined)
+				query.equalTo('itemType', itemType);
+				query.count({
+					success:function(count){
+						$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: itemType, count: count}))
+					},
+					error:function(error){
+						console.log(error);
+					}
+				})
+		})
+		})
+	},
+
+	itemTypeDetail: function (location) {
+		var that = this;
+		$('.inventory-list-detail-bound').html('');
+
+		var query = new Parse.Query('itemType');
+		query.equalTo('typeName', location.currentTarget.innerHTML);
+		query.first({
+			success: function(itemType) {
+				// console.log(itemType)
+				var query = new Parse.Query('itemInstance');
+				query.equalTo('itemType', itemType);
+				query.equalTo('itemInstanceCode', undefined)
+				query.each(function(item){
+					// console.log(item.attributes)
+					$('.inventory-list-detail-bound').append(that.listItemDetailTemplate({ item: item.attributes }))
+				})
+				
+			},
+			error: function(error) {
+				console.log(error)
+			}
+		})
+
+
+
 	},
 
 

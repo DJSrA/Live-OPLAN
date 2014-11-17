@@ -20,6 +20,7 @@ var ShelfList = Parse.View.extend ({
 	},
 
 	template: _.template($('.shelf-list-view').text()),
+	shelfItemTemplate: _.template($('.shelf-list-item').text()),
 
 	initialize: function() {
 		$('.app-container').html(this.el);
@@ -29,7 +30,19 @@ var ShelfList = Parse.View.extend ({
 
 	render: function() {
 		$(this.el).append(this.template());
+		this.getShelfItems();
 	},
+
+	getShelfItems: function () {
+		var that = this;
+		$('.shelf-item-list-bound').html('');
+
+		var query = new Parse.Query('itemInstance');
+		query.equalTo('itemInstanceCode', 0)
+		query.each(function(item){
+			$('.shelf-item-list-bound').append(that.shelfItemTemplate({ item: item.attributes }))
+		})
+	}
 
 
 });

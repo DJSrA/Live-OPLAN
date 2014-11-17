@@ -1,10 +1,12 @@
 var OrderList = Parse.View.extend ({
 
 	events: {
-
+		'click .order-instance'	: 'orderDetail',
 	},
 
 	template: _.template($('.order-list-view').text()),
+	orderInstanceTemplate: _.template($('.order-list-item-view').text()),
+	orderDetailTemplate: _.template($('.order-detail-view').text()),
 
 	initialize: function() {
 		$('.app-container').html(this.el);
@@ -14,8 +16,38 @@ var OrderList = Parse.View.extend ({
 
 	render: function() {
 		$(this.el).append(this.template());
-
+		this.getOrders();
 	},
+
+	getOrders: function() {
+		var that = this;
+
+		$('.order-list-item-bound').html('');
+		var query = new Parse.Query('order');
+		query.include('customer');
+		query.each(function(order){
+			$('.order-list-item-bound').append(that.orderInstanceTemplate({ order: order, customer: order.attributes.customer }))
+		})
+	},
+
+	orderDetail: function(location) {
+		var that = this;
+		// console.log(location.currentTarget.id)
+		$('.order-detail-bound').html('');
+		var query = new Parse.Query('order');
+		query.include('customer');
+		query.equalTo('objectId', location.currentTarget.id);
+		query.first(function(order){
+			console.log(order)
+			var query = new Parse.Query('itemInstance');
+			query.include('itemType');
+			query.equalTo('order', order);
+			query.each(function(item){
+				$('.order-detail-bound').append(that.orderDetailTemplate({ item: item, itemType: item.attributes.itemType }))
+			})
+		})
+
+	}
 
 
 });

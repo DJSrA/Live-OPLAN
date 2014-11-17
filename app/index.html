@@ -33,43 +33,127 @@
             <li><a href="/#shelf">shelf</a></li>
             <li><a href="/#backorder">backorder</a></li>
             <li><a href="/#orders">orders</a></li>
-
             <li><a href="/#order">place order</a></li>
-
-
-
             <li><a href="/#customers">customer list</a></li>
         </ul>
         <div class="app-container"></div>
 
         <script type="text/template" class="dashboard-view">
             <div>dashboard view</div>
-        </script>        
-
-        <script type="text/template" class="scan-item-view">
-            <div>Scan Item View</div>
         </script>
 
+        <!-- 
+
+
+                        Scan Item Templates                                                             Scan Item Templates
+
+
+         -->
+        <script type="text/template" class="scan-item-view">
+            <span><input class="itemType" placeholder="item type"></span>
+            <span><input class="itemName" placeholder="item name"></span>
+            <span><input class="itemNumber" placeholder="item number"></span>
+            <div class="new-item-submit blue-submit">Submit New Item</div>    
+        </script>
+        
+        <!-- 
+
+
+                        Inventory List Templates                                                        Inventory List Templates
+
+
+         -->
         <script type="text/template" class="inventory-list-view">
             <div>Inventory List View</div>
+            <ul class="inventory-list-item-bound"></ul>
+            <ul class="inventory-list-detail-bound"></ul>
         </script>        
+        <script type="text/template" class="inventory-list-item-view">
+            <li><span class="item-type"><%=itemType.attributes.typeName%></span>:<span><%=count%></span></li>
+        </script>
+        <script type="text/template" class="inventory-list-detail-view">
+            <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span> </li>
+        </script>
+
+        <!-- 
+
+
+                        Shelf List Templates                                                            Shelf List Templates
+
+
+         -->
 
         <script type="text/template" class="shelf-list-view">
             <div>shelf List View</div>
-        </script>        
+            <ul class="shelf-item-list-bound"></ul>          
 
+        </script> 
+
+        <script type="text/template" class="shelf-list-item">
+            <li><span>Name : <%=item.itemName%></span><span> Serial Number : <%=item.serialNumber%></span></li>
+        </script>   
+        <!-- 
+
+
+                        Backorder List Templates                                                        Backorder List Templates
+
+
+         -->
         <script type="text/template" class="backorder-list-view">
             <div>backorder List View</div>
-        </script>        
+            <ul class="backorder-list-item-bound"></ul>
+        </script>
 
+        <script type="text/template" class="backorder-list-item">
+            <li>
+                <div>Item Name : <%=itemType.typeName%></div>
+                <div>Order Id : <%=order.id%></div></li>
+        </script>    
+        <!-- 
+
+
+                        Order List Templates                                                        Order List Templates
+
+
+         -->
         <script type="text/template" class="order-list-view">
             <div>order List View</div>
-            <a href="/#orders/3">order instance</a>
+            <ul class="order-list-item-bound"></ul>
+            <ul class="order-detail-bound"></ul>
         </script>        
 
-        <script type="text/template" class="order-status-view">
-            <div>order instance View</div>
+        <script type="text/template" class="order-list-item-view">
+            <li class="order-instance" id="<%=order.id%>">
+                <div>Order : <%=order.attributes.orderNumber%></div>
+                <div>Placed : <%=customer.createdAt%></div>
+                <div>Customer : <%=customer.attributes.name%></div>
+            </li>
         </script>        
+
+        <script type="text/template" class="order-detail-view">
+            <li>
+                <div>Item : <%=itemType.attributes.typeName%></div>
+                <div>SerialNum : <%=item.attributes.serialNumber%></div>
+                <div>Status : <%=item.attributes.itemInstanceCode%></div>
+            </li>
+        </script>
+        <!-- 
+
+
+                        Place Order Templates                                                        Place Order Templates
+
+
+         -->
+
+
+
+
+
+
+
+
+
+
 
         <script type="text/template" class="place-order-view">
             <div>place order View</div>
@@ -89,10 +173,35 @@
         <script type="text/template" class="order-partial-view">
             <div>order partial View</div>
         </script>
+        <!-- 
 
+
+                        Customer List Templates                                                        Customer List Templates
+
+
+         -->
         <script type="text/template" class="customer-list-view">
             <div>customer list View</div>
+            <div class="add-customer-bound"></div>
+            <ul class="customer-list"></ul>
+        </script>        
+
+        <script type="text/template" class="new-customer-list-item">
+            <span><input class="customer-name" placeholder="Name"></span>
+            <span><input class="customer-city" placeholder="City"></span>
+            <span><input class="customer-state" placeholder="State"></span>
+            <span><input class="customer-address" placeholder="Street Address"></span>
+            <div class="new-customer-submit blue-submit">Submit New Item</div>
+
+        </script>        
+
+        <script type="text/template" class="customer-list-item">
+            <li>
+                <div><%=customer.name%><div>
+                <div><%=customer.streetAddress%> <%=customer.city%>, <%=customer.state%></div>
+            </li>
         </script>
+
 
 
         <!-- build:js scripts/vendor.js -->

@@ -19,6 +19,7 @@ var BackorderList = Parse.View.extend ({
 	},
 
 	template: _.template($('.backorder-list-view').text()),
+	backorderItemTemplate: _.template($('.backorder-list-item').text()),
 
 	initialize: function() {
 		$('.app-container').html(this.el);
@@ -28,7 +29,19 @@ var BackorderList = Parse.View.extend ({
 
 	render: function() {
 		$(this.el).append(this.template());
+		this.getBackorderItems();
+	},
 
+	getBackorderItems: function() {
+		var that = this;
+		$('.backorder-list-item-bound').html('');
+
+		var query = new Parse.Query('backOrder');
+		query.include('itemType');
+		query.include('order');
+		query.each(function(item){
+			$('.backorder-list-item-bound').append(that.backorderItemTemplate({ backorder: item.attributes, itemType: item.attributes.itemType.attributes, order: item.attributes.order }))
+		})
 	},
 
 

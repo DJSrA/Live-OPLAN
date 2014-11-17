@@ -15,21 +15,73 @@
 var ScanItem = Parse.View.extend ({
 
 	events: {
-
+		'click .new-item-submit' : 'checkInput',
 	},
 
 	template: _.template($('.scan-item-view').text()),
 
 	initialize: function() {
+		// $('.app-container').html('');
 		$('.app-container').html(this.el);
 		// console.log('scanItem')
 		this.render();
 	},
 
 	render: function() {
-		$(this.el).append(this.template());
-
+		// $(this.el).html('');
+		$(this.el).html(this.template());
 	},
+
+	checkInput: function() {
+		if($('.itemType').val() && $('.itemName').val() && $('.itemNumber').val()){
+			this.checkItemType()
+		}else {
+			alert('please fill in all feilds')
+		}
+	},
+
+	checkItemType: function(){
+		var that = this;
+
+		var query = new Parse.Query('itemType');
+		query.equalTo('typeName', ($('.itemType').val()).toLowerCase())
+		query.find(function(items){
+			if(items.length>0){
+				that.itemPointer = items[0];
+			} else {
+				console.log('no match');
+				var ItemType = Parse.Object.extend("itemType"); 
+				var itemType = new ItemType();
+
+				itemType.set('typeName', ($('.itemType').val()).toLowerCase());
+				itemType.save();
+				that.itemPointer = itemType;
+			}
+
+		}).then(function(){
+			that.newItemSubmit();
+		})
+	},
+	newItemSubmit: function() {
+		var that = this;
+		var ItemInstance = Parse.Object.extend("itemInstance");
+		var itemInstance = new ItemInstance();
+
+		itemInstance.set('itemName', ($('.itemName').val()).toLowerCase() );
+		itemInstance.set('serialNumber', ($('.itemNumber').val()).toLowerCase() );
+		itemInstance.set('itemType', this.itemPointer );
+
+		itemInstance.save().then(function(){
+			that.render();
+		});
+
+
+		console.log($('.itemType').val())
+		console.log($('.itemName').val())
+		console.log($('.itemNumber').val())
+
+
+	}
 
 
 });
