@@ -13,6 +13,7 @@
         <!-- endbower -->
         <!-- endbuild -->
         <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
         <!-- build:js scripts/vendor/modernizr.js -->
@@ -26,17 +27,18 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="alan-arms-pos">ALAN ARMS</div>
+        <div class="alan-arms-pos col-md-12 bg-primary">ALAN ARMS
         <ul>
-            <li><a href="/#scan">scan</a></li>
-            <li><a href="/#inventory">inventory</a></li>
-            <li><a href="/#shelf">shelf</a></li>
-            <li><a href="/#backorder">backorder</a></li>
-            <li><a href="/#orders">orders</a></li>
-            <li><a href="/#order">place order</a></li>
-            <li><a href="/#customers">customer list</a></li>
+            <li class="col-md-1  col-md-offset-2"><a href="/#scan">scan</a></li>
+            <li class="col-md-1"><a href="/#inventory">inventory</a></li>
+            <li class="col-md-1"><a href="/#shelf">shelf</a></li>
+            <li class="col-md-1"><a href="/#backorder">backorder</a></li>
+            <li class="col-md-1"><a href="/#orders">orders</a></li>
+            <li class="col-md-1"><a href="/#order">place order</a></li>
+            <li class="col-md-1"><a href="/#customers">customer list</a></li>
         </ul>
-        <div class="app-container"></div>
+        </div>
+        <div class="app-container col-xs-8 col-md-offset-2"></div>
 
         <script type="text/template" class="dashboard-view">
             <div>dashboard view</div>
@@ -50,10 +52,9 @@
 
          -->
         <script type="text/template" class="scan-item-view">
-            <span><input class="itemType" placeholder="item type"></span>
-            <span><input class="itemName" placeholder="item name"></span>
-            <span><input class="itemNumber" placeholder="item number"></span>
-            <div class="new-item-submit blue-submit">Submit New Item</div>    
+            <form role="form">
+                <button type="button" class="btn btn-default new-item-submit">Submit</button>  
+            </form>
         </script>
         
         <!-- 
@@ -251,6 +252,8 @@
         <script src="scripts/place-order-view.js"></script>
         <script src="scripts/scan-item-view.js"></script>
         <script src="scripts/shelf-list-view.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         
         <script src="scripts/router.js"></script>
         <script src="scripts/main.js"></script>

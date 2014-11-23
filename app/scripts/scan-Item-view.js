@@ -15,7 +15,7 @@
 var ScanItem = Parse.View.extend ({
 
 	events: {
-		'click .new-item-submit' : 'checkItemType',
+		'click .new-item-submit' : 'createNewItemInstance',
 	},
 
 	template: _.template($('.scan-item-view').text()),
@@ -27,6 +27,7 @@ var ScanItem = Parse.View.extend ({
 	  this.autoFillScan();
 		// this.autoFill();
 		this.render();
+
 	},
 
 	render: function() {
@@ -44,9 +45,21 @@ var ScanItem = Parse.View.extend ({
 
 	autoFillScan: function() {
 		this.autoFill();
-
-		console.log(this.autoFill());
-		$('.app-container').append('<h1>' + (this.autoFill().splice(0)) + ' ' + (this.autoFill().splice(1)) + '</h1>');
+		// var serialNo = 'none';
+		// this.autoFill().forEach(function(e){
+		// 	var scannedAndParsed = parseInt(e);
+		// 	if(isNaN(scannedAndParsed) === false){
+		// 		console.log(e);
+		// 		serialNo = e;
+		// 		return serialNo;
+		// 	}
+		// })
+		// console.log(serialNo);
+		// console.log(this.autoFill());
+		var UPCserial = this.autoFill();
+		console.log(UPCserial);
+		$('.app-container').prepend('<div class="form-group"><label>Serial Number</label><div>' + UPCserial.splice(1) + '</div></div>')
+		$('.app-container').prepend('<div class="form-group"><label>Item UPC</label><div>' + UPCserial.splice(0) + '</div></div>')
 	},
 
 	autoFill: function(UPC, SerialNumber) {
@@ -185,6 +198,7 @@ var ScanItem = Parse.View.extend ({
 
 		  var that = this;
 		  var scannedItem = e;
+		  var scannedAndParsed = parseInt(e);
 		  var query = new Parse.Query('itemType');
 		  var UPCchecklist = [];
 		  var newSerialNumber = '';
@@ -205,8 +219,8 @@ var ScanItem = Parse.View.extend ({
 	    }
 
 
-		  if(parseInt(scannedItem) != NaN) {
-
+		  if(isNaN(scannedAndParsed) === false) {
+		  	console.log(scannedAndParsed)
 		    UPCchecklist.forEach(function(e){
 		      if(e === scannedItem){
 		        var query = new Parse.Query('itemType');
