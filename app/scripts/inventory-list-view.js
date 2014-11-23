@@ -43,7 +43,7 @@ var InventoryList = Parse.View.extend ({
 				var query = new Parse.Query('itemInstance');
 				query.equalTo('itemInstanceCode', undefined)
 				query.equalTo('itemType', itemType);
-				query.count({
+				query.find({
 					success:function(count){
 						$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: itemType, count: count}))
 					},
@@ -51,7 +51,7 @@ var InventoryList = Parse.View.extend ({
 						console.log(error);
 					}
 				})
-		})
+			})
 		})
 	},
 

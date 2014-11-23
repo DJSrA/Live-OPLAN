@@ -69,7 +69,7 @@
             <ul class="inventory-list-detail-bound"></ul>
         </script>        
         <script type="text/template" class="inventory-list-item-view">
-            <li><span class="item-type"><%=itemType.attributes.typeName%></span>:<span><%=count%></span></li>
+            <li><span class="item-type"><%=itemType.attributes.Model%></span>:<span><%=count%></span></li>
         </script>
         <script type="text/template" class="inventory-list-detail-view">
             <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span> </li>
@@ -106,7 +106,7 @@
 
         <script type="text/template" class="backorder-list-item">
             <li>
-                <div>Item Name : <%=itemType.typeName%></div>
+                <div>Item Name : <%=itemType.Model%></div>
                 <div>Order Id : <%=order.id%></div></li>
         </script>    
         <!-- 
@@ -132,7 +132,7 @@
 
         <script type="text/template" class="order-detail-view">
             <li>
-                <div>Item : <%=itemType.attributes.typeName%></div>
+                <div>Item : <%=itemType.attributes.Model%></div>
                 <div>SerialNum : <%=item.attributes.serialNumber%></div>
                 <div>Status : <%=item.attributes.itemInstanceCode%></div>
             </li>
@@ -197,8 +197,8 @@
 
         <script type="text/template" class="customer-list-item">
             <li>
-                <div><%=customer.name%><div>
-                <div><%=customer.streetAddress%> <%=customer.city%>, <%=customer.state%></div>
+                <div><%=customer.Company%><div>
+                <div><%=customer.Address1%> <%=customer.city%>, <%=customer.State%></div>
             </li>
         </script>
 

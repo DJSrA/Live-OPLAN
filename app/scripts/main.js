@@ -8,3 +8,6 @@ Parse.initialize("rzGw28XmRP4nCA4ZFkF0nVSwuqDNgwNuTcdSVqMY", "xRwB3cRqAak4nX00Vj
 var router = new AppRouter();
 
 Parse.history.start();
+
+
+// want a global autofill function for testing scanning
