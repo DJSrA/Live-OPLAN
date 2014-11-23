@@ -38,7 +38,7 @@
             <li class="col-md-1"><a href="/#customers">customer list</a></li>
         </ul>
         </div>
-        <div class="app-container col-xs-8 col-md-offset-2"></div>
+        <div class="app-container col-xs-10 col-md-offset-1"></div>
 
         <script type="text/template" class="dashboard-view">
             <div>dashboard view</div>
@@ -66,11 +66,11 @@
          -->
         <script type="text/template" class="inventory-list-view">
             <div>Inventory List View</div>
-            <ul class="inventory-list-item-bound"></ul>
+            <ul class="inventory-list-item-bound col-xs-12"></ul>
             <ul class="inventory-list-detail-bound"></ul>
         </script>        
         <script type="text/template" class="inventory-list-item-view">
-            <li><span class="item-type"><%=itemType.attributes.Model%></span>:<span><%=count%></span></li>
+            <li class="col-md-2"><div class="item-type"><%=itemType.attributes.Model%></div><div><%=count%></div></li>
         </script>
         <script type="text/template" class="inventory-list-detail-view">
             <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span> </li>

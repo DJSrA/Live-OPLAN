@@ -21,17 +21,13 @@ var ScanItem = Parse.View.extend ({
 	template: _.template($('.scan-item-view').text()),
 
 	initialize: function() {
-		// $('.app-container').html('');
 		$('.app-container').html(this.el);
-		// console.log('scanItem')
 	  this.autoFillScan();
-		// this.autoFill();
 		this.render();
 
 	},
 
 	render: function() {
-		// $(this.el).html('');
 		$(this.el).html(this.template());
 	},
 
@@ -45,21 +41,9 @@ var ScanItem = Parse.View.extend ({
 
 	autoFillScan: function() {
 		this.autoFill();
-		// var serialNo = 'none';
-		// this.autoFill().forEach(function(e){
-		// 	var scannedAndParsed = parseInt(e);
-		// 	if(isNaN(scannedAndParsed) === false){
-		// 		console.log(e);
-		// 		serialNo = e;
-		// 		return serialNo;
-		// 	}
-		// })
-		// console.log(serialNo);
-		// console.log(this.autoFill());
 		var UPCserial = this.autoFill();
-		console.log(UPCserial);
-		$('.app-container').prepend('<div class="form-group"><label>Serial Number</label><div>' + UPCserial.splice(1) + '</div></div>')
-		$('.app-container').prepend('<div class="form-group"><label>Item UPC</label><div>' + UPCserial.splice(0) + '</div></div>')
+		$('.app-container').prepend('<div class="form-group"><label>Serial Number</label><div id="item-info-block" style="display: block;width: 150px;height: 34px;padding: 6px 12px;font-size: 14px;line-height: 1.42857143;color: #555;background-color: #fff;background-image: none;border: 1px solid #ccc;border-radius: 4px;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);box-shadow: inset 0 1px 1px rgba(0,0,0,.075);">' + UPCserial.splice(1) + '</div></div><span id="helpBlock" class="help-block">Scanned item serial number</span>')
+		$('.app-container').prepend('<div class="form-group"><label>Item UPC</label><div id="item-info-block" style="display: block;width: 150px;height: 34px;padding: 6px 12px;font-size: 14px;line-height: 1.42857143;color: #555;background-color: #fff;background-image: none;border: 1px solid #ccc;border-radius: 4px;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);box-shadow: inset 0 1px 1px rgba(0,0,0,.075);">' + UPCserial.splice(0) + '</div></div><span id="helpBlock" class="help-block">Scanned item UPC</span>')
 	},
 
 	autoFill: function(UPC, SerialNumber) {
@@ -140,54 +124,12 @@ var ScanItem = Parse.View.extend ({
 		// 	})
 			
 		// })
-		// this.autoFill().forEach(function(e){
-
-		//   var that = this;
-		//   var scannedItem = e;
-		//   var parsedScannedItem = parseInt(e);
-		//   var query = new Parse.Query('itemType');
-		//   var UPCchecklist = [];
-		//   var newSerialNumber = '';
-
-		//   query.find(function(itemTypes){
-		//     itemTypes.forEach(function(b){
-		//       if(b.attributes.UPC){
-		//         UPCchecklist.push(b.attributes.UPC)
-		//       }
-		//     });
-
-		//   if(isNaN(parsedScannedItem) === false) {
-		//   	var itemUPC = scannedItem;
-		//   } 
-
-		//   })
-		// })
-
-		// .then(function(){
-		// 	that.newItemSubmit();
-		// })
 	},
 	newItemSubmit: function() {
 		var that = this;
-		// var ItemInstance = Parse.Object.extend("itemInstance");
-		// var itemInstance = new ItemInstance();
-
-		// itemInstance.set('itemName', ($('.itemName').val()).toLowerCase() );
-		// itemInstance.set('serialNumber', ($('.itemNumber').val()).toLowerCase() );
-		// itemInstance.set('itemType', this.itemPointer );
 		that.createNewItemInstance().then(function(){
 			that.render;
 		});
-		// itemInstance.save().then(function(){
-		// 	that.render();
-		// });
-
-	
-		// console.log($('.itemType').val())
-		// console.log($('.itemName').val())
-		// console.log($('.itemNumber').val())
-
-
 	},
 
 	createNewItemInstance: function () {
@@ -258,16 +200,101 @@ var ScanItem = Parse.View.extend ({
 
 		  })
 		})
-
-		// Get scanned code that is equal to NaN and set the itemInstance SerialNumber to it's value
-		// this.autoFill().forEach(function(e){ var scannedItem = e; var parsedScannedItem = parseInt(e); if(isNaN(parsedScannedItem)){ return scannedItem} })
-
-		// console.log(itemInstance);
-
 	}
 
 
 });
+
+
+
+
+
+
+
+
+// var ScanItem = Parse.View.extend ({
+
+// 	events: {
+// 		'click .new-item-submit' : 'checkInput',
+// 	},
+
+// 	template: _.template($('.scan-item-view').text()),
+
+// 	initialize: function() {
+// 		$('.app-container').html(this.el);
+// 		this.render();
+// 	},
+
+// 	render: function() {
+// 		$(this.el).html(this.template());
+// 	},
+
+// 	checkInput: function() {
+// 		if($('.itemType').val() && $('.itemName').val() && $('.itemNumber').val()){
+// 			this.checkItemType()
+// 		}else {
+// 			alert('please fill in all feilds')
+// 		}
+// 	},
+
+// 	checkItemType: function(){
+// 		var that = this;
+
+// 		var query = new Parse.Query('itemType');
+// 		query.equalTo('typeName', ($('.itemType').val()).toLowerCase())
+// 		query.find(function(items){
+// 			if(items.length>0){
+// 				that.itemPointer = items[0];
+// 			} else {
+// 				console.log('no match');
+// 				var ItemType = Parse.Object.extend("itemType"); 
+// 				var itemType = new ItemType();
+
+// 				itemType.set('typeName', ($('.itemType').val()).toLowerCase());
+// 				itemType.save();
+// 				that.itemPointer = itemType;
+// 			}
+
+// 		}).then(function(){
+// 			that.newItemSubmit();
+// 		})
+// 	},
+// 	newItemSubmit: function() {
+// 		var that = this;
+// 		var ItemInstance = Parse.Object.extend("itemInstance");
+// 		var itemInstance = new ItemInstance();
+
+// 		itemInstance.set('itemName', ($('.itemName').val()).toLowerCase() );
+// 		itemInstance.set('serialNumber', ($('.itemNumber').val()).toLowerCase() );
+// 		itemInstance.set('itemType', this.itemPointer );
+
+// 		itemInstance.save().then(function(){
+// 			that.render();
+// 		});
+
+
+// 		console.log($('.itemType').val())
+// 		console.log($('.itemName').val())
+// 		console.log($('.itemNumber').val())
+
+
+// 	}
+
+
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // this is very dependant on getting a working scanner. for now, it needs to be an input field where we can manually add new item instances 
 // to the server. when an item instance is added, it should check to see if it can fill a backorder, be assigned to it's item type, and then

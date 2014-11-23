@@ -17,3 +17,26 @@ ul {
 
 .alan-arms-pos a {
   color: inherit; }
+
+ul.inventory-list-item-bound .col-md-2 {
+  padding: none; }
+
+ul.inventory-list-item-bound li {
+  height: 40px;
+  margin: 7px;
+  color: #333;
+  padding: 0;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 4px; }
+
+ul.inventory-list-item-bound li div {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 9px 0 7px 9px;
+  height: 100%;
+  vertical-align: top; }
+
+ul.inventory-list-item-bound li .item-type {
+  background: #ececec;
+  width: 80%; }

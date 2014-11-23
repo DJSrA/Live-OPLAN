@@ -18,3 +18,46 @@ ul {
 .alan-arms-pos a {
   color: inherit;
 }
+ul.inventory-list-item-bound .col-md-2 {
+  padding: none;
+}
+ul.inventory-list-item-bound li {
+  height: 40px;
+  margin: 7px;
+  color: #333;
+  padding: 0;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+ul.inventory-list-item-bound li div {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 9px 0 7px 9px;
+  height: 100%;
+  vertical-align: top;x
+}
+
+ul.inventory-list-item-bound li .item-type {
+  background: rgb(236, 236, 236);
+  width: 80%;
+}
+.app-container {
+   #item-info-block {
+    display: block;
+    width: 150px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  }
+  
+}
