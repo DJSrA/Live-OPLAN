@@ -39,13 +39,28 @@ var InventoryList = Parse.View.extend ({
 		var that = this;
 		var query = new Parse.Query('itemType');
 		query.find(function(itemTypes){
+			var ProductIdLength = [];
+			// console.log(itemTypes);
+			itemTypes.forEach(function(e){
+				e.attributes.ProductID != undefined ? ProductIdLength.push(e.attributes.ProductID) : '';
+			})
+			// console.log(ProductIdLength.length);
 			itemTypes.forEach(function(itemType){
 				var query = new Parse.Query('itemInstance');
 				query.equalTo('itemInstanceCode', undefined)
 				query.equalTo('itemType', itemType);
-				query.count({
+				// $(itemType.attributes.ProductID).forEach(function(e){
+				// 	var thisProductId = 0;
+				// 	thisProductId = e;
+				// 	ProductIdLength.push(thisProductId);
+				// })
+				query.find({
 					success:function(count){
-						$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: itemType, count: count}))
+						// for(i = 0; i < ProductIdLength.length; i ++){
+							$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: itemType, count: count}))
+							// console.log(i);
+							// i++	
+						// }
 					},
 					error:function(error){
 						console.log(error);

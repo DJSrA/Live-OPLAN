@@ -16,15 +16,18 @@ var ScanItem = Parse.View.extend ({
 
 	events: {
 		'click .new-item-submit' : 'createNewItemInstance',
+		'click .add-item'				 : 'manualAddItem',
+		'click .add-new-item'    : 'addNewItemFields',
+		'click .cancel-new-item-creation' : 'cancelCreation',
 	},
 
 	template: _.template($('.scan-item-view').text()),
+	manualItemCreationTemplate: _.template($('.manual-item-creation-template').text()),
 
 	initialize: function() {
 		$('.app-container').html(this.el);
 	  this.autoFillScan();
 		this.render();
-
 	},
 
 	render: function() {
@@ -200,6 +203,71 @@ var ScanItem = Parse.View.extend ({
 
 		  })
 		})
+	},
+
+	manualAddItem: function () {
+		$('.add-item').attr('disabled', 'disabled');
+		var that = this;
+		$('.add-here').append(that.manualItemCreationTemplate({}))
+		console.log('added it');
+	},
+
+	addNewItemFields: function () {
+		var empty = $('.new-item-form').find("input").filter(function() {
+		       return this.value === "";
+		   });
+		   if(empty.length) {
+		   	alert('please fill in all fields.');
+		       //At least one input is empty
+		   } else {
+		   	var ItemType = Parse.Object.extend("itemType");
+		   	var itemType = new ItemType();
+		   	itemType.set({
+		   	  Caliber:              $('.caliber').val(),
+		   	  Cost:                 parseInt($('.cost').val()),
+		   	  DealerDiscountPrice:  parseInt($('.dealer-discount-price').val()),
+		   	  DealerPrice:          parseInt($('.dealer-price').val()),
+		   	  Model:                $('.model').val(),
+		   	  ProductID:            parseInt($('.product-id').val()),
+		   	  RetailPrice:          parseInt($('.retail-price').val()),
+		   	  UPC:                  parseInt($('.upc').val()),
+		   	  ManufacturerID:       $('.manufacturer-id').val(),
+		   	})
+
+				var ItemInstance = Parse.Object.extend("itemInstance");
+				var itemInstance = new ItemInstance();
+				itemInstance.set({
+					Caliber:              $('.caliber').val(),
+					Cost:                 parseInt($('.cost').val()),
+					DealerDiscountPrice:  parseInt($('.dealer-discount-price').val()),
+					DealerPrice:          parseInt($('.dealer-price').val()),
+					Model:                $('.model').val(),
+					ProductID:            parseInt($('.product-id').val()),
+					RetailPrice:          parseInt($('.retail-price').val()),
+					UPC:                  parseInt($('.upc').val()),
+					ManufacturerID:       $('.manufacturer-id').val(),
+				  SerialNumber: 				$('.serial-number').val(),
+				})
+
+				itemType.save();
+				itemInstance.save();
+
+
+				console.log(itemInstance);  
+				console.log(itemType);
+		   }
+		  // Serialized:           $('.caliber').val(),
+		  // MfgPartnumber:        $('.caliber').val(),
+		  // Description:          $('.caliber').val(),
+		  // CategoryID:           $('.caliber').val(),
+		  // Comments:             $('.caliber').val(),
+		  // itemType: 						this.itemPointer,
+	},
+
+	cancelCreation: function () {
+		$('.add-item').attr('disabled', false);
+		$('.add-here').html('');
+		console.log('pudding');
 	}
 
 
