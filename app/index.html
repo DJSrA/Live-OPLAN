@@ -27,7 +27,7 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="alan-arms-pos col-md-12 bg-primary">ALAN ARMS
+        <div class="alan-arms-pos col-md-12 bg-primary">ALLEN ARMS
         <ul>
             <li class="col-md-1  top-nav-button col-md-offset-2"><a href="/#scan">scan</a></li>
             <li class="col-md-1 top-nav-button"><a href="/#inventory">inventory</a></li>
@@ -52,16 +52,20 @@
 
          -->
         <script type="text/template" class="scan-item-view">
-            <form role="form">
-                <button type="button" class="btn btn-default new-item-submit">Submit</button>  
-                <button type="button" class="btn btn-info add-item">ADD +</button>
-                <div class="add-here"></div>
-            </form>
+            <div class="scanning col-md-4">
+                <form role="form">
+                    <button type="button" class="btn btn-default new-item-submit">Submit</button>  
+                    <button type="button" class="btn btn-info add-item">ADD +</button>
+                </form>
+            </div>
+            <div class="display-scanned-item"></div>
+            <div class="add-here"></div>
         </script>
         
         <script type="text/template" class="manual-item-creation-template">
-            <div class="new-item-creation">
-                <label><h3>Please Fill In All Fields Below:</h3>
+            <div class="new-item-creation col-md-12">
+            <hr/>
+                <label><h4>Please Fill In All Fields Below:</h4>
                 <div class="form-group new-item-form">
                     <label class="manual-input-title col-md-2">Caliber</label>
                     <input class="col-md-3 manual-add-item caliber"></input>
@@ -84,9 +88,9 @@
                     <label class="manual-input-title col-md-2">Manufacturer ID</label>
                     <input class="col-md-3 manual-add-item manufacturer-id"></input>
                 </div>
-            </div>
             <button type="button" class="btn btn-default add-new-item">Submit</button>  
             <button type="button" class="btn btn-info cancel-new-item-creation">Cancel</button>
+            </div>
         </script>
         <!-- 
 
