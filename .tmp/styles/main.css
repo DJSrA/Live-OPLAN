@@ -1,6 +1,12 @@
+html {
+  background: #CFCECA; }
+
 body {
   margin: 0;
   padding: 0; }
+
+.app-container {
+  background: #FFFFFF; }
 
 ul {
   list-style: none;
@@ -11,7 +17,12 @@ ul {
   background: #3E5672;
   line-height: 30px;
   color: #ffffff;
-  height: 80px; }
+  height: 80px;
+  box-shadow: 0px 1px 4px 0px #848484; }
+  .alan-arms-pos img {
+    width: 200px; }
+  .alan-arms-pos ul {
+    margin-top: 9px; }
 
 .alan-arms-pos ul {
   text-align: center; }
@@ -52,22 +63,9 @@ ul.inventory-list-item-bound li .item-type {
   padding-top: 30px;
   min-height: 675px;
   height: 100%;
-  box-shadow: 0px 1px 4px 0px #cacaca; }
-  .app-container #item-info-block {
-    display: block;
-    width: 150px;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
+  box-shadow: 0px 1px 4px 0px #848484; }
   .app-container .new-item-creation {
-    margin: 20px 0 20px; }
+    margin: 20px 0 0; }
     .app-container .new-item-creation .manual-add-item {
       margin: 20px 50px 0 0;
       display: block;
@@ -90,6 +88,41 @@ ul.inventory-list-item-bound li .item-type {
 
 .top-nav-button:hover {
   background: #2A3C51; }
+
+.start-scanning {
+  margin: 0 0 40px 0;
+  font-size: 20px; }
+
+.stop-scanning {
+  margin: 0 0 40px 0;
+  font-size: 20px;
+  background-color: #F07F4E; }
+
+.stop-scanning:hover {
+  background-color: #DF4007; }
+
+.scanned-item-list {
+  margin: 30px 0; }
+
+.scanned-item-container {
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  margin-top: 15px; }
+
+.scanner-setup-button {
+  float: right;
+  background-color: #EEEEEE; }
+
+.scanned-item-counter {
+  margin: 20px 0 0;
+  font-size: 20px; }
+  .scanned-item-counter p {
+    padding: 3px 0 0; }
+  .scanned-item-counter .scanned-item-total {
+    font-size: 24px;
+    padding-top: 0; }
 
 .display-scanned-item label {
   margin: 0; }
