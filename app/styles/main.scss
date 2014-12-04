@@ -112,7 +112,10 @@ ul.inventory-list-item-bound li .item-type {
       -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     }
-
+    .description {
+      height: 100px;
+      resize: none;
+    }
     .manual-input-title {
       margin: 20px 10px 0 0;
       display: inline-block;

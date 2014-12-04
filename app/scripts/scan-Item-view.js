@@ -336,38 +336,37 @@ var ScanItem = Parse.View.extend ({
 		   	var ItemType = Parse.Object.extend("itemType");
 		   	var itemType = new ItemType();
 		   	itemType.set({
+		   		Manufacturer: 				$('.manufacturer').val(),
+		   		Description: 					$('.description').val(),
 		   	  Caliber:              $('.caliber').val(),
-		   	  Cost:                 parseInt($('.cost').val()),
-		   	  DealerDiscountPrice:  parseInt($('.dealer-discount-price').val()),
-		   	  DealerPrice:          parseInt($('.dealer-price').val()),
 		   	  Model:                $('.model').val(),
-		   	  ProductID:            parseInt($('.product-id').val()),
-		   	  RetailPrice:          parseInt($('.retail-price').val()),
+		   	  Cost:                 parseInt($('.cost').val()),
+		   	  DealerPrice:          parseInt($('.dealer-price').val()),
+		   	  MSRP:         				parseInt($('.msrp').val()),
 		   	  UPC:                  parseInt($('.upc').val()),
-		   	  ManufacturerID:       $('.manufacturer-id').val(),
 		   	})
 
-				var ItemInstance = Parse.Object.extend("itemInstance");
-				var itemInstance = new ItemInstance();
-				
-				itemInstance.set({
-					Caliber:              $('.caliber').val(),
-					Cost:                 parseInt($('.cost').val()),
-					DealerDiscountPrice:  parseInt($('.dealer-discount-price').val()),
-					DealerPrice:          parseInt($('.dealer-price').val()),
-					Model:                $('.model').val(),
-					ProductID:            parseInt($('.product-id').val()),
-					RetailPrice:          parseInt($('.retail-price').val()),
-					UPC:                  parseInt($('.upc').val()),
-					ManufacturerID:       $('.manufacturer-id').val(),
-				  SerialNumber: 				$('.serial-number').val(),
-				})
+				// var ItemInstance = Parse.Object.extend("itemInstance");
+				// var itemInstance = new ItemInstance();
+
+				// itemInstance.set({
+				// 	Caliber:              $('.caliber').val(),
+				// 	Cost:                 parseInt($('.cost').val()),
+				// 	DealerDiscountPrice:  parseInt($('.dealer-discount-price').val()),
+				// 	DealerPrice:          parseInt($('.dealer-price').val()),
+				// 	Model:                $('.model').val(),
+				// 	ProductID:            parseInt($('.product-id').val()),
+				// 	RetailPrice:          parseInt($('.retail-price').val()),
+				// 	UPC:                  parseInt($('.upc').val()),
+				// 	ManufacturerID:       $('.manufacturer-id').val(),
+				//   SerialNumber: 				$('.serial-number').val(),
+				// })
 
 				itemType.save();
-				itemInstance.save();
+				// itemInstance.save();
 
 
-				console.log(itemInstance);  
+				// console.log(itemInstance);  
 				console.log(itemType);
 		   }
 		  // itemType: 						this.itemPointer,
@@ -385,8 +384,7 @@ var ScanItem = Parse.View.extend ({
 
 
 
-// this is very dependant on getting a working scanner. for now, it needs to be an input field where we can manually add new item instances 
-// to the server. when an item instance is added, it should check to see if it can fill a backorder, be assigned to it's item type, and then
+// When an item instance is added, it should check to see if it can fill a backorder, be assigned to it's item type, and then
 // after it has been saved check to see if it can fill a backorder. if it fails to fill a backorder both times, it SHOULD NOT get an item 
 // instance code, and just be saved to the server, and the physical item should go in regular inventory.
 
