@@ -78,6 +78,8 @@
             <div class="scanned-item-list col-md-12"></div>
         </script>
         
+        <!-- Manual add item template -->
+
         <script type="text/template" class="manual-item-creation-template">
             <div class="new-item-creation col-md-12">
             <hr/>
@@ -114,15 +116,27 @@
 
          -->
         <script type="text/template" class="inventory-list-view">
-            <div>Inventory List View</div>
+            <div class="page-title">INVENTORY</div>
+            <div class="manufacturer-names col-md-12">
+              <ul class="manufacturers">
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Silencerco">SILENCERCO</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Surefire">SUREFIRE</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="GEMTECH">GEMTECH</li>
+              </ul>
+            </div>
+            <div class="manufacturer-title col-md-12">
+                <div class='center-number'></div>
+            </div>
+            <div class="in-stock col-md-1 number-center">IN STOCK</div><div class="col-md-5 number-center">ITEM TYPE</div><div class="number-center col-md-3"># IN INVENTORY</div><div class="number-center col-md-3"> # ON BACKORDER</div>
             <ul class="inventory-list-item-bound col-xs-12"></ul>
             <ul class="inventory-list-detail-bound"></ul>
         </script>        
         <script type="text/template" class="inventory-list-item-view">
-            <li class="col-md-3"><div class="product-id"><%=itemType.attributes.ProductID%></div><div class="item-type"> <%=itemType.attributes.Model%></div><div><%=count%></div></li>
+            <li class="col-md-12"><div class="product-id col-md-1"></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3">10</div><div class="backorder-number number-center col-md-3">4</div></li>
         </script>
         <script type="text/template" class="inventory-list-detail-view">
-            <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span> </li>
+            <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span></li>
         </script>
 
         <!-- 

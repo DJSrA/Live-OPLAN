@@ -367,7 +367,12 @@ var ScanItem = Parse.View.extend ({
 
 
 				// console.log(itemInstance);  
+				$('.scanned-item-list').append('<div class="col-md-3 scanned-item-container"><div class="scanned-item-attribute col-md-6"><p>' + itemType.attributes.Model + '</p></div><div class="scanned-item-attribute col-md-6"><p>' + itemType.attributes.UPC + '</div>');
+
 				console.log(itemType);
+				$('.new-item-form').children('input').val('');
+				$('.new-item-form').children('textarea').val('');
+				$('.manufacturer').focus();
 		   }
 		  // itemType: 						this.itemPointer,
 	},

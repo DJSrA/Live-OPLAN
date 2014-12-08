@@ -17,7 +17,8 @@
 var InventoryList = Parse.View.extend ({
 
 	events: {
-		'click span.item-type' : 'itemTypeDetail'
+		'click span.item-type' : 'itemTypeDetail',
+		'click .manufacturer' : 'activeManufacturer',
 	},
 
 	template: _.template($('.inventory-list-view').text()),
@@ -36,38 +37,6 @@ var InventoryList = Parse.View.extend ({
 	},
 
 	getItemTypes: function() {
-		var that = this;
-		var query = new Parse.Query('itemType');
-		query.find(function(itemTypes){
-			var ProductIdLength = [];
-			// console.log(itemTypes);
-			itemTypes.forEach(function(e){
-				e.attributes.ProductID != undefined ? ProductIdLength.push(e.attributes.ProductID) : '';
-			})
-			// console.log(ProductIdLength.length);
-			itemTypes.forEach(function(itemType){
-				var query = new Parse.Query('itemInstance');
-				query.equalTo('itemInstanceCode', undefined)
-				query.equalTo('itemType', itemType);
-				// $(itemType.attributes.ProductID).forEach(function(e){
-				// 	var thisProductId = 0;
-				// 	thisProductId = e;
-				// 	ProductIdLength.push(thisProductId);
-				// })
-				query.find({
-					success:function(count){
-						// for(i = 0; i < ProductIdLength.length; i ++){
-							$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: itemType, count: count}))
-							// console.log(i);
-							// i++	
-						// }
-					},
-					error:function(error){
-						console.log(error);
-					}
-				})
-		})
-		})
 	},
 
 	itemTypeDetail: function (location) {
@@ -96,6 +65,69 @@ var InventoryList = Parse.View.extend ({
 
 
 	},
+
+	activeManufacturer: function(e){
+		$('.manufacturer').removeClass('active');
+		$(event.target).addClass('active');
+		$('.center-number').text('');
+		$('.center-number').text($(event.target).text());
+		$('.inventory-list-item-bound').html('');
+		var chosenManufacturer = e.currentTarget.attributes.name.value;
+		var that = this;
+		var itemNumber = 0;
+		var listManufacturers = [];
+		var thisModel = 0;
+		var query = new Parse.Query('itemType');
+		query.limit(1000)
+		// query.find(function(Manufacturers){
+			// Manufacturers.forEach(function(e){
+				// console.log(e.attributes.Manufacturer)
+				// e.attributes.Manufacturer == "Advanced Armament Co" ? console.log(Manufacturers) : console.log("Who's that?");
+				// thisModel = thisModel + 1;
+			// })
+			// listManufacturers.push(Manufacturers.attributes.Manufacturer);
+			// console.log(listManufacturers)
+		// })
+		query.find(function(itemTypes){
+
+			// console.log(itemTypes.attributes)
+			itemTypes.forEach(function(e){
+				// console.log(e.attributes.Manufacturer);
+				if (e.attributes.Manufacturer == chosenManufacturer){
+					$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: e}))
+				}
+			})
+			// itemTypes.forEach(function(itemType){
+			// 	var query = new Parse.Query('itemInstance');
+			// 	// query.equalTo('itemInstanceCode', undefined)
+			// 	query.equalTo('Manufacturer', chosenManufacturer);
+			// 	// $(itemType.attributes.ProductID).forEach(function(e){
+			// 	// 	var thisProductId = 0;
+			// 	// 	thisProductId = e;
+			// 	// 	ProductIdLength.push(thisProductId);
+			// 	// })
+			// console.log(query)
+			// // console.log(itemNumber)
+			// 	query.find({
+			// 		success:function(count){
+			// 				itemNumber = itemNumber + 1;
+			// 				// $('.product-id').text(itemNumber);
+			// 			// for(i = 0; i < ProductIdLength.length; i ++){
+			// 				$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: itemType, count: count}))
+			// 				// console.log(i);
+			// 				// console.log(itemNumber);
+			// 				// console.log(count)
+
+			// 				// i++	
+			// 			// }
+			// 		},
+			// 		error:function(error){
+			// 			console.log(error);
+			// 		}
+			// 	})
+		})
+		// })
+	}
 
 
 });
