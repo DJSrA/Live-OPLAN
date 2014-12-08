@@ -74,29 +74,21 @@ var InventoryList = Parse.View.extend ({
 		$('.inventory-list-item-bound').html('');
 		var chosenManufacturer = e.currentTarget.attributes.name.value;
 		var that = this;
-		var itemNumber = 0;
+		// var itemNumber = 0;
 		var listManufacturers = [];
-		var thisModel = 0;
+		// var thisModel = 0;
 		var query = new Parse.Query('itemType');
 		query.limit(1000)
-		// query.find(function(Manufacturers){
-			// Manufacturers.forEach(function(e){
-				// console.log(e.attributes.Manufacturer)
-				// e.attributes.Manufacturer == "Advanced Armament Co" ? console.log(Manufacturers) : console.log("Who's that?");
-				// thisModel = thisModel + 1;
-			// })
-			// listManufacturers.push(Manufacturers.attributes.Manufacturer);
-			// console.log(listManufacturers)
-		// })
 		query.find(function(itemTypes){
 
-			// console.log(itemTypes.attributes)
 			itemTypes.forEach(function(e){
-				// console.log(e.attributes.Manufacturer);
 				if (e.attributes.Manufacturer == chosenManufacturer){
 					$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: e}))
 				}
 			})
+
+			// THIS IS HERE IN CASE I NEED SOMETHING OLD -------------
+
 			// itemTypes.forEach(function(itemType){
 			// 	var query = new Parse.Query('itemInstance');
 			// 	// query.equalTo('itemInstanceCode', undefined)
