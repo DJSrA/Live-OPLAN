@@ -17,7 +17,8 @@
 var InventoryList = Parse.View.extend ({
 
 	events: {
-		'click span.item-type' : 'itemTypeDetail'
+		'click span.item-type' : 'itemTypeDetail',
+		'click .manufacturer' : 'activeManufacturer',
 	},
 
 	template: _.template($('.inventory-list-view').text()),
@@ -36,23 +37,6 @@ var InventoryList = Parse.View.extend ({
 	},
 
 	getItemTypes: function() {
-		var that = this;
-		var query = new Parse.Query('itemType');
-		query.find(function(itemTypes){
-			itemTypes.forEach(function(itemType){
-				var query = new Parse.Query('itemInstance');
-				query.equalTo('itemInstanceCode', undefined)
-				query.equalTo('itemType', itemType);
-				query.count({
-					success:function(count){
-						$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: itemType, count: count}))
-					},
-					error:function(error){
-						console.log(error);
-					}
-				})
-		})
-		})
 	},
 
 	itemTypeDetail: function (location) {
@@ -81,6 +65,61 @@ var InventoryList = Parse.View.extend ({
 
 
 	},
+
+	activeManufacturer: function(e){
+		$('.manufacturer').removeClass('active');
+		$(event.target).addClass('active');
+		$('.center-number').text('');
+		$('.center-number').text($(event.target).text());
+		$('.inventory-list-item-bound').html('');
+		var chosenManufacturer = e.currentTarget.attributes.name.value;
+		var that = this;
+		// var itemNumber = 0;
+		var listManufacturers = [];
+		// var thisModel = 0;
+		var query = new Parse.Query('itemType');
+		query.limit(1000)
+		query.find(function(itemTypes){
+
+			itemTypes.forEach(function(e){
+				if (e.attributes.Manufacturer == chosenManufacturer){
+					$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: e}))
+				}
+			})
+
+			// THIS IS HERE IN CASE I NEED SOMETHING OLD -------------
+
+			// itemTypes.forEach(function(itemType){
+			// 	var query = new Parse.Query('itemInstance');
+			// 	// query.equalTo('itemInstanceCode', undefined)
+			// 	query.equalTo('Manufacturer', chosenManufacturer);
+			// 	// $(itemType.attributes.ProductID).forEach(function(e){
+			// 	// 	var thisProductId = 0;
+			// 	// 	thisProductId = e;
+			// 	// 	ProductIdLength.push(thisProductId);
+			// 	// })
+			// console.log(query)
+			// // console.log(itemNumber)
+			// 	query.find({
+			// 		success:function(count){
+			// 				itemNumber = itemNumber + 1;
+			// 				// $('.product-id').text(itemNumber);
+			// 			// for(i = 0; i < ProductIdLength.length; i ++){
+			// 				$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: itemType, count: count}))
+			// 				// console.log(i);
+			// 				// console.log(itemNumber);
+			// 				// console.log(count)
+
+			// 				// i++	
+			// 			// }
+			// 		},
+			// 		error:function(error){
+			// 			console.log(error);
+			// 		}
+			// 	})
+		})
+		// })
+	}
 
 
 });

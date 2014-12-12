@@ -15,20 +15,76 @@
 var ScanItem = Parse.View.extend ({
 
 	events: {
-		'click .new-item-submit' : 'createNewItemInstance',
+		'click .new-item-submit' 						: 'createNewItemInstance',
+		'click .add-item'				 						: 'manualAddItem',
+		'click .add-new-item'    						: 'addNewItemFields',
+		'click .cancel-new-item-creation' 	: 'cancelCreation',
+		'click .start-scanning'  						: 'startScanning',
+		'click .stop-scanning'   						: 'stopScanning',
+		'keypress .this-upc'								: 'firstScan',
+		'keypress .this-serial-number'			: 'secondScan',
 	},
 
 	template: _.template($('.scan-item-view').text()),
+	manualItemCreationTemplate: _.template($('.manual-item-creation-template').text()),
 
 	initialize: function() {
 		$('.app-container').html(this.el);
-	  this.autoFillScan();
+		var fakeScan = [];
 		this.render();
-
+		var totalScanned = 0;
+	  // this.autoFillScan();
 	},
 
 	render: function() {
 		$(this.el).html(this.template());
+	},
+
+	firstScan: function(e){
+		if(e.keyCode == 13){
+		   console.log($('.this-upc').val());
+		   $('.this-serial-number').focus();
+		} else {
+			console.log("it's not ENTER!");
+		}
+	},
+
+	secondScan: function(e){
+		var totalScanned = $('.scanned-item-total').text()
+		if(e.keyCode == 13){
+		   console.log($('.this-upc').val() + ', ' + $('.this-serial-number').val());
+		   this.autoFill();
+		   console.log(this.autoFill());
+		   this.createNewItemInstance();
+		   totalScanned = parseInt(totalScanned) + 1;
+			 $('.scanned-item-total').text(totalScanned);
+		   // this.showScannedItem();
+		   $('.this-upc').val('');
+		   $('.this-serial-number').val('');
+		   $('.this-upc').focus();
+		} else {
+			console.log("it's not ENTER!");
+		}
+	},
+
+	startScanning: function () {
+		$('.this-upc').attr('disabled', false);
+		$('.this-serial-number').attr('disabled', false);
+		$('.this-upc').focus();
+		$('.start-scanning').addClass('stop-scanning');
+		$('.start-scanning').text('STOP SCANNING');
+		$('.stop-scanning').removeClass('start-scanning')
+		// this.isEnter();
+		// this.autoFill();
+		// this.autoFillScan();
+	},
+
+	stopScanning: function () {
+		$('.this-upc').attr('disabled', true);
+		$('.this-serial-number').attr('disabled', true);
+		$('.stop-scanning').addClass('start-scanning');
+		$('.stop-scanning').text('START SCANNING');
+		$('.start-scanning').removeClass('stop-scanning')
 	},
 
 	checkInput: function() {
@@ -42,21 +98,102 @@ var ScanItem = Parse.View.extend ({
 	autoFillScan: function() {
 		this.autoFill();
 		var UPCserial = this.autoFill();
-		$('.app-container').prepend('<div class="form-group"><label>Serial Number</label><div id="item-info-block" style="display: block;width: 150px;height: 34px;padding: 6px 12px;font-size: 14px;line-height: 1.42857143;color: #555;background-color: #fff;background-image: none;border: 1px solid #ccc;border-radius: 4px;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);box-shadow: inset 0 1px 1px rgba(0,0,0,.075);">' + UPCserial.splice(1) + '</div></div><span id="helpBlock" class="help-block">Scanned item serial number</span>')
-		$('.app-container').prepend('<div class="form-group"><label>Item UPC</label><div id="item-info-block" style="display: block;width: 150px;height: 34px;padding: 6px 12px;font-size: 14px;line-height: 1.42857143;color: #555;background-color: #fff;background-image: none;border: 1px solid #ccc;border-radius: 4px;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);box-shadow: inset 0 1px 1px rgba(0,0,0,.075);">' + UPCserial.splice(0) + '</div></div><span id="helpBlock" class="help-block">Scanned item UPC</span>')
+		$('.this-serial-number').val(UPCserial.splice(1));
+		$('.this-upc').val(UPCserial.splice(0));
+		this.showScannedItem();
 	},
 
 	autoFill: function(UPC, SerialNumber) {
 		var that = this;
 		var scannedItemArray = []
+		scannedItemArray.push($('.this-upc').val());
+		scannedItemArray.push($('.this-serial-number').val())
+	  // var itemUPC = [817272010404, 471280075002, 123456789012];
+	  // var SerialNO = ['SKR556-0239', 'TI 00114', 'QP 12345'];
 
-	  var itemUPC = [817272010404, 471280075002];
-	  var SerialNO = ['SKR556-0239', 'TI 00114'];
-
-	  function r (list) { return list[_.random(list.length-1)] }
-	  scannedItemArray.push(r(itemUPC));
-	  scannedItemArray.push(r(SerialNO));
+	  // function r (list) { return list[_.random(list.length-1)] }
+	  // scannedItemArray.push(r(itemUPC));
+	  // scannedItemArray.push(r(SerialNO));
 	  return scannedItemArray;
+	},
+
+	showScannedItem: function () {
+		console.log('SHOW SCANNED')
+			var checkItem = [];
+			this.autoFill().forEach(function(e){
+			  var that = this;
+			  var scannedItem = e;
+			  var scannedAndParsed = parseInt(e);
+			  var query = new Parse.Query('itemType');
+			  var UPCchecklist = [];
+			  console.log(UPCchecklist + ' UPC checklist')
+			  var newSerialNumber = '';
+
+			  query.find(function(itemTypes){
+			    itemTypes.forEach(function(b){
+			      if(b.attributes.UPC){
+			        UPCchecklist.push(b.attributes.UPC)
+			      }
+			    });
+
+		    var SerialNumber = function () {
+			    this.autoFill().forEach(function(e){
+						 var scannedItem = e; 
+						 var parsedScannedItem = parseInt(e); 
+						 if(isNaN(parsedScannedItem)){ return scannedItem} 
+					})
+		    }
+
+
+			  if(isNaN(scannedAndParsed) === false) {
+			  	console.log(scannedAndParsed)
+			  	console.log(UPCchecklist);
+			  	console.log(scannedItem);
+			    UPCchecklist.forEach(function(e){
+			    	console.log(scannedItem);
+			      if(e == scannedItem){
+			      	console.log(e);
+			        var query = new Parse.Query('itemType');
+			        query.find(function(itemTypes){
+			          itemTypes.forEach(function(b){
+			            if(b.attributes.UPC === e){
+
+			              // Setting new itemInstance attributes to matching itemType attributes
+			              checkItem.push({
+			                Caliber:              b.attributes.Caliber,
+			                CategoryID:           b.attributes.CategoryID,
+			                Comments:             b.attributes.Comments,
+			                Cost:                 b.attributes.Cost,
+			                DealerDiscountPrice:  b.attributes.DealerDiscountPrice,
+			                DealerPrice:          b.attributes.DealerPrice,
+			                Description:          b.attributes.Description,
+			                ManufacturerID:       b.attributes.ManufacturerID,
+			                MfgPartnumber:        b.attributes.MfgPartnumber,
+			                Model:                b.attributes.Model,
+			                ProductID:            b.attributes.ProductID,
+			                RetailPrice:          b.attributes.RetailPrice,
+			                Serialized:           b.attributes.Serialized,
+			                UPC:                  b.attributes.UPC,
+			                itemType: 						b,
+			                typeName:             (b.attributes.typeName === undefined ? '' : b.attributes.typeName),
+			                SerialNumber: 				$('.this-serial-number').val(),
+			              })
+
+			              console.log(checkItem)     ;
+										// itemInstance.save();
+										console.log(checkItem[0].Model);
+										$('.display-scanned-item').append('<ul class="col-md-8"><li class="col-md-3"><label>Model:</label></li><li class="col-md-9">' + checkItem[0].Model + '</li><li class="col-md-3"><label>Caliber:</label></li><li class="col-md-9">' + checkItem[0].Caliber + '</li><li class="col-md-3"><label>Retail Price:</label></li><li class="col-md-9">$' + checkItem[0].RetailPrice + '</li></ul>');
+			            }
+			          })
+			        })
+			      }
+			      }
+
+			    )
+			  } 
+
+			  })
+			})
 	},
 
 
@@ -77,11 +214,6 @@ var ScanItem = Parse.View.extend ({
 					that.itemPointer = items[0];
 				} else {
 					console.log('no match');
-					// var ItemType = Parse.Object.extend("itemType"); 
-					// var itemType = new ItemType();
-
-					// itemType.set('UPC', ($('.itemType').val()).toLowerCase());
-					// itemType.save();
 					that.itemPointer = itemType;
 				}
 
@@ -90,40 +222,6 @@ var ScanItem = Parse.View.extend ({
 			})
 		});
 
-
-
-
-
-
-
-		// var that = this;
-
-		// this.autoFill().forEach(function(e){
-		// 	var scannedItem = e;
-		// 	var parsedScannedItem = parseInt(e);
-		// 	if(isNaN(parsedScannedItem) === false) {
-		// 		var itemUPC = scannedItem;
-		// 	} 
-		// 	var query = new Parse.Query('itemType');
-		// 	// query.equalTo('typeName', ($('.itemType').val()).toLowerCase())
-		// 	query.find(function(items){
-		// 		console.log(items);
-		// 			if(items.length>0){
-		// 				that.itemPointer = items[0];
-		// 			} else {
-		// 				console.log('no match');
-		// 				var ItemType = Parse.Object.extend("itemType"); 
-		// 				var itemType = new ItemType();
-
-		// 				itemType.set('typeName', ($('.itemType').val()).toLowerCase());
-		// 				itemType.save();
-		// 				that.itemPointer = itemType;
-		// 			}
-
-		// 		})
-		// 	})
-			
-		// })
 	},
 	newItemSubmit: function() {
 		var that = this;
@@ -143,7 +241,7 @@ var ScanItem = Parse.View.extend ({
 		  var scannedAndParsed = parseInt(e);
 		  var query = new Parse.Query('itemType');
 		  var UPCchecklist = [];
-		  var newSerialNumber = '';
+		  var newSerialNumber = $('.this-serial-number').val();
 
 		  query.find(function(itemTypes){
 		    itemTypes.forEach(function(b){
@@ -160,16 +258,29 @@ var ScanItem = Parse.View.extend ({
 				})
 	    }
 
+	    if(isNaN(scannedAndParsed) === true){
+	    	console.log(scannedItem);
+	    	var query = new Parse.Query('itemInstance');
+	    	query.find(function(itemInstances){
+	    		itemInstances.forEach(function(b){
+	    			if(b.attributes.SerialNumber === scannedItem) {
+	    				console.log('this is a match');
+	    			} else {
+	    				console.log('This is new');
+	    			}
+	    		})
+	    	})
+	    }
+
 
 		  if(isNaN(scannedAndParsed) === false) {
-		  	console.log(scannedAndParsed)
 		    UPCchecklist.forEach(function(e){
-		      if(e === scannedItem){
+		      if(e == scannedItem){
 		        var query = new Parse.Query('itemType');
 		        query.find(function(itemTypes){
 		          itemTypes.forEach(function(b){
 		            if(b.attributes.UPC === e){
-
+			          	console.log(b.attributes.UPC);
 		              // Setting new itemInstance attributes to matching itemType attributes
 		              itemInstance.set({
 		                Caliber:              b.attributes.Caliber,
@@ -186,10 +297,14 @@ var ScanItem = Parse.View.extend ({
 		                RetailPrice:          b.attributes.RetailPrice,
 		                Serialized:           b.attributes.Serialized,
 		                UPC:                  b.attributes.UPC,
-		                itemType: 						this.itemPointer,
+		                itemType: 						b,
 		                typeName:             (b.attributes.typeName === undefined ? '' : b.attributes.typeName),
-		                SerialNumber: 				this.SerialNumber
-		              }).save()       
+		                serialNumber: 				newSerialNumber,
+		              })
+									console.log($('.this-serial-number').text());
+								  console.log(itemInstance)
+								  $('.scanned-item-list').append('<div class="col-md-3 scanned-item-container"><div class="scanned-item-attribute col-md-6"><p>' + itemInstance.attributes.Model + '</p></div><div class="scanned-item-attribute col-md-6"><p>' + itemInstance.attributes.serialNumber + '</div>');
+									// console.log(itemInstance);
 									// itemInstance.save();
 		            }
 		          })
@@ -197,107 +312,84 @@ var ScanItem = Parse.View.extend ({
 		      }
 		    })
 		  } 
-
 		  })
 		})
-	}
+	},
+
+	manualAddItem: function () {
+		$('.add-item').attr('disabled', 'disabled');
+		$('.new-item-submit').attr('disabled', 'disabled');
+		var that = this;
+		this.stopScanning();
+		$('.add-here').append(that.manualItemCreationTemplate({}))
+		console.log('added it');
+	},
+
+	addNewItemFields: function () {
+		var empty = $('.new-item-form').find("input").filter(function() {
+		       return this.value === "";
+		   });
+		   if(empty.length) {
+		   	alert('please fill in all fields.');
+		       //At least one input is empty
+		   } else {
+		   	var ItemType = Parse.Object.extend("itemType");
+		   	var itemType = new ItemType();
+		   	itemType.set({
+		   		Manufacturer: 				$('.manufacturer').val(),
+		   		Description: 					$('.description').val(),
+		   	  Caliber:              $('.caliber').val(),
+		   	  Model:                $('.model').val(),
+		   	  Cost:                 parseInt($('.cost').val()),
+		   	  DealerPrice:          parseInt($('.dealer-price').val()),
+		   	  MSRP:         				parseInt($('.msrp').val()),
+		   	  UPC:                  parseInt($('.upc').val()),
+		   	})
+
+				// var ItemInstance = Parse.Object.extend("itemInstance");
+				// var itemInstance = new ItemInstance();
+
+				// itemInstance.set({
+				// 	Caliber:              $('.caliber').val(),
+				// 	Cost:                 parseInt($('.cost').val()),
+				// 	DealerDiscountPrice:  parseInt($('.dealer-discount-price').val()),
+				// 	DealerPrice:          parseInt($('.dealer-price').val()),
+				// 	Model:                $('.model').val(),
+				// 	ProductID:            parseInt($('.product-id').val()),
+				// 	RetailPrice:          parseInt($('.retail-price').val()),
+				// 	UPC:                  parseInt($('.upc').val()),
+				// 	ManufacturerID:       $('.manufacturer-id').val(),
+				//   SerialNumber: 				$('.serial-number').val(),
+				// })
+
+				itemType.save();
+				// itemInstance.save();
+
+
+				// console.log(itemInstance);  
+				$('.scanned-item-list').append('<div class="col-md-3 scanned-item-container"><div class="scanned-item-attribute col-md-6"><p>' + itemType.attributes.Model + '</p></div><div class="scanned-item-attribute col-md-6"><p>' + itemType.attributes.UPC + '</div>');
+
+				console.log(itemType);
+				$('.new-item-form').children('input').val('');
+				$('.new-item-form').children('textarea').val('');
+				$('.manufacturer').focus();
+		   }
+		  // itemType: 						this.itemPointer,
+	},
+
+	cancelCreation: function () {
+		$('.add-item').attr('disabled', false);
+		$('.new-item-submit').attr('disabled', false);
+		$('.add-here').html('');
+		console.log('pudding');
+	},
 
 
 });
 
 
 
-
-
-
-
-
-// var ScanItem = Parse.View.extend ({
-
-// 	events: {
-// 		'click .new-item-submit' : 'checkInput',
-// 	},
-
-// 	template: _.template($('.scan-item-view').text()),
-
-// 	initialize: function() {
-// 		$('.app-container').html(this.el);
-// 		this.render();
-// 	},
-
-// 	render: function() {
-// 		$(this.el).html(this.template());
-// 	},
-
-// 	checkInput: function() {
-// 		if($('.itemType').val() && $('.itemName').val() && $('.itemNumber').val()){
-// 			this.checkItemType()
-// 		}else {
-// 			alert('please fill in all feilds')
-// 		}
-// 	},
-
-// 	checkItemType: function(){
-// 		var that = this;
-
-// 		var query = new Parse.Query('itemType');
-// 		query.equalTo('typeName', ($('.itemType').val()).toLowerCase())
-// 		query.find(function(items){
-// 			if(items.length>0){
-// 				that.itemPointer = items[0];
-// 			} else {
-// 				console.log('no match');
-// 				var ItemType = Parse.Object.extend("itemType"); 
-// 				var itemType = new ItemType();
-
-// 				itemType.set('typeName', ($('.itemType').val()).toLowerCase());
-// 				itemType.save();
-// 				that.itemPointer = itemType;
-// 			}
-
-// 		}).then(function(){
-// 			that.newItemSubmit();
-// 		})
-// 	},
-// 	newItemSubmit: function() {
-// 		var that = this;
-// 		var ItemInstance = Parse.Object.extend("itemInstance");
-// 		var itemInstance = new ItemInstance();
-
-// 		itemInstance.set('itemName', ($('.itemName').val()).toLowerCase() );
-// 		itemInstance.set('serialNumber', ($('.itemNumber').val()).toLowerCase() );
-// 		itemInstance.set('itemType', this.itemPointer );
-
-// 		itemInstance.save().then(function(){
-// 			that.render();
-// 		});
-
-
-// 		console.log($('.itemType').val())
-// 		console.log($('.itemName').val())
-// 		console.log($('.itemNumber').val())
-
-
-// 	}
-
-
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// this is very dependant on getting a working scanner. for now, it needs to be an input field where we can manually add new item instances 
-// to the server. when an item instance is added, it should check to see if it can fill a backorder, be assigned to it's item type, and then
+// When an item instance is added, it should check to see if it can fill a backorder, be assigned to it's item type, and then
 // after it has been saved check to see if it can fill a backorder. if it fails to fill a backorder both times, it SHOULD NOT get an item 
 // instance code, and just be saved to the server, and the physical item should go in regular inventory.
 

@@ -28,15 +28,15 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="alan-arms-pos col-md-12 bg-primary">ALAN ARMS
+        <div class="alan-arms-pos col-xs-10 col-md-offset-1 bg-primary"><img src="images/aa-logo.png">
         <ul>
-            <li class="col-md-1  col-md-offset-2"><a href="/#scan">scan</a></li>
-            <li class="col-md-1"><a href="/#inventory">inventory</a></li>
-            <li class="col-md-1"><a href="/#shelf">shelf</a></li>
-            <li class="col-md-1"><a href="/#backorder">backorder</a></li>
-            <li class="col-md-1"><a href="/#orders">orders</a></li>
-            <li class="col-md-1"><a href="/#order">place order</a></li>
-            <li class="col-md-1"><a href="/#customers">customer list</a></li>
+            <li class="col-md-1  top-nav-button col-md-offset-2"><a href="/#scan">Scan</a></li>
+            <li class="col-md-1 top-nav-button"><a href="/#inventory">Inventory</a></li>
+            <li class="col-md-1 top-nav-button"><a href="/#shelf">Shelf</a></li>
+            <li class="col-md-1 top-nav-button"><a href="/#backorder">Backorder</a></li>
+            <li class="col-md-1 top-nav-button"><a href="/#orders">Orders</a></li>
+            <li class="col-md-1 top-nav-button"><a href="/#order">Place Order</a></li>
+            <li class="col-md-1 top-nav-button"><a href="/#customers">Customers</a></li>
         </ul>
         </div>
         <div class="app-container col-xs-10 col-md-offset-1"></div>
@@ -44,8 +44,8 @@
 
 
         <script type="text/template" class="dashboard-view">
-            <div>dashboard view</div>
 
+            <div><h2>Allen Arms Inventory and Order Management</h2></div>
         </script>
 
         <!-- 
@@ -56,11 +56,62 @@
 
          -->
         <script type="text/template" class="scan-item-view">
-            <form role="form">
-                <button type="button" class="btn btn-default new-item-submit">Submit</button>  
-            </form>
+            <div class="scanning col-md-4">
+            <button type="button" class="start-scanning btn btn-warning">START SCANNING</button>
+            <div class="form-group">
+                <label>Item UPC</label>
+                <input id="item-info-block" class="form-control this-upc" disabled></input>
+            </div>
+            <span id="helpBlock" class="help-block">Scanned item UPC</span>
+            <div class="form-group">
+                <label>Serial Number</label>
+                <input id="item-info-block" class="form-control this-serial-number" disabled></input>
+            </div>
+            <span id="helpBlock" class="help-block">Scanned item serial number</span>
+                <form role="form">
+                    <button type="button" class="btn btn-default new-item-submit">Submit</button>  
+                    <button type="button" class="btn btn-info add-item">ADD +</button>
+                </form>
+            </div>
+            <div class="col-md-8 scanner-setup">
+                <button class="scanner-setup-button btn btn-default">Scanner Setup</button>
+            </div>
+            <div class="display-scanned-item"></div>
+            <div class="add-here"></div>
+            <div class="scanned-item-counter col-md-12"><p class="col-md-3">Total Items Scanned : </p><p class="scanned-item-total col-md-2">0</p></div>
+            <div class="scanned-item-list col-md-12"></div>
         </script>
         
+        <!-- Manual add item template -->
+
+        <script type="text/template" class="manual-item-creation-template">
+            <div class="new-item-creation col-md-12">
+            <hr/>
+                <label><h4>Please Fill In All Fields Below:</h4>
+                <div class="form-group new-item-form">
+                    <label class="manual-input-title col-md-2">Manufacturer</label>
+                    <input class="col-md-3 manual-add-item manufacturer"></input>
+                    <label class="manual-input-title col-md-2">Caliber</label>
+                    <input class="col-md-3 manual-add-item caliber"></input>
+                    <label class="manual-input-title col-md-2">Cost</label>
+                    <input class="col-md-3 manual-add-item cost"></input>
+                    <label class="manual-input-title col-md-2">Model</label>
+                    <input class="col-md-3 manual-add-item model"></input>
+                    <label class="manual-input-title col-md-2">Dealer Price</label>
+                    <input class="col-md-3 manual-add-item dealer-price"></input>
+                    <label class="manual-input-title col-md-2">UPC</label>
+                    <input class="col-md-3 manual-add-item upc"></input>
+                    <label class="manual-input-title col-md-2">MSRP</label>
+                    <input class="col-md-3 manual-add-item msrp"></input>
+                    <label class="manual-input-title col-md-2">Description</label>
+                    <textarea class="col-md-3 manual-add-item description"></textarea>
+
+                </div>
+            <button type="button" class="btn btn-default add-new-item">Submit</button>  
+            <button type="button" class="btn btn-info cancel-new-item-creation">Cancel</button>
+            <hr/>
+            </div>
+        </script>
         <!-- 
 
 
@@ -69,15 +120,27 @@
 
          -->
         <script type="text/template" class="inventory-list-view">
-            <div>Inventory List View</div>
+            <div class="page-title">INVENTORY</div>
+            <div class="manufacturer-names col-md-12">
+              <ul class="manufacturers">
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Silencerco">SILENCERCO</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Surefire">SUREFIRE</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="GEMTECH">GEMTECH</li>
+              </ul>
+            </div>
+            <div class="manufacturer-title col-md-12">
+                <div class='center-number'></div>
+            </div>
+            <div class="in-stock col-md-1 number-center">IN STOCK</div><div class="col-md-5 number-center">ITEM TYPE</div><div class="number-center col-md-3"># IN INVENTORY</div><div class="number-center col-md-3"> # ON BACKORDER</div>
             <ul class="inventory-list-item-bound col-xs-12"></ul>
             <ul class="inventory-list-detail-bound"></ul>
         </script>        
         <script type="text/template" class="inventory-list-item-view">
-            <li class="col-md-2"><div class="item-type"><%=itemType.attributes.Model%></div><div><%=count%></div></li>
+            <li class="col-md-12"><div class="product-id col-md-1"></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3">10</div><div class="backorder-number number-center col-md-3">4</div></li>
         </script>
         <script type="text/template" class="inventory-list-detail-view">
-            <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span> </li>
+            <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span></li>
         </script>
 
         <!-- 
@@ -162,9 +225,90 @@
             <div><%=merchant.attributes.Address1%></div>
             <div><%=merchant.attributes.City%></div>
             <div><%=merchant.attributes.State%></div>
+            <div class="shopping-cart-bound"></div>
+        <div class="app-merchant-bound">
             <div class="accept-merchant">ACCEPT</div>
             <div class="cancel-merchant">CANCEL</div>
-        </script>        
+        </div>
+        </script> 
+
+        <script type="text/template" class="order-inventory-list-view">
+            <div class="page-title">INVENTORY</div>
+            <div class="manufacturer-names col-md-12">
+              <ul class="manufacturers">
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Silencerco">SILENCERCO</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Surefire">SUREFIRE</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="GEMTECH">GEMTECH</li>
+              </ul>
+            </div>
+            <div class="manufacturer-title col-md-12">
+                <div class='center-number'></div>
+            </div>
+            <div class="in-stock col-md-1 number-center"></div><div class="col-md-5 number-center">ITEM TYPE</div><div class="number-center col-md-3"># IN INVENTORY</div><div class="number-center col-md-3"> # ON BACKORDER</div>
+            <ul class="inventory-list-item-bound col-xs-12"></ul>
+            <ul class="inventory-list-detail-bound"></ul>
+        </script>   
+
+        <script type="text/template" class="order-inventory-list-item-view">
+            <li class="col-md-12"><div class="product-id col-md-1"><button class="order-item" value="<%=itemType.id%>">Add</button></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3">10</div><div class="backorder-number number-center col-md-3">4</div></li>
+        </script>   
+
+        <script type="text/template" class="order-inventory-list-detail-view">
+            <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span></li>
+        </script>
+
+        <script type="text/template" class="order-shopping-cart-view">
+            <li class="shopping-cart-item"><span><%=item[0]%></span><span> x</span><span><%=item[1]%> </span></li>    
+        </script>  
+
+        <script type="text/template" class="confirm-order-view">
+        <div class="top-info-bound">
+            <div class="merchant-info">
+                <div><%=customer.Company%></div>
+                <div><span><%=customer.FirstName%></span> <span><%=customer.LastName%></div>
+                <div><%=customer.Address1%></div>
+                <div><span><%=customer.City%></span> <span><%=customer.State%></span> <span><%=customer.Zip%></span></div>
+                <div><%=customer.email%></div>
+                <div><%=customer.Phone%></div>
+
+            </div>
+            <div class="seller-info">
+                <h1>☃</h1>
+                <div>Allen Arms</div>
+                <div>Greenville SC</div>
+            </div>  
+        <div>
+        <div class="item-list-bound">
+            <div class="item-instance-bound"></div>
+        </div>
+
+        <div class="item-total-bound">
+            <div class="cart-total"></div>
+        <button class="btn update-total">Update</button>
+        <button class="btn confirm-list">Confirm</button>
+        </div>
+        </script>   
+
+        <script type="text/template" class="confirm-order-item-instance-view">
+            <div>
+                <span><%=item.Manufacturer%> <%=item.Model%></span>
+                <span> x</span>
+                <span><input type ="number" id="<%=item.id%>"class="cart-item-instance" value="<%=item.quan%>"></span>
+                <span> <%=item.DealerPrice%> </span>
+                <span>=<span class="total-item-cost"><%= (parseInt(item.DealerPrice.replace(/\s+/g, '').substr(1)))*(item.quan) %></span></span>
+            </div>
+        </script>          
+
+        <script type="text/template" class="update-order-total-view">
+            <span><%=sum%></span>
+        </script>  
+
+        <script type="text/template" class="final-order-instance-view">
+            <span>cool</span>
+        </script>  
+
+
 
 
 
@@ -200,7 +344,7 @@
         <script type="text/template" class="customer-list-view">
             <div>customer list View</div>
             <div class="add-customer-bound"></div>
-            <ul class="customer-list"></ul>
+            <ol class="customer-list"></ol>
         </script>        
 
         <script type="text/template" class="new-customer-list-item">
@@ -208,12 +352,12 @@
             <span><input class="customer-city" placeholder="City"></span>
             <span><input class="customer-state" placeholder="State"></span>
             <span><input class="customer-address" placeholder="Street Address"></span>
-            <div class="new-customer-submit blue-submit">Submit New Item</div>
+            <div class="new-customer-submit btn-default">Submit New Item</div>
 
         </script>        
 
         <script type="text/template" class="customer-list-item">
-            <li>
+            <li class="col-md-4">
                 <div><%=customer.Company%><div>
                 <div><%=customer.Address1%> <%=customer.city%>, <%=customer.State%></div>
             </li>
@@ -269,6 +413,7 @@
         <script src="scripts/place-order-view.js"></script>
         <script src="scripts/scan-item-view.js"></script>
         <script src="scripts/shelf-list-view.js"></script>
+        <script src="scripts/confirm-order-view.js"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         

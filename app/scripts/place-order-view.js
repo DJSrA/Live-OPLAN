@@ -7,11 +7,17 @@ var PlaceOrder = Parse.View.extend ({
 		'click .merchant' : 'showCustomer',
 		'click .accept-merchant' : 'acceptMerchant',
 		'click .cancel-merchant' : 'showStates',
+		'click .confirm-order-button' : 'swapConfirmView'
 	},
 
 	template: _.template($('.place-order-view').text()),
 	customersTemplate: _.template($('.customer-by-state-view').text()),
 	customerTemplate: _.template($('.customer-order-view').text()),
+
+	shoppingCart: {
+		customer: {},
+		cart: []
+	},
 
 	initialize: function() {
 		$('.app-container').html(this.el);
@@ -74,12 +80,17 @@ var PlaceOrder = Parse.View.extend ({
 	showCustomer: function(location) {
 		$('.select-customer').html('<span><span class="states-bread">states</span> <i class="fa fa-arrow-right"></i> <span class="customers-bread">customers</span> <i class="fa fa-arrow-right"></i> '+ location.currentTarget.innerHTML + '</span>');
 		var index = location.currentTarget.id;
-		this.merchant = this.merchants[index];
-		$('.select-customer').append(this.customerTemplate({merchant : this.merchant}));
+		this.shoppingCart.customer = this.merchants[index];
+		$('.select-customer').append(this.customerTemplate({merchant : this.shoppingCart.customer}));
 	},
 
 	acceptMerchant: function() {
-		console.log(this.merchant)
+		new OrderInventoryList();
+		// console.log(this.shoppingCart)
+	},
+
+	swapConfirmView: function() {
+		router.swap( new ConfirmOrderView({ customer: this.shoppingCart.customer, items: this.shoppingCart.cart }) );
 	}
 
 
@@ -96,3 +107,135 @@ var PlaceOrder = Parse.View.extend ({
 
 // once item types and quantities are chosen form-3's will be generated and filled out for the existing items, and will be generated for the backorder
 // items although be incomplete. these will be displayed on a different page, but made here.
+
+
+//						ITEM INSTANCE CODE
+// /////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////
+// ///////// undefined 	: not assigned, currently for sale	
+// ///////// 0 			: currently on the shelf, already sold, waiting for paperwork 
+// ///////// 1			: currently attached to a backorder waiting to be processed
+// ///////// 2			: sold/shipped/unavailable
+// ///////// 3			: special, not currently used, but essetially this exists
+// /////////			  for reserving items, removing items from a backorder but
+// /////////			  needing to keep it from being attached to another backorder,
+// /////////			  or basically any time it is not sold but not currently open
+// /////////			  for regular sale
+// /////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////
+
+
+var OrderInventoryList = Parse.View.extend ({
+
+	events: {
+		'click span.item-type' : 'itemTypeDetail',
+		'click .manufacturer' : 'activeManufacturer',
+		'click button.order-item' : 'addItemOrder'
+	},
+
+	template: _.template($('.order-inventory-list-view').text()),
+	listItemTemplate: _.template($('.order-inventory-list-item-view').text()),
+	listItemDetailTemplate: _.template($('.order-inventory-list-detail-view').text()),
+	shoppingCartTemplate: _.template($('.order-shopping-cart-view').text()),
+
+	initialize: function() {
+		$('.app-merchant-bound').html(this.el);
+		// console.log('InventoryList')
+		this.render();
+	},
+
+	render: function() {
+		$(this.el).append(this.template());
+		this.getItemTypes();
+	},
+
+	getItemTypes: function() {
+	},
+
+	itemTypeDetail: function (location) {
+		var that = this;
+		$('.inventory-list-detail-bound').html('');
+
+		var query = new Parse.Query('itemType');
+		query.equalTo('typeName', location.currentTarget.innerHTML);
+		query.first({
+			success: function(itemType) {
+				// console.log(itemType)
+				var query = new Parse.Query('itemInstance');
+				query.equalTo('itemType', itemType);
+				query.equalTo('itemInstanceCode', undefined)
+				query.each(function(item){
+					// console.log(item.attributes)
+					$('.inventory-list-detail-bound').append(that.listItemDetailTemplate({ item: item.attributes }))
+				})
+				
+			},
+			error: function(error) {
+				console.log(error)
+			}
+		})
+
+
+
+	},
+
+	activeManufacturer: function(e){
+		$('.manufacturer').removeClass('active');
+		$(event.target).addClass('active');
+		$('.center-number').text('');
+		$('.center-number').text($(event.target).text());
+		$('.inventory-list-item-bound').html('');
+		var chosenManufacturer = e.currentTarget.attributes.name.value;
+		var that = this;
+		// var itemNumber = 0;
+		var listManufacturers = [];
+		// var thisModel = 0;
+		var query = new Parse.Query('itemType');
+		query.limit(1000)
+		query.find(function(itemTypes){
+
+			itemTypes.forEach(function(e){
+				if (e.attributes.Manufacturer == chosenManufacturer){
+					$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: e}))
+				}
+			})
+
+		})
+	},
+
+
+	addItemOrder: function(e){
+		var that = this;
+		var tog = false
+
+		router.currentView.shoppingCart.cart.forEach(function(item){
+			if(item[0] == e.currentTarget.getAttribute('value')){
+				tog = true;
+				item[1] += 1;
+				// console.log(router.currentView.shoppingCart.cart)
+				that.renderCart()
+			}
+		})
+		if(tog == false){
+			var cartItem = [ e.currentTarget.getAttribute('value'), 1];
+			router.currentView.shoppingCart.cart.push(cartItem);
+			// console.log(router.currentView.shoppingCart.cart)
+			that.renderCart()				
+		}
+			
+	},
+
+	renderCart: function(){
+		$('.shopping-cart-bound').html('');
+		var that = this;
+
+		router.currentView.shoppingCart.cart.forEach(function(item){
+			$('.shopping-cart-bound').append(that.shoppingCartTemplate({ item: item}));
+			// console.log(item)
+		})
+		$('.shopping-cart-bound').append('<button role="button" class="btn confirm-order-button" data-toggle="modal">Check Out</button>');
+
+	}
+
+
+});
