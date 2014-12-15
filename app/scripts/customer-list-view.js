@@ -1,7 +1,9 @@
 var CustomerList = Parse.View.extend ({
 
 	events: {
+		'click .create-customer'		 : 'createCustomerContainer',
 		'click .new-customer-submit' : 'addCustomer',
+		'click .cancel-customer'		 : 'cancelCustomerCreation',
 	},
 
 	template: _.template($('.customer-list-view').text()),
@@ -10,7 +12,7 @@ var CustomerList = Parse.View.extend ({
 
 	initialize: function() {
 		$('.app-container').html(this.el);
-		// console.log('CustomerList')
+		this.phoneValidate();
 		this.render();
 	},
 
@@ -18,7 +20,57 @@ var CustomerList = Parse.View.extend ({
 		$(this.el).html('');
 		$(this.el).append(this.template());
 		this.drawNewCustomerInput();
+		this.phoneValidate();	
+		this.emailValidate();
 		this.getCustomers();
+		// setTimeout(this.readyCustomers(), 5000);
+	},
+
+	phoneValidate: function () {
+	  function phone (input, n) {
+	      $(input).keyup(function() {
+	          // val is numeric
+	          if ($.isNumeric($(this).val())) {
+	              $('.phone-number-input').css('background', 'white');
+	              if ($(this).val().length >= n) $(this).next('input').focus();
+	          // val is not numeric
+	          } else {
+	              // characters exist in input
+	              $(this).css('background', $(this).val().length ? 'rgba(255, 0, 0, 0.35)' : 'white');
+	          }
+	      });
+	  };
+	  _.each($('.phone-number-input'), function (input, i) {
+	      // make click event for each input
+	      phone(input, [3,3,4][i]);
+	  });
+
+	  _.each($('.zip-input'), function(input, i) {
+	  		phone(input, [5][i]);
+	  })
+
+	  // new function 
+	  addDashes = function addDashes(f) {
+	      var r = /(\D+)/g,
+	          areacode = '',
+	          middle3 = '',
+	          last4 = '';
+	      f.value = f.value.replace(r, '');
+	      areacode = f.value.substr(0, 3);
+	      middle3 = f.value.substr(3, 3);
+	      last4 = f.value.substr(6, 4);
+	      f.value = areacode + '-' + middle3 + '-' + last4;
+	  }
+	},
+
+	emailValidate: function () {
+	  function evaluate (val) { return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(val); }
+	  $('.email-input').keyup(function() {
+	    $(this).css('background', evaluate($(this).val()) ? 'white' : 'rgba(255, 0, 0, 0.35)');
+	    if($(this).val() < 1){
+	    	$(this).css('background', 'white');
+	    }
+	  })
 	},
 
 	drawNewCustomerInput: function() {
@@ -36,19 +88,44 @@ var CustomerList = Parse.View.extend ({
 			}
 		})
 	},
+
+	createCustomerContainer: function (){
+		console.log('open it');
+		$('.create-customer').attr('disabled', 'disabled');
+		$('.hidden-customer-creation').css('display', 'block');
+	},
+
+	cancelCustomerCreation: function (){
+		$('.create-customer-input').val('');
+		$('.create-customer').attr('disabled', false);
+		$('.hidden-customer-creation').css('display', 'none');
+	},
+
 	addCustomer: function() {
 		var that = this;
 
 		var Customer = Parse.Object.extend('customer');
 		var customer = new Customer();
-		customer.set('name', $('.customer-name').val());
-		customer.set('city', $('.customer-city').val());
-		customer.set('state', $('.customer-state').val());
-		customer.set('streetAddress', $('.customer-address').val());
-
-		customer.save().then(function(){
-			that.drawNewCustomerInput();
-			that.getCustomers();
+		$('.create-customer-input').forEach(function(e){
+			if($(e).val() === '') {
+				console.log('empty');
+			} else {
+				customer.set({
+					Company: $('.company-input').val(),
+					FirstName: $('.first-name-input').val(),
+					LastName: $('.last-name-input').val(),
+					Phone: parseInt($('.phone-number-input').val()),
+					email: $('.email-input').val(),
+					FFL: $('.ffl-input').val(),
+					Address1: $('.address-input').val(),
+					Zip: parseInt($('.zip-input').val()),
+					City: $('.city-input').val(),
+					State: $('.state-input').val()
+				}).save();
+				console.log(customer);
+				// that.drawNewCustomerInput();
+				that.getCustomers();
+			}
 		})
 	},
 
@@ -57,9 +134,20 @@ var CustomerList = Parse.View.extend ({
 		$('.customer-list').html('');
 		this.query = new Parse.Query('customer');
 		this.query.each(function(customer){
-			$('.customer-list').append(that.customerListTemplate({ customer: customer.attributes }))
+			// console.log(customer.attributes);
+			$('.customer-list').append(that.customerListTemplate({ customer: customer.attributes, model: customer }));
 		})
+		// that.readyCustomers();
 	},
+
+ //  readyCustomers:function() {
+ //  	console.log('makin lists');
+ //  	var options = {
+	// 	  valueNames: [ 'username', 'address' ],
+	// 	};
+	// 	console.log(options);
+	// 	var userList = new List('list', options);
+	// },
 
 
 });
