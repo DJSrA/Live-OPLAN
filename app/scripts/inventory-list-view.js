@@ -66,26 +66,113 @@ var InventoryList = Parse.View.extend ({
 
 	},
 
+	newItemView: function(e){
+		new InventoryItemView({
+		  el: $('.inventory-list-item-bound'),
+		  model: e,
+		});
+	},
 	activeManufacturer: function(e){
 		$('.manufacturer').removeClass('active');
 		$(event.target).addClass('active');
 		$('.center-number').text('');
 		$('.center-number').text($(event.target).text());
 		$('.inventory-list-item-bound').html('');
+
 		var chosenManufacturer = e.currentTarget.attributes.name.value;
 		var that = this;
-		// var itemNumber = 0;
 		var listManufacturers = [];
-		// var thisModel = 0;
+		var thisManufacturersItems = [];
+		
 		var query = new Parse.Query('itemType');
 		query.limit(1000)
 		query.find(function(itemTypes){
-
 			itemTypes.forEach(function(e){
+				var thisItem = [];
 				if (e.attributes.Manufacturer == chosenManufacturer){
+					// var newItemView = new InventoryItemView({itemType: e});
 					$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: e}))
+					thisManufacturersItems.push(e);
 				}
+				return thisManufacturersItems
+			});
+			var ItemsList = []
+			console.log(thisManufacturersItems);
+			var queryInstances = new Parse.Query('itemInstance');
+			queryInstances.limit(1000);
+			queryInstances.find(function(itemInstances){
+				var UPCList = [];
+				itemInstances.forEach(function(item){
+					UPCList.push(item.attributes.UPC);
+					
+				})
+				return UPCList
+				// console.log(itemInstances.attributes.UPC);
 			})
+			console.log(UPCList);
+			for(i = 0; i < thisManufacturersItems.length; i++){
+			  _.each(thisManufacturersItems[i], function(){
+			  	// console.log(thisManufacturersItems);
+			  	// console.log(thisManufacturersItems[i].attributes.UPC);
+			  	ItemsList.push(thisManufacturersItems[i]);
+			    // $('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: thisManufacturersItems[i]}))
+			  });
+				// setTimeout(console.log(ItemsList), 1500);
+		  	// return ItemsList;
+			};
+		})
+		// // this.setAppropriateHeight();
+	},
+
+
+	// setAppropriateHeight: function () {
+	// 	$('li').forEach(function(){
+	// 		console.log($(this).height);
+	// 	})
+		// $('.try').css('height', $(this).parent().height());
+		// var children = []; 
+		// var outerContainer = $('.inventory-list-item-bound');
+		// console.log(outerContainer);
+		// console.log(this.$el);
+		// $('.inventory-list-item-bound').children().forEach(function(child){
+		// 	children.push(child);
+		// 	console.log(children);
+		// 	return children
+		// })
+		// // _.each($('.inventory-list-item-bound').children(), function(child){ 
+		// // 	children.push(child);
+		// // 	return children
+		// // }); 
+		// // console.log(children)
+		// _.each(children, function(child){
+		// 	$(child).children().css('height', $(child).height())
+		// });
+	// },
+
+
+});
+
+// this is a list of all items that are not attached to a backorder or a shelf item, so all items with no item instance code.
+// these are all items instances that have been scanned in and not sold. there should be a list of all item types that have item
+// instances attached to them, including a non-defined item type, which is what is given to all items that do not have defined item
+// types. an item instance must be assigned an item type other than non-defined before it can be sold. 
+
+// new item types should be able to be created, deleted and edited. when this happens, items should be automatically moved from non-defined
+// to the new item type if they match. otherwise some association with the info from the manufacturers needs to be created so that items will
+// automatically be put into their appropriate types when scanned in. 
+
+// particular item instances should be able to be created, deleted and edited, however this should be indirect to do, and require multiple
+// checks and button clicks, as it should never happen by accident.
+
+// there is going to be a "special" item type, which is going to be dealt with entirely seperately from the rest of the items, and it going to 
+// be pulled into the order forms differently as well. it should only be dealt with after all essentials are completed.
+// the point of the special item class is to group items that are unique in some way. this could be a one off item that will never be sold again,
+// or it could an existing item that they want to sell for a different price, but only want to apply that price to that particular item. this 
+// could also be accomplished on the invoice, but this is a better way of tracking it. there are also other uses for the "special" item type,
+// but it is not a priority, just something that will likely need to be made. it will never take items automatically when scanned in.
+
+
+
 
 			// THIS IS HERE IN CASE I NEED SOMETHING OLD -------------
 
@@ -117,32 +204,3 @@ var InventoryList = Parse.View.extend ({
 			// 			console.log(error);
 			// 		}
 			// 	})
-		})
-		// })
-	}
-
-
-});
-
-// this is a list of all items that are not attached to a backorder or a shelf item, so all items with no item instance code.
-// these are all items instances that have been scanned in and not sold. there should be a list of all item types that have item
-// instances attached to them, including a non-defined item type, which is what is given to all items that do not have defined item
-// types. an item instance must be assigned an item type other than non-defined before it can be sold. 
-
-// new item types should be able to be created, deleted and edited. when this happens, items should be automatically moved from non-defined
-// to the new item type if they match. otherwise some association with the info from the manufacturers needs to be created so that items will
-// automatically be put into their appropriate types when scanned in. 
-
-// particular item instances should be able to be created, deleted and edited, however this should be indirect to do, and require multiple
-// checks and button clicks, as it should never happen by accident.
-
-// there is going to be a "special" item type, which is going to be dealt with entirely seperately from the rest of the items, and it going to 
-// be pulled into the order forms differently as well. it should only be dealt with after all essentials are completed.
-// the point of the special item class is to group items that are unique in some way. this could be a one off item that will never be sold again,
-// or it could an existing item that they want to sell for a different price, but only want to apply that price to that particular item. this 
-// could also be accomplished on the invoice, but this is a better way of tracking it. there are also other uses for the "special" item type,
-// but it is not a priority, just something that will likely need to be made. it will never take items automatically when scanned in.
-
-
-
-
