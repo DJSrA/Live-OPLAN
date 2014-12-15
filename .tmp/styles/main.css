@@ -224,6 +224,7 @@ ul.inventory-list-item-bound li .item-type {
 .in-stock {
   padding: 0; }
 
+<<<<<<< HEAD
 .try {
   height: inherit; }
 
@@ -287,3 +288,20 @@ ul.inventory-list-item-bound li .item-type {
   right: 10px;
   padding: 2px 6px 0;
   display: none; }
+=======
+/*place new order stuff*/
+.customer-state {
+  display: inline-block;
+  margin-left: 5px; }
+
+.merchant-info {
+  float: left; }
+
+.seller-info {
+  float: right; }
+
+.item-list-bound, .item-total-bound {
+  float: left;
+  clear: both;
+  width: 100%; }
+>>>>>>> 4cbca40c6f6e76b99b086515f37e07289a72f3e3

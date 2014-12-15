@@ -9,6 +9,7 @@ var AppRouter = Parse.Router.extend({
 		'orders' 			: 'orderList',
 		'orders/:id'		: 'orderStatus',
 		'order'				: 'placeOrder',
+		'order/:id'			: 'orderItems',
 		'order/:id/form3' 	: 'attachForm3',
 		'order/:id/invoice'	: 'orderInvoice',
 		'order/:id/partial'	: 'orderPartial',
@@ -52,8 +53,12 @@ var AppRouter = Parse.Router.extend({
 		this.swap( new OrderStatus({"orderID": id}) );
 	},
 
-	placeOrder: function(id) {
-		this.swap( new PlaceOrder({"orderID": id}) );
+	placeOrder: function() {
+		this.swap( new PlaceOrder() );
+	},	
+
+	orderItems: function(id) {
+		this.swap( new OrderItemsView({"shopID": id}) );
 	},
 
 	attachForm3: function(id) {

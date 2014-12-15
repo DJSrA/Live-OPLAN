@@ -252,165 +252,177 @@
          -->
         <script type="text/template" class="customer-list-view">
             <div class="page-title">CUSTOMER LIST</div>
-            <hr/>
-            <div class="customer-list-header col-md-10 col-md-offset-1">
-                <div class="search-add-customers">
-                    <form class="form-inline" role="form">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="create-new-customer"><button class="btn btn-info create-customer">+ ADD CUSTOMER</button></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="input-group">
-                            <div class="input-group-addon">Search</div>
-                            <input class="form-control create-customer-input customer-search">
+            <div id="contacts">
+            <table class="col-md-12">
+              <thead>
+                <tr>
+                  <td class="col-md-12">
+                      <hr/>
+                          <div class="customer-list-header col-md-10 col-md-offset-1">
+                              <div class="search-add-customers">
+                                  <form class="form-inline" role="form">
+                                  <div class="form-group">
+                                    <div class="input-group">
+                                      <div class="input-group-addon">Search</div>
+                                      <input class="form-control create-customer-input search">
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <div class="input-group">
+                                        <button class="btn btn-primary reset-search">RESET SEARCH</button>
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <div class="input-group">
+                                          <div class="create-new-customer"><button class="btn btn-info create-customer">+ ADD CUSTOMER</button></div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group float-right">
+                                      <div class="input-group">
+                                          <div class="create-new-customer"><button disabled="disabled" class="btn btn-default scanner-setup-button create-customer">Delete</button></div>
+                                      </div>
+                                  </div>
+                              </form>
                           </div>
-                        </div>
-                        <div class="form-group float-right">
-                            <div class="input-group">
-                                <div class="create-new-customer"><button disabled="disabled" class="btn btn-default scanner-setup-button create-customer">Delete</button></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                      </div>
+                      <div class="hidden-customer-creation col-md-offset-1">
+                          <form class="form-inline form-inline-hidden" role="form">
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">Company</div>
+                                  <input class="form-control create-customer-input company-input">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">First Name</div>
+                                  <input class="form-control create-customer-input first-name-input">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">Last Name</div>
+                                  <input class="form-control create-customer-input last-name-input">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">Phone #</div>
+                                  <input maxlength="10" class="form-control create-customer-input phone-number-input">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">Email</div>
+                                  <input type="email" class="form-control create-customer-input email-input">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">FFL</div>
+                                  <input class="form-control create-customer-input ffl-input">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">Address</div>
+                                  <input class="form-control create-customer-input address-input">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">City</div>
+                                  <input class="form-control create-customer-input city-input">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">Zip</div>
+                                  <input maxlength="5" class="form-control create-customer-input zip-input">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon state-addon">State</div>
+                                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                      <select name="state" class="form-control create-customer-input state-input">
+                                          <option value="AL">AL</option>
+                                          <option value="AK">AK</option>
+                                          <option value="AZ">AZ</option>
+                                          <option value="AR">AR</option>
+                                          <option value="CA">CA</option>
+                                          <option value="CO">CO</option>
+                                          <option value="CT">CT</option>
+                                          <option value="DE">DE</option>
+                                          <option value="DC">DC</option>
+                                          <option value="FL">FL</option>
+                                          <option value="GA">GA</option>
+                                          <option value="HI">HI</option>
+                                          <option value="ID">ID</option>
+                                          <option value="IL">IL</option>
+                                          <option value="IN">IN</option>
+                                          <option value="IA">IA</option>
+                                          <option value="KS">KS</option>
+                                          <option value="KY">KY</option>
+                                          <option value="LA">LA</option>
+                                          <option value="ME">ME</option>
+                                          <option value="MD">MD</option>
+                                          <option value="MA">MA</option>
+                                          <option value="MI">MI</option>
+                                          <option value="MN">MN</option>
+                                          <option value="MS">MS</option>
+                                          <option value="MO">MO</option>
+                                          <option value="MT">MT</option>
+                                          <option value="NE">NE</option>
+                                          <option value="NV">NV</option>
+                                          <option value="NH">NH</option>
+                                          <option value="NJ">NJ</option>
+                                          <option value="NM">NM</option>
+                                          <option value="NY">NY</option>
+                                          <option value="NC">NC</option>
+                                          <option value="ND">ND</option>
+                                          <option value="OH">OH</option>
+                                          <option value="OK">OK</option>
+                                          <option value="OR">OR</option>
+                                          <option value="PA">PA</option>
+                                          <option value="RI">RI</option>
+                                          <option value="SC">SC</option>
+                                          <option value="SD">SD</option>
+                                          <option value="TN">TN</option>
+                                          <option value="TX">TX</option>
+                                          <option value="UT">UT</option>
+                                          <option value="VT">VT</option>
+                                          <option value="VA">VA</option>
+                                          <option value="WA">WA</option>
+                                          <option value="WV">WV</option>
+                                          <option value="WI">WI</option>
+                                          <option value="WY">WY</option>
+                                      </select>
+                                      </div>
+                                </div>
+                              </div>
+                          </form>
+                          <div class="add-customer creation-button new-customer-submit"><button class="btn btn-info btn-primary">SAVE CUSTOMER</button></div>
+                          <div class="cancel-customer creation-button"><button class="btn btn-info btn-warning">CANCEL</button></div>
+                      </div>
+                      <hr class="odd-hr">
+                  </td>
+                </tr>
+              </thead>
+              <tbody class="list"> 
+                <tr class="list-here"></tr>
+              </tbody>
+            </table>
             </div>
-            <div class="hidden-customer-creation col-md-offset-1">
-                <form class="form-inline form-inline-hidden" role="form">
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">Company</div>
-                        <input class="form-control create-customer-input company-input">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">First Name</div>
-                        <input class="form-control create-customer-input first-name-input">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">Last Name</div>
-                        <input class="form-control create-customer-input last-name-input">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">Phone #</div>
-                        <input maxlength="10" class="form-control create-customer-input phone-number-input">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">Email</div>
-                        <input type="email" class="form-control create-customer-input email-input">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">FFL</div>
-                        <input class="form-control create-customer-input ffl-input">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">Address</div>
-                        <input class="form-control create-customer-input address-input">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">City</div>
-                        <input class="form-control create-customer-input city-input">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">Zip</div>
-                        <input maxlength="5" class="form-control create-customer-input zip-input">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon state-addon">State</div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <select name="state" class="form-control create-customer-input state-input">
-                                <option value="AL">AL</option>
-                                <option value="AK">AK</option>
-                                <option value="AZ">AZ</option>
-                                <option value="AR">AR</option>
-                                <option value="CA">CA</option>
-                                <option value="CO">CO</option>
-                                <option value="CT">CT</option>
-                                <option value="DE">DE</option>
-                                <option value="DC">DC</option>
-                                <option value="FL">FL</option>
-                                <option value="GA">GA</option>
-                                <option value="HI">HI</option>
-                                <option value="ID">ID</option>
-                                <option value="IL">IL</option>
-                                <option value="IN">IN</option>
-                                <option value="IA">IA</option>
-                                <option value="KS">KS</option>
-                                <option value="KY">KY</option>
-                                <option value="LA">LA</option>
-                                <option value="ME">ME</option>
-                                <option value="MD">MD</option>
-                                <option value="MA">MA</option>
-                                <option value="MI">MI</option>
-                                <option value="MN">MN</option>
-                                <option value="MS">MS</option>
-                                <option value="MO">MO</option>
-                                <option value="MT">MT</option>
-                                <option value="NE">NE</option>
-                                <option value="NV">NV</option>
-                                <option value="NH">NH</option>
-                                <option value="NJ">NJ</option>
-                                <option value="NM">NM</option>
-                                <option value="NY">NY</option>
-                                <option value="NC">NC</option>
-                                <option value="ND">ND</option>
-                                <option value="OH">OH</option>
-                                <option value="OK">OK</option>
-                                <option value="OR">OR</option>
-                                <option value="PA">PA</option>
-                                <option value="RI">RI</option>
-                                <option value="SC">SC</option>
-                                <option value="SD">SD</option>
-                                <option value="TN">TN</option>
-                                <option value="TX">TX</option>
-                                <option value="UT">UT</option>
-                                <option value="VT">VT</option>
-                                <option value="VA">VA</option>
-                                <option value="WA">WA</option>
-                                <option value="WV">WV</option>
-                                <option value="WI">WI</option>
-                                <option value="WY">WY</option>
-                            </select>
-                            </div>
-                      </div>
-                    </div>
-                </form>
-                <div class="add-customer creation-button new-customer-submit"><button class="btn btn-info btn-primary">SAVE CUSTOMER</button></div>
-                <div class="cancel-customer creation-button"><button class="btn btn-info btn-warning">CANCEL</button></div>
-            </div>
-            <hr class="odd-hr">
-            <ul id="list" class="user-list customer-list list"></ul>
-        </script>        
-
-        <script type="text/template" class="new-customer-list-item">
-            <span><input class="search" placeholder="Search"></span>
-        </script>        
+        </script>               
 
         <script type="text/template" class="customer-list-item">
-            <li class="col-md-5 customer-container">
-                <button class="btn-default btn delete-customer">X</button>
-                <div class="col-md-12">
-                    <div class="customer-name"><%=customer.Company%><div>
-                    <div class="customer-address"><span class="address"><%=customer.Address1%></span> <span class="city"><%=customer.City%></span>, <span class="state"><%=customer.State%></span></div>
-                </div>
-            </li>
+                <td style="display: block;" class="col-md-offset-1">
+                    <div class="customer-container col-md-5">
+                        <div class="customer-name"><%=customer.Company%></div>
+                        <div class="address"><%=customer.Address1%></div> <div class="city" style="display:inline-block;"><%=customer.City%></div>, <div class="state" style="display:inline-block;"><%=customer.State%></div>
+                    </div>
+                </td>
         </script>
 
 
@@ -472,3 +484,41 @@
 
 </body>
 </html>
+
+
+<!-- <div id="contacts">
+  <table>
+    <thead>
+      <tr>
+        <th class="sort" data-sort="name">Name</th>
+        <th class="sort" data-sort="age">Age</th>
+        <th class="sort" data-sort="city">City</th>
+        <th colspan="2">
+          <input type="text" class="search" placeholder="Search contact" />
+        </th>
+      </tr>
+    </thead>
+    <tbody class="list">
+      <tr>
+      </tr>
+      <tr>
+        <td class="id" style="display:none;">2</td>
+        <td class="name">Jonas</td>
+        <td class="age">-132</td>
+        <td class="city">Berlin</td>
+      </tr>
+      <tr>
+        <td class="id" style="display:none;">3</td>
+        <td class="name">Gustaf</td>
+        <td class="age">-23</td>
+        <td class="city">Sundsvall</td>
+      </tr>
+      <tr>
+        <td class="id" style="display:none;">4</td>
+        <td class="name">Fredrik</td>
+        <td class="age">26</td>
+        <td class="city">Goteborg</td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->
