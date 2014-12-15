@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "AAPOS": {
+            "applicationId": "rzGw28XmRP4nCA4ZFkF0nVSwuqDNgwNuTcdSVqMY", 
+            "masterKey": "wlfPI52Ofb4lDGUGHAVnLE4FbAOqYqAACIgYgi6q"
+        }, 
+        "_default": {
+            "link": "AAPOS"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.2"
+    }
+}
