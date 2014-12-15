@@ -19,6 +19,9 @@ body {
   margin-top: 101px;
   background: #FFFFFF; }
 
+.display-inline {
+  display: inline-block; }
+
 ul {
   list-style: none;
   padding: 0; }
@@ -296,6 +299,9 @@ ul.inventory-list-item-bound li .item-type {
 .backorder-items {
   border-bottom: solid 3px black; }
 
+.try {
+  height: inherit; }
+
 .customer-list {
   margin-left: 10%; }
 
@@ -314,8 +320,12 @@ ul.inventory-list-item-bound li .item-type {
   cursor: pointer; }
   .customer-container .customer-name {
     font-size: 20px; }
-  .customer-container .customer-address {
+  .customer-container .address {
     font-size: 18px; }
+  .customer-container .city {
+    display: inline-block; }
+  .customer-container .state {
+    display: inline-block; }
 
 .new-customer-input {
   height: 35px;

@@ -166,7 +166,7 @@ var ScanItem = Parse.View.extend ({
 		      }
 		    });
 
-	    var SerialNumber = function () {
+	    SerialNumber = function () {
 		    this.autoFill().forEach(function(e){
 					 var scannedItem = e; 
 					 var parsedScannedItem = parseInt(e); 
@@ -255,8 +255,6 @@ var ScanItem = Parse.View.extend ({
 				$('.new-item-form').children('input').val('');
 				$('.new-item-form').children('textarea').val('');
 				$('.manufacturer').focus();
-				// totalScanned = parseInt(totalScanned) + 1;
-				// $('.scanned-item-total').text(totalScanned);
 		   }
 	},
 

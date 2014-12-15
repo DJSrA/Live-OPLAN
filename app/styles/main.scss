@@ -24,6 +24,9 @@ body {
   margin-top: 101px;
   background: #FFFFFF;
 }
+.display-inline {
+  display: inline-block;
+}
 
 ul {
   list-style: none;
@@ -400,6 +403,10 @@ ul.inventory-list-item-bound li .item-type {
 
 .backorder-items {
   border-bottom: solid 3px black;
+
+}  
+.try {
+  height: inherit;
 }
 
 // CUSTOMERS CUSTOMERS CUSTOMERS ________________________________
@@ -423,8 +430,14 @@ ul.inventory-list-item-bound li .item-type {
   .customer-name {
     font-size: 20px;
   }
-  .customer-address {
+  .address {
     font-size: 18px;
+  }
+  .city{
+    display: inline-block;
+  }
+  .state {
+    display: inline-block;
   }
 }
 
@@ -499,3 +512,7 @@ ul.inventory-list-item-bound li .item-type {
     padding-bottom: 20px;
   }
 }
+
+
+
+
