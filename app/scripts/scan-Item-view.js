@@ -29,10 +29,15 @@ var ScanItem = Parse.View.extend ({
 	manualItemCreationTemplate: _.template($('.manual-item-creation-template').text()),
 
 	initialize: function() {
-		$('.app-container').html(this.el);
-		var fakeScan = [];
-		this.render();
-		var totalScanned = 0;
+		if((Parse.User.current() === null) === true){
+			window.location.href = '#';
+			this.swap( new FrontPage() );
+		} else {
+			$('.app-container').html(this.el);
+			var fakeScan = [];
+			this.render();
+			var totalScanned = 0;
+		}
 	},
 
 	render: function() {

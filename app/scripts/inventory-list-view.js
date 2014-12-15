@@ -26,9 +26,14 @@ var InventoryList = Parse.View.extend ({
 	listItemDetailTemplate: _.template($('.inventory-list-detail-view').text()),
 
 	initialize: function() {
-		$('.app-container').html(this.el);
-		// console.log('InventoryList')
-		this.render();
+		if((Parse.User.current() === null) === true){
+			window.location.href = '#';
+			this.swap( new FrontPage() );
+		} else {
+			$('.app-container').html(this.el);
+			// console.log('InventoryList')
+			this.render();
+		}
 	},
 
 	render: function() {

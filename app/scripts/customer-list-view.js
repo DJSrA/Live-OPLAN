@@ -12,9 +12,14 @@ var CustomerList = Parse.View.extend ({
 	customerListTemplate: _.template($('.customer-list-item').text()),
 
 	initialize: function() {
-		$('.app-container').html(this.el);
-		this.phoneValidate();
-		this.render();
+		if((Parse.User.current() === null) === true){
+			window.location.href = '#';
+			this.swap( new FrontPage() );
+		} else {
+			$('.app-container').html(this.el);
+			this.phoneValidate();
+			this.render();
+		}
 	},
 
 	render: function() {
@@ -133,7 +138,7 @@ var CustomerList = Parse.View.extend ({
 					Zip: parseInt($('.zip-input').val()),
 					City: $('.city-input').val(),
 					State: $('.state-input').val()
-				}).save();
+				})	
 				console.log(customer);
 				that.getCustomers();
 			}

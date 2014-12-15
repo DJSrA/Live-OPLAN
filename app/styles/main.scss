@@ -55,6 +55,16 @@ ul {
     }
   }
 }
+
+.sign-in-container {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  .sign-in-form {
+    margin: 5px 0 20px;
+  }
+}
+
 .center-text {
   text-align: center;
 }
@@ -420,32 +430,3 @@ ul.inventory-list-item-bound li .item-type {
   clear: both;
   width: 100%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> 4cbca40c6f6e76b99b086515f37e07289a72f3e3

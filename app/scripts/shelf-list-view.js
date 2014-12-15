@@ -23,9 +23,14 @@ var ShelfList = Parse.View.extend ({
 	shelfItemTemplate: _.template($('.shelf-list-item').text()),
 
 	initialize: function() {
-		$('.app-container').html(this.el);
-		// console.log('ShelfList')
-		this.render();
+		if((Parse.User.current() === null) === true){
+			window.location.href = '#';
+			this.swap( new FrontPage() );
+		} else {
+			$('.app-container').html(this.el);
+			// console.log('ShelfList')
+			this.render();
+		}
 	},
 
 	render: function() {
