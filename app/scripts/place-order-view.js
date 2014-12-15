@@ -33,7 +33,7 @@ var PlaceOrder = Parse.View.extend ({
 	},
 
 	showStates: function() {
-		$('.select-customer').html('<span>states</span>');
+		$('.select-customer').html('');
 
 		var states = [
 			'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA',
@@ -45,7 +45,7 @@ var PlaceOrder = Parse.View.extend ({
 		];
 
 		states.forEach(function(state){
-			$('.select-customer').append('<div class="customer-state">' + state + '</div>');
+			$('.select-customer').append('<button class="customer-state btn btn-default">' + state + '</button>');
 		})
 	},
 

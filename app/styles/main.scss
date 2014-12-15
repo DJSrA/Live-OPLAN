@@ -331,6 +331,76 @@ ul.inventory-list-item-bound li .item-type {
 .try {
   height: inherit;
 }
+.final-order{
+  margin-bottom: 75px;
+  .print-sales, .print-invoice {
+    margin-top: 75px;
+  }
+}
+.in-stock-items {
+  border-bottom: solid 3px black;
+
+}
+.order-heading {
+  border-bottom: solid 3px black;
+
+  .aa-tactical {
+    width: 30%;
+    clear: left;
+  }
+  .seller-info {
+    /*float: right;*/
+  }
+}
+
+.customer-info-bound {
+  border-bottom: solid 3px black;
+  height: 160px;
+
+  .left-info {
+    width: 45%;
+    float: left;
+  }  
+  .right-info {
+    width: 45%;
+    float: right;
+  }
+}
+
+.ordered-item {
+  width: 100%;
+  border-bottom: solid 1px gray;
+
+  li {
+  width: 30%;
+  display: inline-block;
+  }
+}
+  .item-dealer-price{
+
+    float:right;
+    text-align: right;
+  }
+.backordered-item{
+  width: 100%;
+  border-bottom: solid 1px gray;
+  li {
+
+  /*width: 200px;*/
+  display: inline-block;
+  }
+}
+.sum-total {
+    width: 100%;
+    text-align: right;
+    div {
+      /*float: right;*/
+    }
+}
+
+.backorder-items {
+  border-bottom: solid 3px black;
+}
 
 // CUSTOMERS CUSTOMERS CUSTOMERS ________________________________
 
@@ -410,4 +480,22 @@ ul.inventory-list-item-bound li .item-type {
 //   width: 25px;
 //   border: 2px;
 //   border-radius: 4px;
+}
+
+@media print {
+.noPrint {
+    display:none;
+    /*height: 0px;*/
+    /*margin: -300px;*/
+  }
+  .app-container{
+    margin: 0px;
+    padding: 0px;
+  }
+  .order-heading {
+    height: 130px;
+  }
+  .in-stock-items {
+    padding-bottom: 20px;
+  }
 }

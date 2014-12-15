@@ -28,7 +28,7 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="alan-arms-pos col-xs-12 bg-primary"><img src="images/aa-logo.png">
+        <div class="alan-arms-pos col-xs-12 bg-primary noPrint"><img src="images/aa-logo.png">
         <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
             <ul class="nav navbar-nav col-md-12">
                 <li class="col-md-2 "><a href="/#scan">SCAN</a></li>
@@ -224,7 +224,7 @@
             
         </script>
         <script type="text/template" class="customer-by-state-view">
-            <div id="<%=index%>" class="merchant"><%=merchant.attributes.Company%></div>
+            <div id="<%=index%>" class="merchant btn-default"><%=merchant.attributes.Company%></div>
         </script>        
         <script type="text/template" class="customer-order-view">
             <div><%=merchant.attributes.Company%></div>
@@ -233,8 +233,8 @@
             <div><%=merchant.attributes.State%></div>
             <div class="shopping-cart-bound"></div>
         <div class="app-merchant-bound">
-            <div class="accept-merchant">ACCEPT</div>
-            <div class="cancel-merchant">CANCEL</div>
+            <div class="accept-merchant btn btn-default">ACCEPT</div>
+            <div class="cancel-merchant btn btn-default">CANCEL</div>
         </div>
         </script> 
 
@@ -265,7 +265,7 @@
         </script>
 
         <script type="text/template" class="order-shopping-cart-view">
-            <li class="shopping-cart-item"><span><%=item[2]%><</span></li>
+            <div class="shopping-cart-item btn btn-info"><span><%=item[2]%></span></div>
         </script>  
 
         <script type="text/template" class="confirm-order-view">
@@ -310,14 +310,101 @@
             <span><%=sum%></span>
         </script>  
 
+
+<!-- FINAL ORDER TEMPLATE                                                                               FINAL ORDER TEMPLATE -->
         <script type="text/template" class="final-order-instance-view">
-            <span>cool</span>
+        <div class="final-order">
+        <div class="order-heading">
+            <img class="aa-tactical"src="images/aa-tactical.png">
+            <ul class="seller-info">
+                <li>Allen Arms Indoor Range</li>
+                <li>1210 pointset Highway</li>
+                <li>Greenville, SC 29609</li>
+                <li>Store: (864) 250-2007</li>
+                <li>Fax: (864) 271-0806</li>
+            </ul>
+        </div>
+
+        <div class="customer-info"></div>
+        <h3 class="ship-head">To Ship</h3>
+        <div class="in-stock-items"></div>
+        <h3 class="backorder-head">Backordered</h3>
+        <div class="backorder-items"></div>
+
+        <button class="btn btn-info print-sales noPrint">Print Sales Order</button>
+        <button class="btn btn-info print-invoice noPrint">Print Invoice</button>
+
+        </div>
+
+        
+        </script>  
+        
+        <script type="text/template" class="customer-info-order-template">
+        <div class="customer-info-bound">
+            <ul class="left-info">
+                <% if(customer.get('FirstName')){%>
+                    <li>Name: <%=customer.get('FirstName')%> <% if(customer.get('LastName')){ %>
+                            <span><%=customer.get('LastName')%></span>
+                        <%}%> 
+                    </li>
+                <%}%>
+                <li>Company: <%=customer.get('Company')%></li>
+                <li>Address: <%=customer.get('Address1')%>
+                <% if(customer.get('Address2')){%>
+                    </br><span> <%=customer.get('Address2')%></span>
+                </li>
+                <%}%>
+                <li>City: <%=customer.get('City')%></li>
+                <li>State: <%=customer.get('State')%></li>
+                <li>Zip: <%=customer.get('State')%></li>
+                <li>Phone: <%=customer.get('Phone')%></li>
+                <% if(customer.get('email')){%>
+                    <li>Email: <%=customer.get('email')%></li>
+                <%}%>
+            </ul>
+            <ul class="right-info">
+                <li>Invoice Num: <%=order.id%></li>
+                <li>Invoice Date: <%=order.createdAt%></li>
+            </ul>
+        </div>
         </script>  
 
+        <script type="text/template" class="customer-info-order-items-template">
+            <ul class="ordered-item">
+            <li>
+                <span><%= type.get('Manufacturer') %></span>
+                <span> <%= type.get('Model') %></span>
+                <span> <%= type.get('Caliber') %></span>
+            </li>
+            <li>
+            <% if(item.get('serialNumber')){%>
+                <span>Serial: <%= item.get('serialNumber') %>
+            <%}%>
+            </li>
+            <li class="item-dealer-price">
+                <span class="item-price"><%=type.get('DealerPrice')%></span>
+            </li>
+            </ul>
+        </script>        
 
+        <script type="text/template" class="customer-info-backorder-template">
+        <ul class="backordered-item">
+            <li>
+                <span><%= type.get('Manufacturer') %></span>
+                <span> <%= type.get('Model') %></span>
+                <span> <%= type.get('Caliber') %></span>
+            </li>
+            <li class="item-dealer-price">
+                <span class="item-price"><%=type.get('DealerPrice')%></span>
+            </li>
+        </ul>
+        </script>           
 
-
-
+        <script type="text/template" class="sales-order-template-total">
+            <ul>
+            <li class="sum-total">Total: $<%=total%>.00</li>
+            </ul>
+        </script>           
 
 
 
@@ -331,7 +418,8 @@
             <div>attach form3 View</div>
             <a href="/#order/3/invoice">order invoice</a>
             <a href="/#order/3/partial">order partial</a>
-        </script>        
+        </script>           
+
 
         <script type="text/template" class="order-invoice-view">
             <div>order invoice View</div>
@@ -552,7 +640,6 @@
         <script src="scripts/customer-list-view.js"></script>
         <script src="scripts/front-page-view.js"></script>
         <script src="scripts/inventory-list-view.js"></script>
-        <script src="scripts/inventory-item-view.js"></script>
         <script src="scripts/order-invoice-view.js"></script>
         <script src="scripts/order-list-view.js"></script>
         <script src="scripts/order-items.js"></script>
@@ -562,6 +649,7 @@
         <script src="scripts/scan-item-view.js"></script>
         <script src="scripts/shelf-list-view.js"></script>
         <script src="scripts/confirm-order-view.js"></script>
+        <script src="scripts/final-order-view.js"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         

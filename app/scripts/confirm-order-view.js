@@ -175,6 +175,8 @@ var FinalOrder = Parse.View.extend ({
 
 	template: _.template($('.final-order-instance-view').text()),
 
+	checkoutCart: [],
+
 	initialize: function() {
 		$('.item-list-bound').html(this.el);
 		// console.log('OrderStatus')
@@ -219,6 +221,7 @@ var FinalOrder = Parse.View.extend ({
 	},
 
 	render: function() {
+		// $('nav').toggle();
 		$(this.el).append(this.template());
 
 	},
@@ -258,6 +261,11 @@ var FinalOrder = Parse.View.extend ({
 							that.makeBackorder(item.UPC);
 						};
 					}
+				}).then(function(){
+					console.log(that.checkoutCart)
+					setTimeout(function(){
+						router.navigate('#order/' + that.order.id, {trigger: true, replace: true})
+					},500)
 				})
 
 		})
@@ -269,6 +277,7 @@ var FinalOrder = Parse.View.extend ({
 		item.set('itemInstanceCode', 2);
 		item.set('order', this.order)
 		item.save();
+		this.checkoutCart.push([item, 0]);
 
 	},
 
@@ -279,6 +288,8 @@ var FinalOrder = Parse.View.extend ({
 		backOrder.set('itemType', itemType);
 		backOrder.set('order', this.order);
 		backOrder.save();
+		this.checkoutCart.push([backOrder, 1]);
+
 	}
 
 
