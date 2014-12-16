@@ -49,6 +49,7 @@ var PlaceOrder = Parse.View.extend ({
 			'DC'
 		];
 
+		$('.order-directions').text('Choose state location of customer');
 		states.forEach(function(state){
 			$('.select-customer').append('<button class="customer-state btn btn-default">' + state + '</button>');
 		})
@@ -77,20 +78,23 @@ var PlaceOrder = Parse.View.extend ({
 
 	showCustomers: function() {
 		var that = this;
-		$('.select-customer').html('<span><span class="states-bread">states</span> <i class="fa fa-arrow-right"></i> customers</span>');
+		$('.select-customer').html('<div class="crumbs"><span class="states-bread">states</span> > customers</div>');
+		$('.order-directions').text('Select the customer to create order');
 		this.merchants.forEach(function(merchant,index){
 			$('.select-customer').append(that.customersTemplate({merchant: merchant, index: index}));
 		});
 	},
 
 	showCustomer: function(location) {
-		$('.select-customer').html('<span><span class="states-bread">states</span> <i class="fa fa-arrow-right"></i> <span class="customers-bread">customers</span> <i class="fa fa-arrow-right"></i> '+ location.currentTarget.innerHTML + '</span>');
+		$('.order-directions').text('Please confirm customer selection');
+		$('.select-customer').html('<div class="crumbs"><span class="states-bread">states</span> > <span class="customers-bread">customers</span> > '+ location.currentTarget.innerHTML + '</div>');
 		var index = location.currentTarget.id;
 		this.shoppingCart.customer = this.merchants[index];
 		$('.select-customer').append(this.customerTemplate({merchant : this.shoppingCart.customer}));
 	},
 
 	acceptMerchant: function() {
+		$('.order-directions').text('Please select manufacturer and item types for order');
 		this.inventoryList = new OrderInventoryList();
 		// console.log(this.shoppingCart)
 	},
