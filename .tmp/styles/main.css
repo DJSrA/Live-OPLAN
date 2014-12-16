@@ -369,9 +369,7 @@ ul.inventory-list-item-bound li .item-type {
 
 @media print {
   .noPrint {
-    display: none;
-    /*height: 0px;*/
-    /*margin: -300px;*/ }
+    display: none; }
 
   .app-container {
     margin: 0px;

@@ -209,6 +209,7 @@ var OrderInventoryList = Parse.View.extend ({
 		// var thisModel = 0;
 		var query = new Parse.Query('itemType');
 		query.limit(1000)
+		query.equalTo('Manufacturer', chosenManufacturer)
 		query.find(function(itemTypes){
 
 			itemTypes.forEach(function(e){
