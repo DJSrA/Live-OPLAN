@@ -6,10 +6,14 @@ var CustomerList = Parse.View.extend ({
 		'click .cancel-customer'		 : 'cancelCustomerCreation',
 		'keydown .search'		: 'listIt',
 		'click .reset-search' : 'resetSearch',
+		'click .edit-customer' : 'editCustomerModal',
+		'click #close-modal'		: 'closeModal',
+		'click .save-customer-changes' : 'saveCustomerChanges',
 	},
 
 	template: _.template($('.customer-list-view').text()),
 	customerListTemplate: _.template($('.customer-list-item').text()),
+	customerModalTemplate: _.template($('.customer-modal-template').text()),
 
 	initialize: function() {
 		if((Parse.User.current() === null) === true){
@@ -32,13 +36,20 @@ var CustomerList = Parse.View.extend ({
 
 	listIt: function(){
 		var options = {
-		  valueNames: [ 'customer-name', 'address', 'city', 'state' ]
+		  valueNames: [ 'company-name', 'company-owner', 'company-phone', 'company-email', 'FFL', 'address', 'city', 'state', 'zip' ]
 		};
 
 			// Init list
 			
 		var contactList = new List('contacts', options);
 		// var options = {};
+	},
+
+
+	closeModal: function() {
+		console.log('closing modal');
+		$('body').css('overflow', 'visible');
+		$('.modal-div').html('');
 	},
 
 	resetSearch: function () {
@@ -123,9 +134,12 @@ var CustomerList = Parse.View.extend ({
 
 		var Customer = Parse.Object.extend('customer');
 		var customer = new Customer();
-		$('.create-customer-input').forEach(function(e){
-			if($(e).val() === '') {
+		// _.each($('.create-customer-input'), function(e){
+			if($('.company-input').val() === '') {
 				console.log('empty');
+				$('.create-customer-input').val('')
+				$('.company-input').focus();
+				return '';
 			} else {
 				customer.set({
 					Company: $('.company-input').val(),
@@ -135,14 +149,15 @@ var CustomerList = Parse.View.extend ({
 					email: $('.email-input').val(),
 					FFL: $('.ffl-input').val(),
 					Address1: $('.address-input').val(),
-					Zip: parseInt($('.zip-input').val()),
 					City: $('.city-input').val(),
+					Zip: parseInt($('.zip-input').val()),
 					State: $('.state-input').val()
-				})	
+				}).save()	
 				console.log(customer);
 				that.getCustomers();
+				that.cancelCustomerCreation();
 			}
-		})
+		// })
 	},
 
 	getCustomers: function() {
@@ -150,11 +165,62 @@ var CustomerList = Parse.View.extend ({
 		$('.customer-list').html('');
 		this.query = new Parse.Query('customer');
 		this.query.each(function(customer){
-			// console.log(customer.attributes);
 			$('tbody.list').append(that.customerListTemplate({ customer: customer.attributes, model: customer }));
 		})
 		// that.readyCustomers();
 	},
+
+	editCustomerModal: function(e){
+		var that = this;
+		var CustomerName = $(event.target).attr('name');
+		console.log(CustomerName);
+		var customerQuery = new Parse.Query('customer');
+		customerQuery.limit(1500);
+		customerQuery.equalTo('Company', CustomerName);
+		customerQuery.first({
+			success: function(customer){
+				$('body').css('overflow', 'hidden');
+				$('.modal-div').append(that.customerModalTemplate({customer: customer.attributes, model: customer }));
+			},
+			error: function(error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		})
+	},
+
+	saveCustomerChanges: function(e){
+		var that = this;
+		var CustomerName = $(event.target).attr('name');
+		var customerQuery = new Parse.Query('customer');
+		customerQuery.limit(1500);
+		customerQuery.equalTo('Company', CustomerName);
+		customerQuery.first({
+			success: function(customer){
+				var thisCompany = customer.attributes;
+				// console.log(customer.attributes.Company)
+				customer.set({
+					Company: 		($('.company-input').val().length != 0 ? $('.company-input').val() : thisCompany.Company),
+					FirstName: 	($('.first-name-input').val().length != 0 ? $('.first-name-input').val() : thisCompany.FirstName),
+					LastName: 	($('.last-name-input').val().length != 0 ? $('.last-name-input').val() : thisCompany.LastName),
+					Phone: 			($('.phone-number-input').val().length != 0 ? parseInt($('.phone-number-input').val()) : thisCompany.Phone),
+					email: 			($('.email-input').val().length != 0 ? $('.email-input').val() : thisCompany.email),
+					FFL: 				($('.ffl-input').val().length != 0 ? $('.ffl-input').val() : thisCompany.FFL),
+					Address1: 	($('.first-name-input').val().length != 0 ? $('.first-name-input').val() : thisCompany.Address1),
+					City: 			($('.city-input').val().length != 0 ? $('.city-input').val() : thisCompany.City),
+					Zip: 				($('.zip-input').val().length != 0 ? parseInt($('.zip-input').val()) : thisCompany.Zip),
+					State: 			($('.state-input').val().length != 0 ? $('.state-input').val() : thisCompany.State)
+				}).save()
+
+				console.log(customer.attributes);
+				that.closeModal()
+				that.getCustomers();
+			},
+			error: function(error) {	
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		})
+	}
+
 
  //  readyCustomers:function() {
  //  	console.log('makin lists');

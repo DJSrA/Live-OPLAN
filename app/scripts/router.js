@@ -7,12 +7,8 @@ var AppRouter = Parse.Router.extend({
 		'shelf' 			: 'shelfList',
 		'backorder' 		: 'backorderList',
 		'orders' 			: 'orderList',
-		'orders/:id'		: 'orderStatus',
 		'order'				: 'placeOrder',
-		'order/:id'			: 'orderItems',
-		'order/:id/form3' 	: 'attachForm3',
-		'order/:id/invoice'	: 'orderInvoice',
-		'order/:id/partial'	: 'orderPartial',
+		'order/:id'			: 'finalOrder',
 
 		'customers'			: 'customerList',
 
@@ -75,7 +71,12 @@ var AppRouter = Parse.Router.extend({
 
 	customerList: function() {
 		this.swap( new CustomerList() );
+	},	
+
+	finalOrder: function(id) {
+		this.swap( new OrderInstanceView(id) );
 	},
+
 
 	swap: function (view) {
 		// this replaces the current app-view with the new view, and gets rid of the old one and stops it from listening for events and stuff

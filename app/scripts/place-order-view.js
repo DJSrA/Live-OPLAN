@@ -7,7 +7,8 @@ var PlaceOrder = Parse.View.extend ({
 		'click .merchant' : 'showCustomer',
 		'click .accept-merchant' : 'acceptMerchant',
 		'click .cancel-merchant' : 'showStates',
-		'click .confirm-order-button' : 'swapConfirmView'
+		'click .confirm-order-button' : 'swapConfirmView',
+		// 'click .remove-item' : 'removeItemOrder'
 	},
 
 	template: _.template($('.place-order-view').text()),
@@ -37,7 +38,7 @@ var PlaceOrder = Parse.View.extend ({
 	},
 
 	showStates: function() {
-		$('.select-customer').html('<span>states</span>');
+		$('.select-customer').html('');
 
 		var states = [
 			'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA',
@@ -49,7 +50,7 @@ var PlaceOrder = Parse.View.extend ({
 		];
 
 		states.forEach(function(state){
-			$('.select-customer').append('<div class="customer-state">' + state + '</div>');
+			$('.select-customer').append('<button class="customer-state btn btn-default">' + state + '</button>');
 		})
 	},
 
@@ -90,13 +91,33 @@ var PlaceOrder = Parse.View.extend ({
 	},
 
 	acceptMerchant: function() {
-		new OrderInventoryList();
+		this.inventoryList = new OrderInventoryList();
 		// console.log(this.shoppingCart)
 	},
 
 	swapConfirmView: function() {
 		router.swap( new ConfirmOrderView({ customer: this.shoppingCart.customer, items: this.shoppingCart.cart }) );
-	}
+	},
+
+	// removeItemOrder: function(e) {
+	// 	var that = this;
+	// 	var tog = false
+
+	// 	this.shoppingCart.cart.forEach(function(item, index, array){
+	// 		if(item[0] == e.currentTarget.getAttribute('value')){
+	// 			item[1] -= 1;
+	// 			if(item[1] <= 0){
+	// 				array.splice(that.shoppingCart.cart[index], 1);
+	// 				that.shoppingCart.cart = array;
+	// 				that.inventoryList.renderCart()
+	// 			}else {
+	// 				that.inventoryList.renderCart()
+					
+	// 			}
+	// 			// console.log(router.currentView.shoppingCart.cart)
+	// 		}
+	// 	})		
+	// },
 
 
 });
@@ -135,7 +156,7 @@ var OrderInventoryList = Parse.View.extend ({
 	events: {
 		'click span.item-type' : 'itemTypeDetail',
 		'click .manufacturer' : 'activeManufacturer',
-		'click button.order-item' : 'addItemOrder'
+		'click button.order-item' : 'addItemOrder',
 	},
 
 	template: _.template($('.order-inventory-list-view').text()),
@@ -151,10 +172,6 @@ var OrderInventoryList = Parse.View.extend ({
 
 	render: function() {
 		$(this.el).append(this.template());
-		this.getItemTypes();
-	},
-
-	getItemTypes: function() {
 	},
 
 	itemTypeDetail: function (location) {
@@ -213,6 +230,8 @@ var OrderInventoryList = Parse.View.extend ({
 		var that = this;
 		var tog = false
 
+		var itemName = e.currentTarget.parentElement.parentElement.children[1].innerHTML;
+
 		router.currentView.shoppingCart.cart.forEach(function(item){
 			if(item[0] == e.currentTarget.getAttribute('value')){
 				tog = true;
@@ -222,7 +241,7 @@ var OrderInventoryList = Parse.View.extend ({
 			}
 		})
 		if(tog == false){
-			var cartItem = [ e.currentTarget.getAttribute('value'), 1];
+			var cartItem = [ e.currentTarget.getAttribute('value'), 1, itemName];
 			router.currentView.shoppingCart.cart.push(cartItem);
 			// console.log(router.currentView.shoppingCart.cart)
 			that.renderCart()				
@@ -235,6 +254,10 @@ var OrderInventoryList = Parse.View.extend ({
 		var that = this;
 
 		router.currentView.shoppingCart.cart.forEach(function(item){
+			// if(item[3] == undefined){
+			// 	var query = new Parse.Query('itemType');
+			// 	query.
+			// }
 			$('.shopping-cart-bound').append(that.shoppingCartTemplate({ item: item}));
 			// console.log(item)
 		})

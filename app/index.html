@@ -27,7 +27,7 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="alan-arms-pos col-xs-12 bg-primary"><a class="home" href="#"><img src="images/aa-logo.png"></a>
+        <div class="alan-arms-pos col-xs-12 bg-primary"><a class="home" href="#"><img src="images/aa-tactical.png"></a>
         <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
             <ul class="nav navbar-nav col-md-12">
                 <li class="col-md-2 "><a class="nav-link" href="/#scan">SCAN</a></li>
@@ -46,7 +46,7 @@
 
         <script type="text/template" class="dashboard-view">
             <div class="sign-in-container col-md-4 col-md-offset-4">
-            <img class="col-md-12" src="images/aa-logo.png">
+            <img class="col-md-12" src="images/aa-tactical.png">
             <div><h2>Sign In</h2></div>
                 <div class="form-group sign-in-form">
                     <label>Username</label>
@@ -229,27 +229,209 @@
 
 
          -->
-
-
-
-
-
-
-
-
-
-
-
         <script type="text/template" class="place-order-view">
-            <div>place order View</div>
-            <a href="/#order/3/form3">attach form3</a>
+            <h2>Place Order</h2>
+            <div class="select-customer"></div>
+            
+        </script>
+        <script type="text/template" class="customer-by-state-view">
+            <div id="<%=index%>" class="merchant btn-default"><%=merchant.attributes.Company%></div>
         </script>        
+        <script type="text/template" class="customer-order-view">
+            <div><%=merchant.attributes.Company%></div>
+            <div><%=merchant.attributes.Address1%></div>
+            <div><%=merchant.attributes.City%></div>
+            <div><%=merchant.attributes.State%></div>
+            <div class="shopping-cart-bound"></div>
+        <div class="app-merchant-bound">
+            <div class="accept-merchant btn btn-default">ACCEPT</div>
+            <div class="cancel-merchant btn btn-default">CANCEL</div>
+        </div>
+        </script> 
+
+        <script type="text/template" class="order-inventory-list-view">
+            <div class="page-title">INVENTORY</div>
+            <div class="manufacturer-names col-md-12">
+              <ul class="manufacturers">
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Silencerco">SILENCERCO</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Surefire">SUREFIRE</li>
+                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="GEMTECH">GEMTECH</li>
+              </ul>
+            </div>
+            <div class="manufacturer-title col-md-12">
+                <div class='center-number'></div>
+            </div>
+            <div class="in-stock col-md-1 number-center"></div><div class="col-md-5 number-center">ITEM TYPE</div><div class="number-center col-md-3"># IN INVENTORY</div><div class="number-center col-md-3"> # ON BACKORDER</div>
+            <ul class="inventory-list-item-bound col-xs-12"></ul>
+            <ul class="inventory-list-detail-bound"></ul>
+        </script>   
+
+        <script type="text/template" class="order-inventory-list-item-view">
+            <li class="col-md-12"><div class="product-id col-md-1"><button class="order-item" value="<%=itemType.id%>">Add</button></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3">10</div><div class="backorder-number number-center col-md-3">4</div></li>
+        </script>   
+
+        <script type="text/template" class="order-inventory-list-detail-view">
+            <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span></li>
+        </script>
+
+        <script type="text/template" class="order-shopping-cart-view">
+            <div class="shopping-cart-item btn btn-info"><span><%=item[2]%></span></div>
+        </script>  
+
+        <script type="text/template" class="confirm-order-view">
+        <div class="top-info-bound">
+            <div class="merchant-info">
+                <div><%=customer.Company%></div>
+                <div><span><%=customer.FirstName%></span> <span><%=customer.LastName%></div>
+                <div><%=customer.Address1%></div>
+                <div><span><%=customer.City%></span> <span><%=customer.State%></span> <span><%=customer.Zip%></span></div>
+                <div><%=customer.email%></div>
+                <div><%=customer.Phone%></div>
+
+            </div>
+            <div class="seller-info">
+                <h1>☃</h1>
+                <div>Allen Arms</div>
+                <div>Greenville SC</div>
+            </div>  
+        <div>
+        <div class="item-list-bound">
+            <div class="item-instance-bound"></div>
+        </div>
+
+        <div class="item-total-bound">
+            <div class="cart-total"></div>
+        <button class="btn update-total">Update</button>
+        <button class="btn confirm-list">Confirm</button>
+        </div>
+        </script>   
+
+        <script type="text/template" class="confirm-order-item-instance-view">
+            <div>
+                <span><%=item.Manufacturer%> <%=item.Model%></span>
+                <span> x</span>
+                <span><input type ="number" id="<%=item.id%>"class="cart-item-instance" value="<%=item.quan%>"></span>
+                <span> <%=item.DealerPrice%> </span>
+                <span>=<span class="total-item-cost"><%= (parseInt(item.DealerPrice.replace(/\s+/g, '').substr(1)))*(item.quan) %></span></span>
+            </div>
+        </script>          
+
+        <script type="text/template" class="update-order-total-view">
+            <span><%=sum%></span>
+        </script>  
+
+
+<!-- FINAL ORDER TEMPLATE                                                                               FINAL ORDER TEMPLATE -->
+        <script type="text/template" class="final-order-instance-view">
+        <div class="final-order">
+        <div class="order-heading">
+            <img class="aa-tactical"src="images/aa-tactical.png">
+            <ul class="seller-info">
+                <li>Allen Arms Indoor Range</li>
+                <li>1210 pointset Highway</li>
+                <li>Greenville, SC 29609</li>
+                <li>Store: (864) 250-2007</li>
+                <li>Fax: (864) 271-0806</li>
+            </ul>
+        </div>
+
+        <div class="customer-info"></div>
+        <h3 class="ship-head">To Ship</h3>
+        <div class="in-stock-items"></div>
+        <h3 class="backorder-head">Backordered</h3>
+        <div class="backorder-items"></div>
+
+        <button class="btn btn-info print-sales noPrint">Print Sales Order</button>
+        <button class="btn btn-info print-invoice noPrint">Print Invoice</button>
+
+        </div>
+
+        
+        </script>  
+        
+        <script type="text/template" class="customer-info-order-template">
+        <div class="customer-info-bound">
+            <ul class="left-info">
+                <% if(customer.get('FirstName')){%>
+                    <li>Name: <%=customer.get('FirstName')%> <% if(customer.get('LastName')){ %>
+                            <span><%=customer.get('LastName')%></span>
+                        <%}%> 
+                    </li>
+                <%}%>
+                <li>Company: <%=customer.get('Company')%></li>
+                <li>Address: <%=customer.get('Address1')%>
+                <% if(customer.get('Address2')){%>
+                    </br><span> <%=customer.get('Address2')%></span>
+                </li>
+                <%}%>
+                <li>City: <%=customer.get('City')%></li>
+                <li>State: <%=customer.get('State')%></li>
+                <li>Zip: <%=customer.get('State')%></li>
+                <li>Phone: <%=customer.get('Phone')%></li>
+                <% if(customer.get('email')){%>
+                    <li>Email: <%=customer.get('email')%></li>
+                <%}%>
+            </ul>
+            <ul class="right-info">
+                <li>Invoice Num: <%=order.id%></li>
+                <li>Invoice Date: <%=order.createdAt%></li>
+            </ul>
+        </div>
+        </script>  
+
+        <script type="text/template" class="customer-info-order-items-template">
+            <ul class="ordered-item">
+            <li>
+                <span><%= type.get('Manufacturer') %></span>
+                <span> <%= type.get('Model') %></span>
+                <span> <%= type.get('Caliber') %></span>
+            </li>
+            <li>
+            <% if(item.get('serialNumber')){%>
+                <span>Serial: <%= item.get('serialNumber') %>
+            <%}%>
+            </li>
+            <li class="item-dealer-price">
+                <span class="item-price"><%=type.get('DealerPrice')%></span>
+            </li>
+            </ul>
+        </script>        
+
+        <script type="text/template" class="customer-info-backorder-template">
+        <ul class="backordered-item">
+            <li>
+                <span><%= type.get('Manufacturer') %></span>
+                <span> <%= type.get('Model') %></span>
+                <span> <%= type.get('Caliber') %></span>
+            </li>
+            <li class="item-dealer-price">
+                <span class="item-price"><%=type.get('DealerPrice')%></span>
+            </li>
+        </ul>
+        </script>           
+
+        <script type="text/template" class="sales-order-template-total">
+            <ul>
+            <li class="sum-total">Total: $<%=total%>.00</li>
+            </ul>
+        </script>           
+
+
+
+
+
+
+
+
+      
 
         <script type="text/template" class="attach-form3-view">
             <div>attach form3 View</div>
             <a href="/#order/3/invoice">order invoice</a>
             <a href="/#order/3/partial">order partial</a>
-        </script>        
+        </script>           
+
 
         <script type="text/template" class="order-invoice-view">
             <div>order invoice View</div>
@@ -266,6 +448,7 @@
 
          -->
         <script type="text/template" class="customer-list-view">
+            <div class="modal-div"></div>
             <div class="page-title">CUSTOMER LIST</div>
             <div id="contacts">
             <table class="col-md-12">
@@ -434,10 +617,152 @@
         <script type="text/template" class="customer-list-item">
                 <td style="display: block;" class="col-md-offset-1">
                     <div class="customer-container col-md-5">
-                        <div class="customer-name"><%=customer.Company%></div>
-                        <div class="address"><%=customer.Address1%></div> <div class="city" style="display:inline-block;"><%=customer.City%></div>, <div class="state" style="display:inline-block;"><%=customer.State%></div>
+                        <div class="edit-customer btn btn-default" id="customerModal" data-toggle="modal" data-target="#basicModal" name="<%= customer.Company %>">edit</div>
+                        <div class="show company-name"><%=customer.Company%></div>
+                        <hr class="customer-division"/>
+                        <div class="show company-owner">OWNER: <%= customer.FirstName %> <%=customer.LastName%></div>
+                        <div class="show address customer-inline">ADDRESS: <%=customer.Address1%></div> <div class="city customer-inline" style="display:inline-block;"><%=customer.City%></div>, <div class="state customer-inline" style="display:inline-block;"><%=customer.State%></div> <div class="zip customer-inline" style="display:inline-block;"><%=customer.Zip%></div>
+                        <div class="show company-phone">PHONE: <%= customer.Phone.toString().length == 1 ? '' : ('(' + customer.Phone.toString().slice(0, 3) + ')' + customer.Phone.toString().slice(3, 6) + '-' + customer.Phone.toString().slice(6, 10)) %></div>
+                        <div class="show company-email">EMAIL: <%= customer.email %></div>
+                        <div class="show FFL">FFL: <%= customer.FFL %></div>
                     </div>
                 </td>
+        </script>
+
+        <script type="text/template" class="customer-modal-template">
+            <div class="modal customer-modal-container fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" id="myModalLabel"><%= customer.Company %></h4>
+                        </div>
+                        <div class="modal-body">
+                        <h5 class="modal-title" id="myModalLabel">Fill in the fields and click save to update.</h5>
+                        <form class="form-inline form-inline-hidden" role="form">
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Company</div>
+                                <input class="form-control edit-customer-input company-input" placeholder="<%=customer.Company%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">First Name</div>
+                                <input class="form-control edit-customer-input first-name-input" placeholder="<%=customer.FirstName%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Last Name</div>
+                                <input class="form-control edit-customer-input last-name-input" placeholder="<%=customer.LastName%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Phone #</div>
+                                <input maxlength="10" class="form-control edit-customer-input phone-number-input" placeholder="(<%=customer.Phone.toString().slice(0, 3)%>) <%=customer.Phone.toString().slice(3, 6)%>-<%=customer.Phone.toString().slice(6, 10)%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Email</div>
+                                <input type="email" class="form-control edit-customer-input email-input" placeholder="<%=customer.email%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">FFL</div>
+                                <input class="form-control edit-customer-input ffl-input" placeholder="<%=customer.FFL%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Address</div>
+                                <input class="form-control edit-customer-input address-input" placeholder="<%=customer.Address1%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">City</div>
+                                <input class="form-control edit-customer-input city-input" placeholder="<%=customer.City%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Zip</div>
+                                <input maxlength="5" class="form-control edit-customer-input zip-input" placeholder="<%=customer.Zip%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon state-addon">State</div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <select name="state" class="form-control edit-customer-input state-input" placeholder="<%=customer.State%>">
+                                        <option value="AL">AL</option>
+                                        <option value="AK">AK</option>
+                                        <option value="AZ">AZ</option>
+                                        <option value="AR">AR</option>
+                                        <option value="CA">CA</option>
+                                        <option value="CO">CO</option>
+                                        <option value="CT">CT</option>
+                                        <option value="DE">DE</option>
+                                        <option value="DC">DC</option>
+                                        <option value="FL">FL</option>
+                                        <option value="GA">GA</option>
+                                        <option value="HI">HI</option>
+                                        <option value="ID">ID</option>
+                                        <option value="IL">IL</option>
+                                        <option value="IN">IN</option>
+                                        <option value="IA">IA</option>
+                                        <option value="KS">KS</option>
+                                        <option value="KY">KY</option>
+                                        <option value="LA">LA</option>
+                                        <option value="ME">ME</option>
+                                        <option value="MD">MD</option>
+                                        <option value="MA">MA</option>
+                                        <option value="MI">MI</option>
+                                        <option value="MN">MN</option>
+                                        <option value="MS">MS</option>
+                                        <option value="MO">MO</option>
+                                        <option value="MT">MT</option>
+                                        <option value="NE">NE</option>
+                                        <option value="NV">NV</option>
+                                        <option value="NH">NH</option>
+                                        <option value="NJ">NJ</option>
+                                        <option value="NM">NM</option>
+                                        <option value="NY">NY</option>
+                                        <option value="NC">NC</option>
+                                        <option value="ND">ND</option>
+                                        <option value="OH">OH</option>
+                                        <option value="OK">OK</option>
+                                        <option value="OR">OR</option>
+                                        <option value="PA">PA</option>
+                                        <option value="RI">RI</option>
+                                        <option value="SC">SC</option>
+                                        <option value="SD">SD</option>
+                                        <option value="TN">TN</option>
+                                        <option value="TX">TX</option>
+                                        <option value="UT">UT</option>
+                                        <option value="VT">VT</option>
+                                        <option value="VA">VA</option>
+                                        <option value="WA">WA</option>
+                                        <option value="WV">WV</option>
+                                        <option value="WI">WI</option>
+                                        <option value="WY">WY</option>
+                                    </select>
+                                    </div>
+                              </div>
+                            </div>
+                        </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="close-modal" class="btn close-modal btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="save-customer-changes btn btn-primary" name="<%= customer.Company %>">Save changes</button>
+                    </div>
+                </div>
+              </div>
+            </div>
         </script>
 
 
@@ -482,7 +807,6 @@
         <script src="scripts/customer-list-view.js"></script>
         <script src="scripts/front-page-view.js"></script>
         <script src="scripts/inventory-list-view.js"></script>
-        <script src="scripts/inventory-item-view.js"></script>
         <script src="scripts/order-invoice-view.js"></script>
         <script src="scripts/order-list-view.js"></script>
         <script src="scripts/order-partial-view.js"></script>
@@ -490,6 +814,8 @@
         <script src="scripts/place-order-view.js"></script>
         <script src="scripts/scan-item-view.js"></script>
         <script src="scripts/shelf-list-view.js"></script>
+        <script src="scripts/confirm-order-view.js"></script>
+        <script src="scripts/final-order-view.js"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         
