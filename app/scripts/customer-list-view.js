@@ -82,6 +82,15 @@ var CustomerList = Parse.View.extend ({
 	  		phone(input, [5][i]);
 	  })
 
+	  _.each($('.edit-phone-number-input'), function (input, i) {
+	      // make click event for each input
+	      phone(input, [3,3,4][i]);
+	  });
+
+	  _.each($('.edit-zip-input'), function(input, i) {
+	  		phone(input, [5][i]);
+	  })
+
 	  // new function 
 	  addDashes = function addDashes(f) {
 	      var r = /(\D+)/g,
@@ -167,7 +176,6 @@ var CustomerList = Parse.View.extend ({
 		this.query.each(function(customer){
 			$('tbody.list').append(that.customerListTemplate({ customer: customer.attributes, model: customer }));
 		})
-		// that.readyCustomers();
 	},
 
 	editCustomerModal: function(e){
@@ -181,6 +189,7 @@ var CustomerList = Parse.View.extend ({
 			success: function(customer){
 				$('body').css('overflow', 'hidden');
 				$('.modal-div').append(that.customerModalTemplate({customer: customer.attributes, model: customer }));
+				$('.state-input').selectedIndex = customer.attributes.State;
 			},
 			error: function(error) {
 				console.log("Error: " + error.code + " " + error.message);
@@ -189,6 +198,29 @@ var CustomerList = Parse.View.extend ({
 	},
 
 	saveCustomerChanges: function(e){
+		function phone (input, n) {
+		    $(input).keyup(function() {
+		        // val is numeric
+		        if ($.isNumeric($(this).val())) {
+		            $('.phone-number-input').css('background', 'white');
+		            if ($(this).val().length >= n) $(this).next('input').focus();
+		        // val is not numeric
+		        } else {
+		            // characters exist in input
+		            $(this).css('background', $(this).val().length ? 'rgba(255, 0, 0, 0.35)' : 'white');
+		        }
+		    });
+		};
+
+		$('.edit-phone-number-input'), function (input, i) {
+		    // make click event for each input
+		    phone(input, [3,3,4][i]);
+		};
+
+		$('.edit-zip-input'), function(input, i) {
+				phone(input, [5][i]);
+		};
+
 		var that = this;
 		var CustomerName = $(event.target).attr('name');
 		var customerQuery = new Parse.Query('customer');
@@ -202,12 +234,12 @@ var CustomerList = Parse.View.extend ({
 					Company: 		($('.company-input').val().length != 0 ? $('.company-input').val() : thisCompany.Company),
 					FirstName: 	($('.first-name-input').val().length != 0 ? $('.first-name-input').val() : thisCompany.FirstName),
 					LastName: 	($('.last-name-input').val().length != 0 ? $('.last-name-input').val() : thisCompany.LastName),
-					Phone: 			($('.phone-number-input').val().length != 0 ? parseInt($('.phone-number-input').val()) : thisCompany.Phone),
+					Phone: 			($('.edit-phone-number-input').val().length != 0 ? parseInt($('.edit-phone-number-input').val()) : thisCompany.Phone),
 					email: 			($('.email-input').val().length != 0 ? $('.email-input').val() : thisCompany.email),
 					FFL: 				($('.ffl-input').val().length != 0 ? $('.ffl-input').val() : thisCompany.FFL),
 					Address1: 	($('.first-name-input').val().length != 0 ? $('.first-name-input').val() : thisCompany.Address1),
 					City: 			($('.city-input').val().length != 0 ? $('.city-input').val() : thisCompany.City),
-					Zip: 				($('.zip-input').val().length != 0 ? parseInt($('.zip-input').val()) : thisCompany.Zip),
+					Zip: 				($('.edit-zip-input').val().length != 0 ? parseInt($('.edit-zip-input').val()) : thisCompany.Zip),
 					State: 			($('.state-input').val().length != 0 ? $('.state-input').val() : thisCompany.State)
 				}).save()
 

@@ -92,7 +92,8 @@
             </div>
             <div class="display-scanned-item"></div>
             <div class="add-here"></div>
-            <div class="scanned-item-counter col-md-12"><p class="col-md-3">Total Items Scanned : </p><p class="scanned-item-total col-md-2">0</p></div>
+            <hr class="odd-hr"/>
+            <div class="scanned-item-counter col-md-3"><p class="col-md-10">Total Items Scanned : </p><p class="scanned-item-total col-md-2">0</p></div>
             <div class="scanned-item-list col-md-12"></div>
         </script>
         
@@ -125,7 +126,6 @@
                 </label>
             <button type="button" class="btn btn-default add-new-item">Submit</button>  
             <button type="button" class="btn btn-info cancel-new-item-creation">Cancel</button>
-            <hr/>
             </div>
         </script>
         <!-- 
@@ -138,12 +138,13 @@
         <script type="text/template" class="inventory-list-view">
             <div class="page-title">INVENTORY</div>
             <div class="manufacturer-names col-md-12">
-              <ul class="manufacturers">
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Silencerco">SILENCERCO</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Surefire">SUREFIRE</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="GEMTECH">GEMTECH</li>
-              </ul>
+                <ul class="manufacturers">
+                  <li class="manufacturer col-md-2  btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
+                  <li class="manufacturer col-md-2  btn-default btn" name="Silencerco">SILENCERCO</li>
+                  <li class="manufacturer col-md-2  btn-default btn" name="Surefire">SUREFIRE</li>
+                  <li class="manufacturer col-md-2  btn-default btn" name="GEMTECH">GEMTECH</li>
+                  <li class="manufacturer col-md-2  btn-default btn" name="OSS Mission">OSS MISSION</li>
+                </ul>
             </div>
             <div class="manufacturer-title col-md-12">
                 <div class='center-number'></div>
@@ -229,18 +230,20 @@
 
          -->
         <script type="text/template" class="place-order-view">
-            <h2>Place Order</h2>
-            <div class="select-customer"></div>
+            <h2 class="page-title">Place Order</h2>
+            <hr/>
+            <h4 class="page-title order-directions"></h4>
+            <div class="select-customer col-md-12"></div>
             
         </script>
         <script type="text/template" class="customer-by-state-view">
-            <div id="<%=index%>" class="merchant btn-default"><%=merchant.attributes.Company%></div>
+            <div id="<%=index%>" class=" col-md-3 merchant btn-default"><%=merchant.attributes.Company%></div>
         </script>        
         <script type="text/template" class="customer-order-view">
-            <div><%=merchant.attributes.Company%></div>
-            <div><%=merchant.attributes.Address1%></div>
-            <div><%=merchant.attributes.City%></div>
-            <div><%=merchant.attributes.State%></div>
+            <div class="customer-order-detail-top"><%=merchant.attributes.Company%></div>
+            <div class="customer-detail-font display-inline"><%=merchant.attributes.Address1%></div>
+            <div class="customer-detail-font display-inline"><%=merchant.attributes.City%></div>
+            <div class="customer-detail-font customer-order-detail-bottom display-inline"><%=merchant.attributes.State%></div>
             <div class="shopping-cart-bound"></div>
         <div class="app-merchant-bound">
             <div class="accept-merchant btn btn-default">ACCEPT</div>
@@ -252,10 +255,11 @@
             <div class="page-title">INVENTORY</div>
             <div class="manufacturer-names col-md-12">
               <ul class="manufacturers">
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Silencerco">SILENCERCO</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Surefire">SUREFIRE</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="GEMTECH">GEMTECH</li>
+                <li class="manufacturer col-md-2  btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
+                <li class="manufacturer col-md-2  btn-default btn" name="Silencerco">SILENCERCO</li>
+                <li class="manufacturer col-md-2  btn-default btn" name="Surefire">SUREFIRE</li>
+                <li class="manufacturer col-md-2  btn-default btn" name="GEMTECH">GEMTECH</li>
+                <li class="manufacturer col-md-2  btn-default btn" name="OSS Mission">OSS MISSION</li>
               </ul>
             </div>
             <div class="manufacturer-title col-md-12">
@@ -660,7 +664,7 @@
                             <div class="form-group">
                               <div class="input-group">
                                 <div class="input-group-addon">Phone #</div>
-                                <input maxlength="10" class="form-control edit-customer-input phone-number-input" placeholder="(<%=customer.Phone.toString().slice(0, 3)%>) <%=customer.Phone.toString().slice(3, 6)%>-<%=customer.Phone.toString().slice(6, 10)%>">
+                                <input maxlength="10" type="number" class="form-control edit-customer-input edit-phone-number-input" placeholder="(<%=customer.Phone.toString().slice(0, 3)%>) <%=customer.Phone.toString().slice(3, 6)%>-<%=customer.Phone.toString().slice(6, 10)%>">
                               </div>
                             </div>
                             <div class="form-group">
@@ -690,14 +694,15 @@
                             <div class="form-group">
                               <div class="input-group">
                                 <div class="input-group-addon">Zip</div>
-                                <input maxlength="5" class="form-control edit-customer-input zip-input" placeholder="<%=customer.Zip%>">
+                                <input maxlength="5" type="number" class="form-control edit-customer-input edit-zip-input" placeholder="<%=customer.Zip%>">
                               </div>
                             </div>
                             <div class="form-group">
                               <div class="input-group">
                                 <div class="input-group-addon state-addon">State</div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <select name="state" class="form-control edit-customer-input state-input" placeholder="<%=customer.State%>">
+                                    <select name="state" class="form-control edit-customer-input state-input">
+                                        <option val=""></option>
                                         <option value="AL">AL</option>
                                         <option value="AK">AK</option>
                                         <option value="AZ">AZ</option>
