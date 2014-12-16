@@ -31,7 +31,7 @@ var ScanItem = Parse.View.extend ({
 	initialize: function() {
 		if((Parse.User.current() === null) === true){
 			window.location.href = '#';
-			this.swap( new FrontPage() );
+			router.swap( new FrontPage() );
 		} else {
 			$('.app-container').html(this.el);
 			var fakeScan = [];
@@ -175,56 +175,58 @@ var ScanItem = Parse.View.extend ({
 		    this.autoFill().forEach(function(e){
 					 var scannedItem = e; 
 					 var parsedScannedItem = parseInt(e); 
-					 if(isNaN(parsedScannedItem)){ return scannedItem} 
+					 if(isNaN(parsedScannedItem)){ 
+					 	console.log(scannedItem)
+					 	return scannedItem
+					 } 
 				})
 	    }
-
+	    var meh = 0
 	    if(isNaN(scannedAndParsed) === true){
+		    console.log(scannedItem);
+	    	// console.log(scannedAndParsed);
 	    	var query = new Parse.Query('itemInstance');
+	    	query.equalTo('serialNumber', scannedItem)
 	    	query.find(function(itemInstances){
-	    		itemInstances.forEach(function(b){
-	    			if(b.attributes.SerialNumber === scannedItem) {
-	    				$('.start-scanning').click();
-	    			} else {
-	    				console.log('This is new');
-	    			}
-	    		})
+	    		if(itemInstances.length > 0){
+		    		console.log(itemInstances)
+    				$('.stop-scanning').click();
+    				return '';
+	    		}
 	    	})
+	    } else {
+				UPCchecklist.forEach(function(e){
+					console.log(scannedItem);
+  	      if(e == scannedItem){
+  	        var query = new Parse.Query('itemType');
+  	        query.limit(1000);
+  	        query.find(function(itemTypes){
+  	          itemTypes.forEach(function(b){
+  	            if(b.attributes.UPC == e){
+  	              // Setting new itemInstance attributes to matching itemType attributes
+  	              itemInstance.set({
+  	                Caliber:              b.attributes.Caliber,
+  	                Cost:                 b.attributes.Cost,
+  	                DealerPrice:          b.attributes.DealerPrice,
+  	                MSRP:          				b.attributes.MSRP,
+  	                Description:          b.attributes.Description,
+  	                Model:                b.attributes.Model,
+  	                UPC:                  b.attributes.UPC,
+  	                itemType: 						b,
+  	                serialNumber: 				newSerialNumber,
+  	                itemInstanceCode: 		0,
+  	              })
+  							  console.log(itemInstance)
+  							  $('.scanned-item-list').append('<div class="col-md-3 scanned-item-container"><div class="scanned-item-attribute col-md-6"><p>' + itemInstance.attributes.Model + '</p></div><div class="scanned-item-attribute col-md-6"><p>' + itemInstance.attributes.serialNumber + '</div>');
+  								// itemInstance.save();
+  							  totalScanned = parseInt(totalScanned) + 1;
+  								$('.scanned-item-total').text(totalScanned);
+  	            }
+  	          })
+  	        })
+  	      }
+  	    })
 	    }
-
-
-		  if(isNaN(scannedAndParsed) === false) {
-		    UPCchecklist.forEach(function(e){
-		      if(e == scannedItem){
-		        var query = new Parse.Query('itemType');
-		        query.limit(1000);
-		        query.find(function(itemTypes){
-		          itemTypes.forEach(function(b){
-		            if(b.attributes.UPC == e){
-		              // Setting new itemInstance attributes to matching itemType attributes
-		              itemInstance.set({
-		                Caliber:              b.attributes.Caliber,
-		                Cost:                 b.attributes.Cost,
-		                DealerPrice:          b.attributes.DealerPrice,
-		                MSRP:          				b.attributes.MSRP,
-		                Description:          b.attributes.Description,
-		                Model:                b.attributes.Model,
-		                UPC:                  b.attributes.UPC,
-		                itemType: 						b,
-		                serialNumber: 				newSerialNumber,
-		                itemInstanceCode: 		0,
-		              }).save();
-								  console.log(itemInstance)
-								  $('.scanned-item-list').append('<div class="col-md-3 scanned-item-container"><div class="scanned-item-attribute col-md-6"><p>' + itemInstance.attributes.Model + '</p></div><div class="scanned-item-attribute col-md-6"><p>' + itemInstance.attributes.serialNumber + '</div>');
-									// itemInstance.save();
-								  totalScanned = parseInt(totalScanned) + 1;
-									$('.scanned-item-total').text(totalScanned);
-		            }
-		          })
-		        })
-		      }
-		    })
-		  } 
 		  })
 		})
 	},
