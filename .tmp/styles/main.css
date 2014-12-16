@@ -461,10 +461,8 @@ ul.inventory-list-item-bound li .item-type {
   width: 100%; }
 
 @media print {
-  .noPrint {
-    display: none;
-    /*height: 0px;*/
-    /*margin: -300px;*/ }
+  .noPrint, .home {
+    display: none; }
 
   .app-container {
     margin: 0px;

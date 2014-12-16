@@ -28,7 +28,7 @@ var InventoryList = Parse.View.extend ({
 	initialize: function() {
 		if((Parse.User.current() === null) === true){
 			window.location.href = '#';
-			this.swap( new FrontPage() );
+			router.swap( new FrontPage() );
 		} else {
 			$('.app-container').html(this.el);
 			// console.log('InventoryList')
@@ -111,10 +111,10 @@ var InventoryList = Parse.View.extend ({
 					UPCList.push(item.attributes.UPC);
 					
 				})
+			console.log(UPCList);
 				return UPCList
 				// console.log(itemInstances.attributes.UPC);
 			})
-			console.log(UPCList);
 			for(i = 0; i < thisManufacturersItems.length; i++){
 			  _.each(thisManufacturersItems[i], function(){
 			  	// console.log(thisManufacturersItems);

@@ -23,7 +23,7 @@ var PlaceOrder = Parse.View.extend ({
 	initialize: function() {
 		if((Parse.User.current() === null) === true){
 			window.location.href = '#';
-			this.swap( new FrontPage() );
+			router.swap( new FrontPage() );
 		} else {
 			$('.app-container').html(this.el);
 			// console.log('PlaceOrder')
@@ -218,6 +218,7 @@ var OrderInventoryList = Parse.View.extend ({
 		// var thisModel = 0;
 		var query = new Parse.Query('itemType');
 		query.limit(1000)
+		query.equalTo('Manufacturer', chosenManufacturer)
 		query.find(function(itemTypes){
 
 			itemTypes.forEach(function(e){
