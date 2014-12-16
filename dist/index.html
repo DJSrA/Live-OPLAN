@@ -117,7 +117,7 @@
             <ul class="order-list-item-bound"></ul>
             <ul class="order-detail-bound"></ul></script><script type=text/template class=order-list-item-view><li class="order-instance" id="<%=order.id%>">
                 <div>Order : <%=order.attributes.orderNumber%></div>
-                <div>Placed : <%=customer.createdAt%></div>
+                // <div>Placed : <%=customer.createdAt%></div>
                 <div>Customer : <%=customer.attributes.name%></div>
             </li></script><script type=text/template class=order-detail-view><li>
                 <div>Item : <%=itemType.attributes.Model%></div>
@@ -154,7 +154,7 @@
             <ul class="inventory-list-item-bound col-xs-12"></ul>
             <ul class="inventory-list-detail-bound"></ul></script><script type=text/template class=order-inventory-list-item-view><li class="col-md-12"><div class="product-id col-md-1"><button class="order-item" value="<%=itemType.id%>">Add</button></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="backorder-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li></script><script type=text/template class=order-inventory-list-detail-view><li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span></li></script><script type=text/template class=order-shopping-cart-view><div class="shopping-cart-item btn btn-info"><span><%=item[2]%></span></div></script><script type=text/template class=confirm-order-view><div class="top-info-bound">
             <div class="merchant-info">
-                <div><%=customer.Company%></div>
+                <div class="bold"><%=customer.Company%></div>
                 <div><span><%=customer.FirstName%></span> <span><%=customer.LastName%></div>
                 <div><%=customer.Address1%></div>
                 <div><span><%=customer.City%></span> <span><%=customer.State%></span> <span><%=customer.Zip%></span></div>
@@ -227,7 +227,7 @@
             </ul>
             <ul class="right-info">
                 <li>Invoice Num: <%=order.id%></li>
-                <li>Invoice Date: <%=order.createdAt%></li>
+                // <li>Invoice Date: <%=order.createdAt%></li>
             </ul>
         </div></script><script type=text/template class=customer-info-order-items-template><ul class="ordered-item">
             <li>

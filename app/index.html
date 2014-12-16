@@ -31,10 +31,10 @@
             <ul class="nav navbar-nav col-md-12">
                 <li class="col-md-2 "><a class="nav-link" href="/#scan">SCAN</a></li>
                 <li class="col-md-2 "><a class="nav-link" href="/#inventory">INVENTORY</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#shelf">SHELF</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#orders">ORDERS</a></li>
                 <li class="col-md-2 "><a class="nav-link" href="/#order">PLACE ORDER</a></li>
                 <li class="col-md-2 "><a class="nav-link" href="/#customers">CUSTOMERS</a></li>
+                <li class="col-md-2 "><a class="nav-link" href="/#shelf">SHELF</a></li>
+                <li class="col-md-2 "><a class="nav-link" href="/#orders">ORDERS</a></li>
             </ul>
         </nav>
         </div>
@@ -285,7 +285,7 @@
         <script type="text/template" class="confirm-order-view">
         <div class="top-info-bound">
             <div class="merchant-info">
-                <div><%=customer.Company%></div>
+                <div class="bold"><%=customer.Company%></div>
                 <div><span><%=customer.FirstName%></span> <span><%=customer.LastName%></div>
                 <div><%=customer.Address1%></div>
                 <div><span><%=customer.City%></span> <span><%=customer.State%></span> <span><%=customer.Zip%></span></div>
@@ -294,9 +294,8 @@
 
             </div>
             <div class="seller-info">
-                <h1>☃</h1>
-                <div>Allen Arms</div>
-                <div>Greenville SC</div>
+                <img class="seller-icon" src="images/aa-tactical.png">
+                <div class="bold">Greenville SC</div>
             </div>  
         <div>
         <div class="item-list-bound">
@@ -312,7 +311,7 @@
 
         <script type="text/template" class="confirm-order-item-instance-view">
             <div>
-                <span><%=item.Manufacturer%> <%=item.Model%></span>
+                <span class="item-name  "><%=item.Manufacturer%> <%=item.Model%></span>
                 <span> x</span>
                 <span><input type ="number" id="<%=item.id%>"class="cart-item-instance" value="<%=item.quan%>"></span>
                 <span> <%=item.DealerPrice%> </span>
@@ -321,7 +320,7 @@
         </script>          
 
         <script type="text/template" class="update-order-total-view">
-            <span><%=sum%></span>
+            <div class="col-md-5 total-div">TOTAL</div><div class="sum-div col-md-7"><span><%=sum%></span></div>
         </script>  
 
 
