@@ -1,7 +1,7 @@
 var FrontPage = Parse.View.extend ({
 
 	events: {
-
+		'click .submit-sign-in' : 'signIn',
 	},
 
 	template: _.template($('.dashboard-view').text()),
@@ -16,6 +16,26 @@ var FrontPage = Parse.View.extend ({
 		$(this.el).append(this.template());
 
 	},
+
+	signIn: function(){
+		var username = $('.username-input').val();
+		var password = $('.password-input').val();
+
+		var that = this;
+
+		// This is just a basic parse login function
+		Parse.User.logIn(username, password, {
+		  success: function(user){
+		  	console.log('logged in');
+		  },
+		  error: function(user, error){
+		  	$('.username-input').val('');
+		  	$('.password-input').val('');
+		  	$('.username-input').focus();
+		    alert("Incorrect. Please try again");
+		  }
+		});
+	}
 
 
 });

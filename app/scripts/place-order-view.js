@@ -21,9 +21,14 @@ var PlaceOrder = Parse.View.extend ({
 	},
 
 	initialize: function() {
-		$('.app-container').html(this.el);
-		// console.log('PlaceOrder')
-		this.render();
+		if((Parse.User.current() === null) === true){
+			window.location.href = '#';
+			this.swap( new FrontPage() );
+		} else {
+			$('.app-container').html(this.el);
+			// console.log('PlaceOrder')
+			this.render();
+		}
 	},
 
 	render: function() {

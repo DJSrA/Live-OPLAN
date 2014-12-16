@@ -9,9 +9,14 @@ var OrderList = Parse.View.extend ({
 	orderDetailTemplate: _.template($('.order-detail-view').text()),
 
 	initialize: function() {
-		$('.app-container').html(this.el);
-		// console.log('OrderList')
-		this.render();
+		if((Parse.User.current() === null) === true){
+			window.location.href = '#';
+			this.swap( new FrontPage() );
+		} else {
+			$('.app-container').html(this.el);
+			// console.log('OrderList')
+			this.render();
+		}
 	},
 
 	render: function() {

@@ -16,7 +16,7 @@ body {
   margin-right: 20px !important; }
 
 .app-container {
-  margin-top: 101px;
+  margin-top: 125px;
   background: #FFFFFF; }
 
 .display-inline {
@@ -44,6 +44,14 @@ ul {
     .side-nav .nav-ul a:hover {
       background: inherit; }
 
+.sign-in-container {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px; }
+  .sign-in-container .sign-in-form {
+    margin: 5px 0 20px; }
+
 .center-text {
   text-align: center; }
 
@@ -54,14 +62,15 @@ ul {
   right: 0;
   left: 0;
   z-index: 3;
-  background: #F4F4F4;
+  background: #999999;
   line-height: 30px;
   color: #ffffff;
   padding: 0;
-  height: 101px;
+  height: 125px;
   box-shadow: 0px 1px 4px 0px #848484; }
   .alan-arms-pos img {
-    width: 200px; }
+    padding: 5px 0;
+    width: 150px; }
   .alan-arms-pos ul {
     margin-top: 9px; }
 
@@ -309,23 +318,46 @@ ul.inventory-list-item-bound li .item-type {
   padding-left: 0; }
 
 .customer-container {
-  height: 80px;
   margin: 10px 15px 0;
   border-radius: 3px;
+  line-height: 24px;
+  border: 1px solid gray;
   background: #ececec;
   box-sizing: border-box;
   padding: 10px 15px;
   box-shadow: 0px 1px 2px 0px #7e7e7e;
   transition: all 150ms;
   cursor: pointer; }
-  .customer-container .customer-name {
-    font-size: 20px; }
-  .customer-container .address {
-    font-size: 18px; }
-  .customer-container .city {
+  .customer-container .customer-division {
+    border-top: 1px solid gray;
+    margin-top: 5px;
+    margin-bottom: 5px; }
+  .customer-container .company-name {
+    font-size: 20px;
+    padding: 5px; }
+  .customer-container .customer-inline {
     display: inline-block; }
-  .customer-container .state {
-    display: inline-block; }
+  .customer-container .edit-customer {
+    position: absolute;
+    right: 15px; }
+
+.customer-modal-container {
+  text-align: center;
+  overflow: visible;
+  display: block;
+  opacity: 1;
+  background: rgba(40, 40, 40, 0.1); }
+  .customer-modal-container .modal-content {
+    margin-top: 140px; }
+  .customer-modal-container .modal-header {
+    background: #F4F4F4;
+    border-radius: 6px 6px 0 0; }
+
+.edit-customer-input {
+  width: 140px !important; }
+
+.edit-customer-input.state-input {
+  width: 110px !important; }
 
 .new-customer-input {
   height: 35px;
@@ -337,7 +369,6 @@ ul.inventory-list-item-bound li .item-type {
   margin: 22px 0 0; }
 
 .customer-container:hover {
-  background: #FCFCFC;
   box-shadow: 0px 2px 4px 1px #BABABA; }
 
 .form-group {
@@ -366,6 +397,22 @@ ul.inventory-list-item-bound li .item-type {
   right: 10px;
   padding: 2px 6px 0;
   display: none; }
+
+/*place new order stuff*/
+.customer-state {
+  display: inline-block;
+  margin-left: 5px; }
+
+.merchant-info {
+  float: left; }
+
+.seller-info {
+  float: right; }
+
+.item-list-bound, .item-total-bound {
+  float: left;
+  clear: both;
+  width: 100%; }
 
 @media print {
   .noPrint {

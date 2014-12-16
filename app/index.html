@@ -27,15 +27,15 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="alan-arms-pos col-xs-12 bg-primary noPrint"><img src="images/aa-logo.png">
+        <div class="alan-arms-pos col-xs-12 bg-primary"><a class="home" href="#"><img src="images/aa-tactical.png"></a>
         <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
             <ul class="nav navbar-nav col-md-12">
-                <li class="col-md-2 "><a href="/#scan">SCAN</a></li>
-                <li class="col-md-2 "><a href="/#inventory">INVENTORY</a></li>
-                <li class="col-md-2 "><a href="/#shelf">SHELF</a></li>
-                <li class="col-md-2 "><a href="/#orders">ORDERS</a></li>
-                <li class="col-md-2 "><a href="/#order">PLACE ORDER</a></li>
-                <li class="col-md-2 "><a href="/#customers">CUSTOMERS</a></li>
+                <li class="col-md-2 "><a class="nav-link" href="/#scan">SCAN</a></li>
+                <li class="col-md-2 "><a class="nav-link" href="/#inventory">INVENTORY</a></li>
+                <li class="col-md-2 "><a class="nav-link" href="/#shelf">SHELF</a></li>
+                <li class="col-md-2 "><a class="nav-link" href="/#orders">ORDERS</a></li>
+                <li class="col-md-2 "><a class="nav-link" href="/#order">PLACE ORDER</a></li>
+                <li class="col-md-2 "><a class="nav-link" href="/#customers">CUSTOMERS</a></li>
             </ul>
         </nav>
         </div>
@@ -45,7 +45,22 @@
         <div class="app-container col-xs-10 col-md-offset-1"></div>
 
         <script type="text/template" class="dashboard-view">
-            <div><h2>Allen Arms Inventory and Order Management</h2></div>
+            <div class="sign-in-container col-md-4 col-md-offset-4">
+            <img class="col-md-12" src="images/aa-tactical.png">
+            <div><h2>Sign In</h2></div>
+                <div class="form-group sign-in-form">
+                    <label>Username</label>
+                    <input id="item-info-block" class="form-control username-input"></input>
+                </div>
+                <div class="form-group sign-in-form">
+                    <label>Password</label>
+                    <input type="password" id="item-info-block" class="form-control password-input"></input>
+                </div>
+                    <form role="form" class="col-md-offset-4">
+                        <button type="button" class="col-md-6 btn btn-default submit-sign-in">Submit</button>  
+                    </form>
+                </div>
+            </div>
         </script>
 
         <!-- 
@@ -56,7 +71,7 @@
 
          -->
         <script type="text/template" class="scan-item-view">
-            <div class="scanning col-md-4">
+            <div class="scanning col-md-4 col-md-offset-4">
             <button type="button" class="start-scanning btn btn-warning">START SCANNING</button>
             <div class="form-group">
                 <label>Item UPC</label>
@@ -73,7 +88,7 @@
                     <button type="button" class="btn btn-info add-item">ADD +</button>
                 </form>
             </div>
-            <div class="col-md-8 scanner-setup">
+            <div class="col-md-4 scanner-setup">
                 <button class="scanner-setup-button btn btn-default">Scanner Setup</button>
             </div>
             <div class="display-scanned-item"></div>
@@ -433,6 +448,7 @@
 
          -->
         <script type="text/template" class="customer-list-view">
+            <div class="modal-div"></div>
             <div class="page-title">CUSTOMER LIST</div>
             <div id="contacts">
             <table class="col-md-12">
@@ -446,7 +462,7 @@
                                   <div class="form-group">
                                     <div class="input-group">
                                       <div class="input-group-addon">Search</div>
-                                      <input class="form-control create-customer-input search">
+                                      <input class="form-control search">
                                     </div>
                                   </div>
                                   <div class="form-group">
@@ -601,10 +617,152 @@
         <script type="text/template" class="customer-list-item">
                 <td style="display: block;" class="col-md-offset-1">
                     <div class="customer-container col-md-5">
-                        <div class="customer-name"><%=customer.Company%></div>
-                        <div class="address"><%=customer.Address1%></div> <div class="city" style="display:inline-block;"><%=customer.City%></div>, <div class="state" style="display:inline-block;"><%=customer.State%></div>
+                        <div class="edit-customer btn btn-default" id="customerModal" data-toggle="modal" data-target="#basicModal" name="<%= customer.Company %>">edit</div>
+                        <div class="show company-name"><%=customer.Company%></div>
+                        <hr class="customer-division"/>
+                        <div class="show company-owner">OWNER: <%= customer.FirstName %> <%=customer.LastName%></div>
+                        <div class="show address customer-inline">ADDRESS: <%=customer.Address1%></div> <div class="city customer-inline" style="display:inline-block;"><%=customer.City%></div>, <div class="state customer-inline" style="display:inline-block;"><%=customer.State%></div> <div class="zip customer-inline" style="display:inline-block;"><%=customer.Zip%></div>
+                        <div class="show company-phone">PHONE: <%= customer.Phone.toString().length == 1 ? '' : ('(' + customer.Phone.toString().slice(0, 3) + ')' + customer.Phone.toString().slice(3, 6) + '-' + customer.Phone.toString().slice(6, 10)) %></div>
+                        <div class="show company-email">EMAIL: <%= customer.email %></div>
+                        <div class="show FFL">FFL: <%= customer.FFL %></div>
                     </div>
                 </td>
+        </script>
+
+        <script type="text/template" class="customer-modal-template">
+            <div class="modal customer-modal-container fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" id="myModalLabel"><%= customer.Company %></h4>
+                        </div>
+                        <div class="modal-body">
+                        <h5 class="modal-title" id="myModalLabel">Fill in the fields and click save to update.</h5>
+                        <form class="form-inline form-inline-hidden" role="form">
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Company</div>
+                                <input class="form-control edit-customer-input company-input" placeholder="<%=customer.Company%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">First Name</div>
+                                <input class="form-control edit-customer-input first-name-input" placeholder="<%=customer.FirstName%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Last Name</div>
+                                <input class="form-control edit-customer-input last-name-input" placeholder="<%=customer.LastName%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Phone #</div>
+                                <input maxlength="10" class="form-control edit-customer-input phone-number-input" placeholder="(<%=customer.Phone.toString().slice(0, 3)%>) <%=customer.Phone.toString().slice(3, 6)%>-<%=customer.Phone.toString().slice(6, 10)%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Email</div>
+                                <input type="email" class="form-control edit-customer-input email-input" placeholder="<%=customer.email%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">FFL</div>
+                                <input class="form-control edit-customer-input ffl-input" placeholder="<%=customer.FFL%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Address</div>
+                                <input class="form-control edit-customer-input address-input" placeholder="<%=customer.Address1%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">City</div>
+                                <input class="form-control edit-customer-input city-input" placeholder="<%=customer.City%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon">Zip</div>
+                                <input maxlength="5" class="form-control edit-customer-input zip-input" placeholder="<%=customer.Zip%>">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-addon state-addon">State</div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <select name="state" class="form-control edit-customer-input state-input" placeholder="<%=customer.State%>">
+                                        <option value="AL">AL</option>
+                                        <option value="AK">AK</option>
+                                        <option value="AZ">AZ</option>
+                                        <option value="AR">AR</option>
+                                        <option value="CA">CA</option>
+                                        <option value="CO">CO</option>
+                                        <option value="CT">CT</option>
+                                        <option value="DE">DE</option>
+                                        <option value="DC">DC</option>
+                                        <option value="FL">FL</option>
+                                        <option value="GA">GA</option>
+                                        <option value="HI">HI</option>
+                                        <option value="ID">ID</option>
+                                        <option value="IL">IL</option>
+                                        <option value="IN">IN</option>
+                                        <option value="IA">IA</option>
+                                        <option value="KS">KS</option>
+                                        <option value="KY">KY</option>
+                                        <option value="LA">LA</option>
+                                        <option value="ME">ME</option>
+                                        <option value="MD">MD</option>
+                                        <option value="MA">MA</option>
+                                        <option value="MI">MI</option>
+                                        <option value="MN">MN</option>
+                                        <option value="MS">MS</option>
+                                        <option value="MO">MO</option>
+                                        <option value="MT">MT</option>
+                                        <option value="NE">NE</option>
+                                        <option value="NV">NV</option>
+                                        <option value="NH">NH</option>
+                                        <option value="NJ">NJ</option>
+                                        <option value="NM">NM</option>
+                                        <option value="NY">NY</option>
+                                        <option value="NC">NC</option>
+                                        <option value="ND">ND</option>
+                                        <option value="OH">OH</option>
+                                        <option value="OK">OK</option>
+                                        <option value="OR">OR</option>
+                                        <option value="PA">PA</option>
+                                        <option value="RI">RI</option>
+                                        <option value="SC">SC</option>
+                                        <option value="SD">SD</option>
+                                        <option value="TN">TN</option>
+                                        <option value="TX">TX</option>
+                                        <option value="UT">UT</option>
+                                        <option value="VT">VT</option>
+                                        <option value="VA">VA</option>
+                                        <option value="WA">WA</option>
+                                        <option value="WV">WV</option>
+                                        <option value="WI">WI</option>
+                                        <option value="WY">WY</option>
+                                    </select>
+                                    </div>
+                              </div>
+                            </div>
+                        </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="close-modal" class="btn close-modal btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="save-customer-changes btn btn-primary" name="<%= customer.Company %>">Save changes</button>
+                    </div>
+                </div>
+              </div>
+            </div>
         </script>
 
 
