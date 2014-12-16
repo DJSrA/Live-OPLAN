@@ -18,7 +18,7 @@ var CustomerList = Parse.View.extend ({
 	initialize: function() {
 		if((Parse.User.current() === null) === true){
 			window.location.href = '#';
-			this.swap( new FrontPage() );
+			router.swap( new FrontPage() );
 		} else {
 			$('.app-container').html(this.el);
 			this.phoneValidate();

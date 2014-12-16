@@ -111,10 +111,10 @@ var InventoryList = Parse.View.extend ({
 					UPCList.push(item.attributes.UPC);
 					
 				})
+			console.log(UPCList);
 				return UPCList
 				// console.log(itemInstances.attributes.UPC);
 			})
-			console.log(UPCList);
 			for(i = 0; i < thisManufacturersItems.length; i++){
 			  _.each(thisManufacturersItems[i], function(){
 			  	// console.log(thisManufacturersItems);

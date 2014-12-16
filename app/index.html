@@ -154,7 +154,7 @@
             <ul class="inventory-list-detail-bound"></ul>
         </script>        
         <script type="text/template" class="inventory-list-item-view">
-            <li class="col-md-12"><div class="try product-id col-md-1"></div><div class="try item-type col-md-4"><%=itemType.attributes.Model%></div><div class="try item-description item-type col-md-5"> <%=itemType.attributes.Description%></div><div class="try all-inventory-number number-center col-md-1">10</div><div class="try backorder-number number-center col-md-1">4</div></li>
+            <li class="col-md-12"><div class="try product-id col-md-1"></div><div class="try item-type col-md-4"><%=itemType.attributes.Model%></div><div class="try item-description item-type col-md-5"> <%=itemType.attributes.Description%></div><div class="try all-inventory-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="try backorder-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>
         </script>
         <script type="text/template" class="inventory-list-detail-view">
             <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span></li>
@@ -268,7 +268,7 @@
         </script>   
 
         <script type="text/template" class="order-inventory-list-item-view">
-            <li class="col-md-12"><div class="product-id col-md-1"><button class="order-item" value="<%=itemType.id%>">Add</button></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3"></div><div class="backorder-number number-center col-md-3"></div></li>
+            <li class="col-md-12"><div class="product-id col-md-1"><button class="order-item" value="<%=itemType.id%>">Add</button></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="backorder-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>
         </script>   
 
         <script type="text/template" class="order-inventory-list-detail-view">

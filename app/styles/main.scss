@@ -555,7 +555,7 @@ ul.inventory-list-item-bound li .item-type {
   width: 100%;
 }
 @media print {
-.noPrint {
+.noPrint, .home {
     display:none;
   }
   .app-container{
