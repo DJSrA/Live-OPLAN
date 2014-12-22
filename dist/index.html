@@ -1,7 +1,7 @@
-<!DOCTYPE html><html class=no-js><head><meta charset=utf-8><title>AAPOS</title><meta name=description content=""><meta name=viewport content="width=device-width"><link rel="shortcut icon" href=/6df2b309.favicon.ico><!-- Place favicon.ico and apple-touch-icon.png in the root directory --><link rel=stylesheet href=styles/2f0340a9.main.css><script src=scripts/vendor/1cb556bb.modernizr.js></script><script src=//www.parsecdn.com/js/parse-1.3.1.js></script><body><!--[if lt IE 10]>
+<!DOCTYPE html><html class=no-js><head><meta charset=utf-8><title>AAPOS</title><meta name=description content=""><meta name=viewport content="width=device-width"><link rel="shortcut icon" href=/6df2b309.favicon.ico><!-- Place favicon.ico and apple-touch-icon'.png in the root directory --><link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css><link rel=stylesheet href=styles/cf6cb5b4.main.css><script src=scripts/vendor/1cb556bb.modernizr.js></script><body><!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]--><div class="alan-arms-pos col-xs-12 bg-primary"><a class=home href=#><img src=images/aa-tactical.png></a><nav class="navbar navbar-inverse navbar-static-top" role=navigation><ul class="nav navbar-nav col-md-12"><li class=col-md-2><a class=nav-link href=/#scan>SCAN</a></li><li class=col-md-2><a class=nav-link href=/#inventory>INVENTORY</a></li><li class=col-md-2><a class=nav-link href=/#shelf>SHELF</a></li><li class=col-md-2><a class=nav-link href=/#orders>ORDERS</a></li><li class=col-md-2><a class=nav-link href=/#order>PLACE ORDER</a></li><li class=col-md-2><a class=nav-link href=/#customers>CUSTOMERS</a></li></ul></nav></div><div class="app-container col-xs-10 col-md-offset-1"></div><script type=text/template class=dashboard-view><div class="sign-in-container col-md-4 col-md-offset-4">
-            <img class="col-md-12" src="images/aa-tactical.png">
+        <![endif]--><div class="alan-arms-pos col-xs-12 bg-primary"><a class=home href=#><img src=images/7e3ff5a8.aa-tactical.png></a><nav class="navbar navbar-inverse navbar-static-top" role=navigation><ul class="nav navbar-nav col-md-12"><li class=col-md-2 onclick="router.navigate('scan',{trigger:true})">SCAN</li><li class=col-md-2 onclick="router.navigate('inventory',{trigger:true})">INVENTORY</li><li class=col-md-2 onclick="router.navigate('order',{trigger:true})">PLACE ORDER</li><li class=col-md-2 onclick="router.navigate('customers',{trigger:true})">CUSTOMERS</li><li class=col-md-2 onclick="router.navigate('shelf',{trigger:true})">SHELF</li><li class=col-md-2 onclick="router.navigate('orders',{trigger:true})">ORDERS</li></ul></nav></div><div class="app-container col-xs-10 col-md-offset-1"></div><script type=text/template class=dashboard-view><div class="sign-in-container col-md-4 col-md-offset-4">
+            <img class="col-md-12" src="images/7e3ff5a8.aa-tactical.png">
             <div><h2>Sign In</h2></div>
                 <div class="form-group sign-in-form">
                     <label>Username</label>
@@ -43,7 +43,8 @@
             </div>
             <div class="display-scanned-item"></div>
             <div class="add-here"></div>
-            <div class="scanned-item-counter col-md-12"><p class="col-md-3">Total Items Scanned : </p><p class="scanned-item-total col-md-2">0</p></div>
+            <hr class="odd-hr"/>
+            <div class="scanned-item-counter col-md-3"><p class="col-md-10">Total Items Scanned : </p><p class="scanned-item-total col-md-2">0</p></div>
             <div class="scanned-item-list col-md-12"></div></script><!-- Manual add item template --><script type=text/template class=manual-item-creation-template><div class="new-item-creation col-md-12">
             <hr/>
                 <div class="not-found"></div>
@@ -70,7 +71,6 @@
                 </label>
             <button type="button" class="btn btn-default add-new-item">Submit</button>  
             <button type="button" class="btn btn-info cancel-new-item-creation">Cancel</button>
-            <hr/>
             </div></script><!-- 
 
 
@@ -79,12 +79,13 @@
 
          --><script type=text/template class=inventory-list-view><div class="page-title">INVENTORY</div>
             <div class="manufacturer-names col-md-12">
-              <ul class="manufacturers">
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Silencerco">SILENCERCO</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Surefire">SUREFIRE</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="GEMTECH">GEMTECH</li>
-              </ul>
+                <ul class="manufacturers">
+                  <li class="manufacturer col-md-2  btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
+                  <li class="manufacturer col-md-2  btn-default btn" name="Silencerco">SILENCERCO</li>
+                  <li class="manufacturer col-md-2  btn-default btn" name="Surefire">SUREFIRE</li>
+                  <li class="manufacturer col-md-2  btn-default btn" name="GEMTECH">GEMTECH</li>
+                  <li class="manufacturer col-md-2  btn-default btn" name="OSS Mission">OSS MISSION</li>
+                </ul>
             </div>
             <div class="manufacturer-title col-md-12">
                 <div class='center-number'></div>
@@ -117,7 +118,7 @@
             <ul class="order-list-item-bound"></ul>
             <ul class="order-detail-bound"></ul></script><script type=text/template class=order-list-item-view><li class="order-instance" id="<%=order.id%>">
                 <div>Order : <%=order.attributes.orderNumber%></div>
-                // <div>Placed : <%=customer.createdAt%></div>
+                <div>Placed : <%=customer.createdAt%></div>
                 <div>Customer : <%=customer.attributes.name%></div>
             </li></script><script type=text/template class=order-detail-view><li>
                 <div>Item : <%=itemType.attributes.Model%></div>
@@ -129,11 +130,13 @@
                         Place Order Templates                                                        Place Order Templates
 
 
-         --><script type=text/template class=place-order-view><h2>Place Order</h2>
-            <div class="select-customer"></div></script><script type=text/template class=customer-by-state-view><div id="<%=index%>" class="merchant btn-default"><%=merchant.attributes.Company%></div></script><script type=text/template class=customer-order-view><div><%=merchant.attributes.Company%></div>
-            <div><%=merchant.attributes.Address1%></div>
-            <div><%=merchant.attributes.City%></div>
-            <div><%=merchant.attributes.State%></div>
+         --><script type=text/template class=place-order-view><h2 class="page-title">Place Order</h2>
+            <hr/>
+            <h4 class="page-title order-directions"></h4>
+            <div class="select-customer col-md-12"></div></script><script type=text/template class=customer-by-state-view><div id="<%=index%>" class=" col-md-3 merchant btn-default"><%=merchant.attributes.Company%></div></script><script type=text/template class=customer-order-view><div class="customer-order-detail-top"><%=merchant.attributes.Company%></div>
+            <div class="customer-detail-font display-inline"><%=merchant.attributes.Address1%></div>
+            <div class="customer-detail-font display-inline"><%=merchant.attributes.City%></div>
+            <div class="customer-detail-font customer-order-detail-bottom display-inline"><%=merchant.attributes.State%></div>
             <div class="shopping-cart-bound"></div>
         <div class="app-merchant-bound">
             <div class="accept-merchant btn btn-default">ACCEPT</div>
@@ -141,10 +144,11 @@
         </div></script><script type=text/template class=order-inventory-list-view><div class="page-title">INVENTORY</div>
             <div class="manufacturer-names col-md-12">
               <ul class="manufacturers">
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Silencerco">SILENCERCO</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="Surefire">SUREFIRE</li>
-                <li class="manufacturer col-md-2 col-md-offset-1 btn-default btn" name="GEMTECH">GEMTECH</li>
+                <li class="manufacturer col-md-2  btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
+                <li class="manufacturer col-md-2  btn-default btn" name="Silencerco">SILENCERCO</li>
+                <li class="manufacturer col-md-2  btn-default btn" name="Surefire">SUREFIRE</li>
+                <li class="manufacturer col-md-2  btn-default btn" name="GEMTECH">GEMTECH</li>
+                <li class="manufacturer col-md-2  btn-default btn" name="OSS Mission">OSS MISSION</li>
               </ul>
             </div>
             <div class="manufacturer-title col-md-12">
@@ -163,9 +167,8 @@
 
             </div>
             <div class="seller-info">
-                <h1>☃</h1>
-                <div>Allen Arms</div>
-                <div>Greenville SC</div>
+                <img class="seller-icon" src="images/7e3ff5a8.aa-tactical.png">
+                <div class="bold">Greenville SC</div>
             </div>  
         <div>
         <div class="item-list-bound">
@@ -177,14 +180,14 @@
         <button class="btn update-total">Update</button>
         <button class="btn confirm-list">Confirm</button>
         </div></script><script type=text/template class=confirm-order-item-instance-view><div>
-                <span><%=item.Manufacturer%> <%=item.Model%></span>
+                <span class="item-name  "><%=item.Manufacturer%> <%=item.Model%></span>
                 <span> x</span>
                 <span><input type ="number" id="<%=item.id%>"class="cart-item-instance" value="<%=item.quan%>"></span>
                 <span> <%=item.DealerPrice%> </span>
                 <span>=<span class="total-item-cost"><%= (parseInt(item.DealerPrice.replace(/\s+/g, '').substr(1)))*(item.quan) %></span></span>
-            </div></script><script type=text/template class=update-order-total-view><span><%=sum%></span></script><!-- FINAL ORDER TEMPLATE                                                                               FINAL ORDER TEMPLATE --><script type=text/template class=final-order-instance-view><div class="final-order">
+            </div></script><script type=text/template class=update-order-total-view><div class="col-md-5 total-div">TOTAL</div><div class="sum-div col-md-7"><span><%=sum%></span></div></script><!-- FINAL ORDER TEMPLATE                                                                               FINAL ORDER TEMPLATE --><script type=text/template class=final-order-instance-view><div class="final-order">
         <div class="order-heading">
-            <img class="aa-tactical"src="images/aa-tactical.png">
+            <img class="aa-tactical"src="images/7e3ff5a8.aa-tactical.png">
             <ul class="seller-info">
                 <li>Allen Arms Indoor Range</li>
                 <li>1210 pointset Highway</li>
@@ -227,7 +230,7 @@
             </ul>
             <ul class="right-info">
                 <li>Invoice Num: <%=order.id%></li>
-                // <li>Invoice Date: <%=order.createdAt%></li>
+                <li>Invoice Date: <%=order.createdAt%></li>
             </ul>
         </div></script><script type=text/template class=customer-info-order-items-template><ul class="ordered-item">
             <li>
@@ -467,7 +470,7 @@
                             <div class="form-group">
                               <div class="input-group">
                                 <div class="input-group-addon">Phone #</div>
-                                <input maxlength="10" class="form-control edit-customer-input phone-number-input" placeholder="(<%=customer.Phone.toString().slice(0, 3)%>) <%=customer.Phone.toString().slice(3, 6)%>-<%=customer.Phone.toString().slice(6, 10)%>">
+                                <input maxlength="10" type="number" class="form-control edit-customer-input edit-phone-number-input" placeholder="(<%=customer.Phone.toString().slice(0, 3)%>) <%=customer.Phone.toString().slice(3, 6)%>-<%=customer.Phone.toString().slice(6, 10)%>">
                               </div>
                             </div>
                             <div class="form-group">
@@ -497,14 +500,15 @@
                             <div class="form-group">
                               <div class="input-group">
                                 <div class="input-group-addon">Zip</div>
-                                <input maxlength="5" class="form-control edit-customer-input zip-input" placeholder="<%=customer.Zip%>">
+                                <input maxlength="5" type="number" class="form-control edit-customer-input edit-zip-input" placeholder="<%=customer.Zip%>">
                               </div>
                             </div>
                             <div class="form-group">
                               <div class="input-group">
                                 <div class="input-group-addon state-addon">State</div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <select name="state" class="form-control edit-customer-input state-input" placeholder="<%=customer.State%>">
+                                    <select name="state" class="form-control edit-customer-input state-input">
+                                        <option val=""></option>
                                         <option value="AL">AL</option>
                                         <option value="AK">AK</option>
                                         <option value="AZ">AZ</option>
@@ -568,12 +572,12 @@
                     </div>
                 </div>
               </div>
-            </div></script><script src=scripts/921203ac.vendor.js></script><!-- Google Analytics: change UA-XXXXX-X to be your site's ID. --><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            </div></script><script src=scripts/921203ac.vendor.js></script><script src=//www.parsecdn.com/js/parse-1.3.2.min.js></script><!-- Google Analytics: change UA-XXXXX-X to be your site's ID. --><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
             e=o.createElement(i);r=o.getElementsByTagName(i)[0];
             e.src='//www.google-analytics.com/analytics.js';
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');</script><script src=scripts/6b5da0e8.plugins.js></script><script src=scripts/7b5e4421.main.js></script><!-- <div id="contacts">
+            ga('create','UA-XXXXX-X');ga('send','pageview');</script><script src=scripts/6b5da0e8.plugins.js></script><script src=//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js><script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js></script><script src=scripts/85d4bed7.main.js></script><!-- <div id="contacts">
   <table>
     <thead>
       <tr>

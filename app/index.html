@@ -6,19 +6,22 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <link rel="shortcut icon" href="/favicon.ico">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- Place favicon.ico and apple-touch-icon'.png in the root directory -->
         <!-- build:css styles/vendor.css -->
         <!-- bower:css -->
         <!-- endbower -->
         <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+
+        <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
+
         <!-- build:js scripts/vendor/modernizr.js -->
         <script src="../bower_components/modernizr/modernizr.js"></script>
         <!-- endbuild -->
-        <script src="//www.parsecdn.com/js/parse-1.3.1.js"></script>
 
     </head>
     <body>
@@ -29,12 +32,12 @@
         <div class="alan-arms-pos col-xs-12 bg-primary"><a class="home" href="#"><img src="images/aa-tactical.png"></a>
         <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
             <ul class="nav navbar-nav col-md-12">
-                <li class="col-md-2 "><a class="nav-link" href="/#scan">SCAN</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#inventory">INVENTORY</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#order">PLACE ORDER</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#customers">CUSTOMERS</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#shelf">SHELF</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#orders">ORDERS</a></li>
+                <li class="col-md-2 " onClick="router.navigate('scan',{trigger:true})">SCAN</a></li>
+                <li class="col-md-2 " onClick="router.navigate('inventory',{trigger:true})">INVENTORY</li>
+                <li class="col-md-2 " onClick="router.navigate('order',{trigger:true})">PLACE ORDER</li>
+                <li class="col-md-2 " onClick="router.navigate('customers',{trigger:true})">CUSTOMERS</li>
+                <li class="col-md-2 " onClick="router.navigate('shelf',{trigger:true})">SHELF</li>
+                <li class="col-md-2 " onClick="router.navigate('orders',{trigger:true})">ORDERS</li>
             </ul>
         </nav>
         </div>
@@ -777,6 +780,8 @@
         <!-- endbower -->
         <!-- endbuild -->
 
+        <script src="//www.parsecdn.com/js/parse-1.3.2.min.js"></script>
+
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -802,9 +807,10 @@
         <script src="../bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tab.js"></script>
         <!-- endbuild -->
 
-        <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="//www.parsecdn.com/js/parse-1.3.1.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+        <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/attach-form3-view.js"></script>
         <script src="scripts/backorder-list-view.js"></script>
         <script src="scripts/customer-list-view.js"></script>
@@ -820,7 +826,6 @@
         <script src="scripts/confirm-order-view.js"></script>
         <script src="scripts/final-order-view.js"></script>
         <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         
         <script src="scripts/router.js"></script>
         <script src="scripts/main.js"></script>
