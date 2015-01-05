@@ -142,11 +142,6 @@
             <div class="page-title">INVENTORY</div>
             <div class="manufacturer-names col-md-12">
                 <ul class="manufacturers">
-                  <li class="manufacturer col-md-2  btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
-                  <li class="manufacturer col-md-2  btn-default btn" name="Silencerco">SILENCERCO</li>
-                  <li class="manufacturer col-md-2  btn-default btn" name="Surefire">SUREFIRE</li>
-                  <li class="manufacturer col-md-2  btn-default btn" name="GEMTECH">GEMTECH</li>
-                  <li class="manufacturer col-md-2  btn-default btn" name="OSS Mission">OSS MISSION</li>
                 </ul>
             </div>
             <div class="manufacturer-title col-md-12">
@@ -274,7 +269,7 @@
         </script>   
 
         <script type="text/template" class="order-inventory-list-item-view">
-            <li class="col-md-12"><div class="product-id col-md-1"><button class="order-item" value="<%=itemType.id%>">Add</button></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="backorder-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>
+            <li class="col-md-12"><div class="product-id col-md-1"><button class="order-item" value="<%=itemType.id%>"><%=itemType.attributes.DealerPrice%></button></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="backorder-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>
         </script>   
 
         <script type="text/template" class="order-inventory-list-detail-view">
@@ -318,7 +313,7 @@
                 <span> x</span>
                 <span><input type ="number" id="<%=item.id%>"class="cart-item-instance" value="<%=item.quan%>"></span>
                 <span> <%=item.DealerPrice%> </span>
-                <span>=<span class="total-item-cost"><%= (parseInt(item.DealerPrice.replace(/\s+/g, '').substr(1)))*(item.quan) %></span></span>
+                <span>=<span class="total-item-cost"><%= (parseInt(item.DealerPrice.replace(/\s+/g, '').replace(/\,/g,'').substr(1)))*(item.quan) %></span></span>
             </div>
         </script>          
 
@@ -379,8 +374,8 @@
                 <%}%>
             </ul>
             <ul class="right-info">
-                <li>Invoice Num: <%=order.id%></li>
-                <li>Invoice Date: <%=order.createdAt%></li>
+                <li>Invoice Num: <%=order.createdAt.getFullYear()%>-<%=order.attributes.orderNumber%></li>
+                <li>Invoice Date: <%=order.createdAt.getDate()%>/<%=order.createdAt.getMonth()%>/<%=order.createdAt.getFullYear()%></li>
             </ul>
         </div>
         </script>  

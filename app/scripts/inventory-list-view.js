@@ -39,6 +39,24 @@ var InventoryList = Parse.View.extend ({
 	render: function() {
 		$(this.el).append(this.template());
 		this.getItemTypes();
+
+		var Manufacturers = [];
+		var query = new Parse.Query('itemType');
+		query.limit(1500);
+		query.find(function(manufacturers){
+		manufacturers.forEach(function(manufacturer){
+		var newManufacturer = '';
+		newManufacturer = manufacturer.attributes.Manufacturer;
+		Manufacturers.push(newManufacturer);
+		})
+		var uniqueManufacturers = [];
+		$.each(Manufacturers, function(i, el){
+		    if($.inArray(el, uniqueManufacturers) === -1) uniqueManufacturers.push(el);
+		});
+		uniqueManufacturers.forEach(function(manufacturer){
+		$('.manufacturers').append("<li class='manufacturer col-md-2 btn-default btn' name='" + manufacturer + "'>" + manufacturer + "</li");
+		})
+		})
 	},
 
 	getItemTypes: function() {

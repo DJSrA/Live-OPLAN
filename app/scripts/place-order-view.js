@@ -100,6 +100,7 @@ var PlaceOrder = Parse.View.extend ({
 	},
 
 	swapConfirmView: function() {
+		// console.log(this.shoppingCart.cart);
 		router.swap( new ConfirmOrderView({ customer: this.shoppingCart.customer, items: this.shoppingCart.cart }) );
 	},
 
