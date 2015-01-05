@@ -15,7 +15,7 @@ var OrderList = Parse.View.extend ({
 		} else {
 			$('.app-container').html(this.el);
 			// console.log('OrderList')
-			this.render();
+			// this.render();
 		}
 	},
 
