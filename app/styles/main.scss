@@ -2,6 +2,15 @@ html {
   background: #F4F4F4;
 }
 
+a {
+  outline: none;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  text-decoration: none;
+}
+
 body {
   margin: 0;
   padding: 0;

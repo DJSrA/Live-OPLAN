@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 html {
   background: #F4F4F4; }
 
@@ -476,3 +477,11 @@ ul.inventory-list-item-bound li .item-type {
 
   .in-stock-items {
     padding-bottom: 20px; } }
+=======
+.blue-submit {
+  height: 20px;
+  width: 120px;
+  border-radius: 2px;
+  border: solid 1px blue;
+  background-color: cornflowerblue; }
+>>>>>>> Stashed changes

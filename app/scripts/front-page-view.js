@@ -2,6 +2,7 @@ var FrontPage = Parse.View.extend ({
 
 	events: {
 		'click .submit-sign-in' : 'signIn',
+		'keydown .password-input' : 'enterSignIn',
 	},
 
 	template: _.template($('.dashboard-view').text()),
@@ -27,6 +28,8 @@ var FrontPage = Parse.View.extend ({
 		Parse.User.logIn(username, password, {
 		  success: function(user){
 		  	console.log('logged in');
+		  	window.location.href = window.location.origin + '/#scan'
+		  	router.swap( new ScanItem() );
 		  },
 		  error: function(user, error){
 		  	$('.username-input').val('');
@@ -35,6 +38,32 @@ var FrontPage = Parse.View.extend ({
 		    alert("Incorrect. Please try again");
 		  }
 		});
+	},
+
+	enterSignIn: function(e){
+		var key = e.which
+		if(key == 13) {
+			console.log('enter');
+			var username = $('.username-input').val();
+			var password = $('.password-input').val();
+
+			var that = this;
+
+			// This is just a basic parse login function
+			Parse.User.logIn(username, password, {
+			  success: function(user){
+			  	console.log('logged in');
+			  	window.location.href = window.location.origin + '/#scan'
+			  	router.swap( new ScanItem() );
+			  },
+			  error: function(user, error){
+			  	$('.username-input').val('');
+			  	$('.password-input').val('');
+			  	$('.username-input').focus();
+			    alert("Incorrect. Please try again");
+			  }
+			});
+		}
 	}
 
 
