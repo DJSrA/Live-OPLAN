@@ -206,6 +206,9 @@ ul.inventory-list-item-bound li .item-type {
   font-size: 20px;
   font-weight: bold; }
 
+.bold {
+  font-weight: bold; }
+
 .manufacturer-names {
   margin: 15px 0;
   height: 40px; }
@@ -262,7 +265,12 @@ ul.inventory-list-item-bound li .item-type {
   background: #F2F2F2; }
 
 .merchant-info {
-  float: left; }
+  float: left;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-bottom: 20px; }
 
 .merchant {
   height: 40px;
@@ -463,6 +471,43 @@ ul.inventory-list-item-bound li .item-type {
   float: left;
   clear: both;
   width: 100%; }
+
+/*CART*/
+.cart-total {
+  width: 150px;
+  height: 40px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px; }
+
+.total-div {
+  height: 100%;
+  padding: 10px;
+  border-right: 1px solid #ccc;
+  background: #ECECEC; }
+
+.sum-div {
+  height: 100%;
+  padding-top: 10px; }
+
+.seller-info {
+  text-align: center;
+  font-size: 16px; }
+
+.seller-icon {
+  width: 200px;
+  margin-bottom: 15px; }
+
+.item-name {
+  font-size: 17px;
+  min-width: 260px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 15px; }
+
+.price-split {
+  width: auto;
+  padding: 0 20px; }
 
 @media print {
   .noPrint, .home {

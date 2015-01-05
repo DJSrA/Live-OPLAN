@@ -28,8 +28,7 @@ var FrontPage = Parse.View.extend ({
 		Parse.User.logIn(username, password, {
 		  success: function(user){
 		  	console.log('logged in');
-		  	window.location.href = window.location.origin + '/#scan'
-		  	router.swap( new ScanItem() );
+		  	router.swap(new ScanItem())
 		  },
 		  error: function(user, error){
 		  	$('.username-input').val('');
