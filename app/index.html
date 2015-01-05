@@ -29,7 +29,7 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="alan-arms-pos col-xs-12 bg-primary"><a class="home" href="#"><img src="images/aa-tactical.png"></a>
+        <div class="alan-arms-pos col-xs-12 bg-primary"><a class="home" href="#"><img src="http://imgur.com/lwT9J0X"></a>
         <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
             <ul class="nav navbar-nav col-md-12">
                 <li class="col-md-2 " onClick="router.navigate('scan',{trigger:true})">SCAN</a></li>
@@ -48,7 +48,7 @@
 
         <script type="text/template" class="dashboard-view">
             <div class="sign-in-container col-md-4 col-md-offset-4">
-            <img class="col-md-12" src="images/aa-tactical.png">
+            <img class="col-md-12" src="http://imgur.com/lwT9J0X">
             <div><h2>Sign In</h2></div>
                 <div class="form-group sign-in-form">
                     <label>Username</label>
@@ -147,12 +147,12 @@
             <div class="manufacturer-title col-md-12">
                 <div class='center-number'></div>
             </div>
-            <div class="in-stock col-md-1 number-center">IN STOCK</div><div class="col-md-5 number-center">ITEM TYPE</div><div class="number-center col-md-2"># IN INVENTORY</div><div class="number-center col-md-2"> # ON BACKORDER</div>
+            <div class="col-md-10 inventory-section">ITEM TYPE</div><div class="inventory-section col-md-1">INVENTORY</div><div class="inventory-section col-md-1">BACKORDER</div>
             <ul class="inventory-list-item-bound col-xs-12"></ul>
             <ul class="inventory-list-detail-bound"></ul>
         </script>        
         <script type="text/template" class="inventory-list-item-view">
-            <li class="col-md-12"><div class="try product-id col-md-1"></div><div class="try item-type col-md-4"><%=itemType.attributes.Model%></div><div class="try item-description item-type col-md-5"> <%=itemType.attributes.Description%></div><div class="try all-inventory-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="try backorder-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>
+            <li class="col-md-12"><div class="try product-id col-md-1"></div><div class="try item-type col-md-4"><%=itemType.attributes.Model%></div><div class="try item-description item-type col-md-5"> <%=itemType.attributes.Description%></div><div class="try all-inventory-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="try backorder-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>            
         </script>
         <script type="text/template" class="inventory-list-detail-view">
             <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span></li>
@@ -263,7 +263,7 @@
             <div class="manufacturer-title col-md-12">
                 <div class='center-number'></div>
             </div>
-            <div class="in-stock col-md-1 number-center"></div><div class="col-md-5 number-center">ITEM TYPE</div><div class="number-center col-md-3"># IN INVENTORY</div><div class="number-center col-md-3"> # ON BACKORDER</div>
+            <div class="col-md-6 inventory-section">ITEM TYPE</div><div class="inventory-section col-md-3">INVENTORY</div><div class="inventory-section col-md-3">BACKORDER</div>
             <ul class="inventory-list-item-bound col-xs-12"></ul>
             <ul class="inventory-list-detail-bound"></ul>
         </script>   
@@ -326,7 +326,7 @@
         <script type="text/template" class="final-order-instance-view">
         <div class="final-order">
         <div class="order-heading">
-            <img class="aa-tactical"src="images/aa-tactical.png">
+            <img class="aa-tactical"src="http://imgur.com/lwT9J0X">
             <ul class="seller-info">
                 <li>Allen Arms Indoor Range</li>
                 <li>1210 pointset Highway</li>
