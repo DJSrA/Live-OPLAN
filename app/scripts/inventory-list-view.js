@@ -19,6 +19,8 @@ var InventoryList = Parse.View.extend ({
 	events: {
 		'click span.item-type' : 'itemTypeDetail',
 		'click .manufacturer' : 'activeManufacturer',
+		'click .full-inventory' : 'showFullInventory',
+		'click .full-backorders' : 'showBackorderList',
 	},
 
 	template: _.template($('.inventory-list-view').text()),
@@ -147,6 +149,14 @@ var InventoryList = Parse.View.extend ({
 		// // this.setAppropriateHeight();
 	},
 
+	showFullInventory: function() {
+		router.navigate('inventory/fullstock', {trigger:true});
+	},	
+
+	showBackorderList: function() {
+		router.navigate('inventory/backorders', {trigger:true});
+	},
+
 
 	// setAppropriateHeight: function () {
 	// 	$('li').forEach(function(){
@@ -174,6 +184,131 @@ var InventoryList = Parse.View.extend ({
 
 
 });
+
+var FullStockList = Parse.View.extend({
+
+	events: {
+		'click .delete-item' : 'deleteItem',
+	},
+
+	template: _.template($('.full-stock-list-template').text()),
+	instanceTemplate: _.template($('.stock-list-instance-template').text()),
+
+	initialize: function(e) {
+		if((Parse.User.current() === null) === true){
+			window.location.href = '#';
+			router.swap( new FrontPage() );
+		} else {
+			$('.app-container').html(this.el);
+			// console.log('InventoryList')
+			this.render();
+		}
+	},
+
+	render: function() {
+		$(this.el).append(this.template());
+		this.getItems();
+	},
+
+	getItems: function() {
+		var that = this;
+		var query = new Parse.Query('itemInstance');
+		// query.include('itemType');
+		query.equalTo('itemInstanceCode', 0);
+
+		query.each(function(item){
+			$('.inventory-list-bound').append(that.instanceTemplate({ item: item.attributes, model: item}));
+		})
+	},
+
+	deleteItem: function(e) {
+
+		var objId = $(e.currentTarget).attr('id');
+
+		var query = new Parse.Query('itemInstance');
+		query.equalTo('objectId', $(e.currentTarget).attr('id') );
+		query.first({
+			success: function(obj) {
+				obj.destroy({
+					success:function(e){
+						$('.' + objId).remove();
+					},
+					error:function(error){
+						console.log(error)
+					}
+				})
+			},
+			error: function(error) {
+				console.log(error)
+			}
+ 		})
+	},
+
+
+})
+
+var FullBackorderList = Parse.View.extend({
+
+	events: {
+		'click .delete-item' : 'deleteItem',
+	},
+
+	template: _.template($('.full-backorder-list-template').text()),
+	instanceTemplate: _.template($('.backorder-list-instance-template').text()),
+
+	initialize: function(e) {
+		if((Parse.User.current() === null) === true){
+			window.location.href = '#';
+			router.swap( new FrontPage() );
+		} else {
+			$('.app-container').html(this.el);
+			// console.log('InventoryList')
+			this.render();
+		}
+	},
+
+	render: function() {
+		$(this.el).append(this.template());
+		this.getItems();
+	},
+
+	getItems: function() {
+		var that = this;
+		var query = new Parse.Query('backOrder');
+		// query.include('itemType');
+		// query.equalTo('itemInstanceCode', 0);
+
+		query.each(function(item){
+			$('.backorder-list-bound').append(that.instanceTemplate({ item: item.attributes, model: item}));
+		})
+	},
+
+	deleteItem: function(e) {
+
+		var objId = $(e.currentTarget).attr('id');
+
+		var query = new Parse.Query('itemInstance');
+		query.equalTo('objectId', $(e.currentTarget).attr('id') );
+		query.include('order');
+		query.first({
+			success: function(obj) {
+				obj.destroy({
+					success:function(e){
+						$('.' + objId).remove();
+					},
+					error:function(error){
+						console.log(error)
+					}
+				})
+			},
+			error: function(error) {
+				console.log(error)
+			}
+ 		})
+	},
+
+
+})
 
 // this is a list of all items that are not attached to a backorder or a shelf item, so all items with no item instance code.
 // these are all items instances that have been scanned in and not sold. there should be a list of all item types that have item

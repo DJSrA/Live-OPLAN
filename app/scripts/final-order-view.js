@@ -3,6 +3,7 @@ var OrderInstanceView = Parse.View.extend ({
 	events: {
 		'click .print-sales' : 'printSales',
 		'click .print-invoice' : 'printInvoice',
+		'click .void-invoice-item' : 'voidInvoiceItem'
 	},
 
 	template: _.template($('.final-order-instance-view').text()),
@@ -144,6 +145,10 @@ var OrderInstanceView = Parse.View.extend ({
 
 	printInvoice: function() {
 		window.print()
+	},
+
+	voidInvoiceItem: function(e) {
+		console.log($(e.currentTarget).attr('id'))
 	},
 
 
