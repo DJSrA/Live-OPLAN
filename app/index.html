@@ -29,15 +29,15 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="alan-arms-pos col-xs-12 bg-primary"><a class="home" href="#"><img src="http://imgur.com/lwT9J0X.png"></a>
+        <div class="alan-arms-pos col-xs-12 bg-primary"><div class="logo-container"><a class="home" href="#"><img src="http://imgur.com/lwT9J0X.png"></a></div>
         <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
             <ul class="nav navbar-nav col-md-12">
-                <li class="col-md-2 " class="nav-link" id="scan" onClick="router.navigate('scan',{trigger:true})">SCAN</a></li>
-                <li class="col-md-2 " class="nav-link" id="inventory" onClick="router.navigate('inventory',{trigger:true})">INVENTORY</li>
-                <li class="col-md-2 " class="nav-link" id="shelf" onClick="router.navigate('order',{trigger:true})">PLACE ORDER</li>
-                <li class="col-md-2 " class="nav-link" id="orders" onClick="router.navigate('customers',{trigger:true})">CUSTOMERS</li>
-                <li class="col-md-2 " class="nav-link" id="order" onClick="router.navigate('shelf',{trigger:true})">SHELF</li>
-                <li class="col-md-2 " class="nav-link" id="customers" onClick="router.navigate('orders',{trigger:true})">ORDERS</li>
+                <li class="col-md-2 nav-link" id="scan" onClick="router.navigate('scan',{trigger:true})">SCAN</a></li>
+                <li class="col-md-2 nav-link" id="inventory" onClick="router.navigate('inventory',{trigger:true})">INVENTORY</li>
+                <li class="col-md-2 nav-link" id="order" onClick="router.navigate('order',{trigger:true})">PLACE ORDER</li>
+                <li class="col-md-2 nav-link" id="customers" onClick="router.navigate('customers',{trigger:true})">CUSTOMERS</li>
+                <li class="col-md-2 nav-link" id="shelf" onClick="router.navigate('shelf',{trigger:true})">SHELF</li>
+                <li class="col-md-2 nav-link" id="orders" onClick="router.navigate('orders',{trigger:true})">ORDERS</li>
             </ul>
         </nav>
         </div>
@@ -73,7 +73,7 @@
 
          -->
         <script type="text/template" class="scan-item-view">
-            <div class="scanning col-md-4 col-md-offset-4">
+            <div class="scanning col-md-3">
             <button type="button" class="start-scanning btn btn-warning">START SCANNING</button>
             <div class="form-group">
                 <label>Item UPC</label>
@@ -90,45 +90,69 @@
                     <button type="button" class="btn btn-info add-item">ADD +</button>
                 </form>
             </div>
-            <div class="col-md-4 scanner-setup">
-                <button class="scanner-setup-button btn btn-default">Scanner Setup</button>
-            </div>
             <div class="display-scanned-item"></div>
-            <div class="add-here"></div>
-            <hr class="odd-hr"/>
-            <div class="scanned-item-counter col-md-3"><p class="col-md-10">Total Items Scanned : </p><p class="scanned-item-total col-md-2">0</p></div>
-            <div class="scanned-item-list col-md-12"></div>
+            <div class="right-content col-md-9">
+                <div class="add-here"></div>
+                <div class="scanned-item-counter col-md-5"><p class="col-md-10">Total Items Scanned : </p><p class="scanned-item-total col-md-2">0</p></div>
+                <div class="scanned-item-list col-md-12"></div>
+            </div>
         </script>
         
         <!-- Manual add item template -->
 
         <script type="text/template" class="manual-item-creation-template">
             <div class="new-item-creation col-md-12">
-            <hr/>
-                <div class="not-found"></div>
-                <label><h4>Please Fill In All Fields Below:</h4>
+                <ul class="new-item-nav col-md-11">
+                  <li class="standard-item-creation btn-info">STANDARD</li>
+                  <li class="generic-item-creation">GENERIC</li>
+                  <button type="button" class="btn btn-default no-upc">UPC ON</button> 
+                  <div class="enable-upc"></div>
+                </ul>
+
                 <div class="form-group new-item-form">
                     <label class="manual-input-title col-md-2">Manufacturer</label>
-                    <input class="col-md-3 manual-add-item manufacturer"></input>
+                    <input class="col-md-3 manual-add-item standard manufacturer"></input>
                     <label class="manual-input-title col-md-2">Caliber</label>
-                    <input class="col-md-3 manual-add-item caliber"></input>
+                    <input class="col-md-3 manual-add-item standard caliber"></input>
                     <label class="manual-input-title col-md-2">Cost</label>
-                    <input class="col-md-3 manual-add-item cost"></input>
+                    <input class="col-md-3 manual-add-item standard cost"></input>
                     <label class="manual-input-title col-md-2">Model</label>
-                    <input class="col-md-3 manual-add-item model"></input>
+                    <input class="col-md-3 manual-add-item standard model"></input>
                     <label class="manual-input-title col-md-2">Dealer Price</label>
-                    <input class="col-md-3 manual-add-item dealer-price"></input>
+                    <input class="col-md-3 manual-add-item standard dealer-price"></input>
                     <label class="manual-input-title col-md-2">UPC</label>
-                    <input class="col-md-3 manual-add-item upc"></input>
+                    <input class="col-md-3 manual-add-item standard upc"></input>
                     <label class="manual-input-title col-md-2">MSRP</label>
-                    <input class="col-md-3 manual-add-item msrp"></input>
+                    <input class="col-md-3 manual-add-item standard msrp"></input>
+                    <span class="col-md-5 filler-input"></span>
                     <label class="manual-input-title col-md-2">Description</label>
-                    <textarea class="col-md-3 manual-add-item description"></textarea>
+                    <textarea class="col-md-3 manual-add-item standard description"></textarea>
+                </div>
+                <div class="form-group generic-new-item-form"> 
+                    <label class="manual-input-title col-md-2">Manufacturer</label>
+                    <input class="col-md-3 manual-add-item generic generic-manufacturer"></input>
+                    <label class="manual-input-title col-md-2">Caliber</label>
+                    <input class="col-md-3 manual-add-item generic generic-caliber"></input>
+                    <label class="manual-input-title col-md-2">Cost</label>
+                    <input class="col-md-3 manual-add-item generic generic-cost"></input>
+                    <label class="manual-input-title col-md-2">Model</label>
+                    <input class="col-md-3 manual-add-item generic generic-model"></input>
+                    <label class="manual-input-title col-md-2">Dealer Price</label>
+                    <input class="col-md-3 manual-add-item generic generic-dealer-price"></input>
+                    <label class="manual-input-title col-md-2">UPC</label>
+                    <input class="col-md-3 manual-add-item generic generic-upc"></input>
+                    <label class="manual-input-title col-md-2">MSRP</label>
+                    <input class="col-md-3 manual-add-item generic generic-msrp"></input>
+                    <label class="manual-input-title col-md-2">AMOUNT</label>
+                    <input type="number" class="col-md-3 manual-add-item generic amount" placeholder="#"></input>
+                    <label class="manual-input-title col-md-2">Description</label>
+                    <textarea class="col-md-3 manual-add-item generic generic-description"></textarea>
 
                 </div>
-                </label>
-            <button type="button" class="btn btn-default add-new-item">Submit</button>  
-            <button type="button" class="btn btn-info cancel-new-item-creation">Cancel</button>
+                <div class="col-md-12 creation-button-holder">
+                    <button type="button" class="btn btn-default add-new-item">Submit</button>  
+                    <button type="button" class="btn btn-info cancel-new-item-creation">Cancel</button>
+                </div>
             </div>
         </script>
         <!-- 
@@ -200,7 +224,7 @@
 
          -->
         <script type="text/template" class="order-list-view">
-            <div>order List View</div>
+            <div class="page-title">Orders List</div>
             <ul class="order-list-item-bound"></ul>
             <ul class="order-detail-bound"></ul>
         </script>        
@@ -209,7 +233,7 @@
             <li class="order-instance" id="<%=order.id%>">
                 <div>Order : <%=order.attributes.orderNumber%></div>
                 <div>Placed : <%=customer.createdAt%></div>
-                <div>Customer : <%=customer.attributes.name%></div>
+                <div>Customer : <%=customer.attributes["Company"]%></div>
             </li>
         </script>        
 

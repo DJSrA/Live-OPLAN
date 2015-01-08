@@ -17,8 +17,9 @@ var OrderList = Parse.View.extend ({
 			var thisLocation = window.location.hash.substring(1).toString();
 			_.each($('.nav-link'), function(e){if(e.id == thisLocation){$(e).css('color','#ffffff')}else{$(e).css('color', '#9d9d9d')}});
 			$('.app-container').html(this.el);
+			this.getOrders();
 			// console.log('OrderList')
-			// this.render();
+			this.render();
 		}
 	},
 
