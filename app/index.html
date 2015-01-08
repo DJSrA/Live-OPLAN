@@ -163,7 +163,10 @@
 
          -->
         <script type="text/template" class="inventory-list-view">
+
             <div class="page-title">INVENTORY</div>
+         <button class="full-inventory btn-success btn">Full Stock</button>
+         <button class="full-backorders btn-danger btn">All Backorders</button>
             <div class="manufacturer-names col-md-12">
                 <ul class="manufacturers">
                 </ul>
@@ -176,10 +179,28 @@
             <ul class="inventory-list-detail-bound"></ul>
         </script>        
         <script type="text/template" class="inventory-list-item-view">
-            <li class="col-md-12"><div class="try product-id col-md-1"></div><div class="try item-type col-md-4"><%=itemType.attributes.Model%></div><div class="try item-description item-type col-md-5"> <%=itemType.attributes.Description%></div><div class="try all-inventory-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="try backorder-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>
+            <li class="col-md-12"><div class="try product-id col-md-1"></div><div class="try item-type col-md-4"><%=itemType.attributes.Model%></div><div class="try item-description item-type col-md-5"> <%=itemType.attributes.Description%></div><div class="try all-inventory-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="try backorder-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>            
         </script>
         <script type="text/template" class="inventory-list-detail-view">
             <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span></li>
+        </script>        
+
+        <script type="text/template" class="full-stock-list-template">
+            <h2>All Inventory In Stock</h2>
+            <ul class="inventory-list-bound"></ul>
+
+        </script>        
+        <script type="text/template" class="stock-list-instance-template">
+            <li class="<%=model.id%>"><span><%=item.Model%></span>, <span><%=item.serialNumber%></span> <button id="<%=model.id%>" class="delete-item btn btn-danger">Delete</button></li>
+        </script>        
+
+        <script type="text/template" class="full-backorder-list-template">
+            <h2>Full Backorder List</h2>
+            <ul class="backorder-list-bound"></ul>
+
+        </script>        
+        <script type="text/template" class="backorder-list-instance-template">
+            <li class="<%=model.id%>"><span><%=item.itemType%></span><button id="<%=model.id%>" class="delete-item btn btn-danger">Delete</button></li>
         </script>
 
         <!-- 
@@ -231,11 +252,12 @@
 
         <script type="text/template" class="order-list-item-view">
             <li class="order-instance" id="<%=order.id%>">
-                <div>Order : <%=order.attributes.orderNumber%></div>
-                <div>Placed : <%=customer.createdAt%></div>
                 <div>Customer : <%=customer.attributes["Company"]%></div>
+                <div>Placed : <%=customer.createdAt%></div>
+                <button class="btn" onClick="router.navigate('order/<%=order.id%>',{trigger:true})">Order# : <%=order.attributes.orderNumber%></button>
             </li>
-        </script>        
+        </script>   
+
 
         <script type="text/template" class="order-detail-view">
             <li>
@@ -253,9 +275,14 @@
          -->
         <script type="text/template" class="place-order-view">
             <h2 class="page-title">Place Order</h2>
-            <hr/>
+
             <h4 class="page-title order-directions"></h4>
             <div class="select-customer col-md-12"></div>
+                        <div class="form-group float-right">
+              <div class="input-group">
+                  <div class="search-by-state"><button class="btn btn-default" onClick="router.navigate('customers',{trigger:true})">Search List</button></div>
+              </div>
+          </div>
             
         </script>
         <script type="text/template" class="customer-by-state-view">
@@ -271,9 +298,11 @@
             <div class="accept-merchant btn btn-default">ACCEPT</div>
             <div class="cancel-merchant btn btn-default">CANCEL</div>
         </div>
+
         </script> 
 
         <script type="text/template" class="order-inventory-list-view">
+        <button class="confirm-order-button">Check Out</button>
             <div class="page-title">INVENTORY</div>
             <div class="manufacturer-names col-md-12">
               <ul class="manufacturers">
@@ -368,6 +397,8 @@
 
         <button class="btn btn-info print-sales noPrint">Print Sales Order</button>
         <button class="btn btn-info print-invoice noPrint">Print Invoice</button>
+        <div style="height:100px;"></div>
+        <button class="btn btn-danger void-invoice noPrint">Void Invoice</button>
 
         </div>
 
@@ -399,13 +430,14 @@
             </ul>
             <ul class="right-info">
                 <li>Invoice Num: <%=order.createdAt.getFullYear()%>-<%=order.attributes.orderNumber%></li>
-                <li>Invoice Date: <%=order.createdAt.getDate()%>/<%=order.createdAt.getMonth()%>/<%=order.createdAt.getFullYear()%></li>
+                <li>Invoice Date: <%=(order.createdAt.getMonth()+1)%>/<%=order.createdAt.getDate()%>/<%=order.createdAt.getFullYear()%></li>
             </ul>
         </div>
         </script>  
 
         <script type="text/template" class="customer-info-order-items-template">
             <ul class="ordered-item">
+            <button class="btn-danger btn void-invoice-item noPrint">x</button>
             <li>
                 <span><%= type.get('Manufacturer') %></span>
                 <span> <%= type.get('Model') %></span>
@@ -420,10 +452,12 @@
                 <span class="item-price"><%=type.get('DealerPrice')%></span>
             </li>
             </ul>
+
         </script>        
 
         <script type="text/template" class="customer-info-backorder-template">
         <ul class="backordered-item">
+        <button class="btn-danger btn void-invoice-item noPrint">x</button>
             <li>
                 <span><%= type.get('Manufacturer') %></span>
                 <span> <%= type.get('Model') %></span>
@@ -491,17 +525,17 @@
                                   </div>
                                   <div class="form-group">
                                       <div class="input-group">
-                                        <button class="btn btn-primary reset-search">RESET SEARCH</button>
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <div class="input-group">
                                           <div class="create-new-customer"><button class="btn btn-info create-customer">+ ADD CUSTOMER</button></div>
                                       </div>
                                   </div>
                                   <div class="form-group float-right">
                                       <div class="input-group">
                                           <div class="create-new-customer"><button disabled="disabled" class="btn btn-default scanner-setup-button create-customer">Delete</button></div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group float-right">
+                                      <div class="input-group">
+                                          <div class="search-by-state"><button class="btn btn-default" onClick="router.navigate('order',{trigger:true})">Search By State</button></div>
                                       </div>
                                   </div>
                               </form>
@@ -642,6 +676,7 @@
                 <td style="display: block;" class="col-md-offset-1">
                     <div class="customer-container col-md-5">
                         <div class="edit-customer btn btn-default" id="customerModal" data-toggle="modal" data-target="#basicModal" name="<%= customer.Company %>">edit</div>
+                        <div class="add-order btn btn-success" id="<%=model.id%>">order</div>
                         <div class="show company-name"><%=customer.Company%></div>
                         <hr class="customer-division"/>
                         <div class="show company-owner">OWNER: <%= customer.FirstName %> <%=customer.LastName%></div>

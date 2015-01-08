@@ -1,14 +1,14 @@
 var CustomerList = Parse.View.extend ({
 
 	events: {
-		'click .create-customer'		 : 'createCustomerContainer',
-		'click .new-customer-submit' : 'addCustomer',
-		'click .cancel-customer'		 : 'cancelCustomerCreation',
-		'keydown .search'		: 'listIt',
-		'click .reset-search' : 'resetSearch',
-		'click .edit-customer' : 'editCustomerModal',
-		'click #close-modal'		: 'closeModal',
-		'click .save-customer-changes' : 'saveCustomerChanges',
+		'click .create-customer'			: 'createCustomerContainer',
+		'click .new-customer-submit' 		: 'addCustomer',
+		'click .cancel-customer'		 	: 'cancelCustomerCreation',
+		'click .reset-search' 				: 'resetSearch',
+		'click .edit-customer' 				: 'editCustomerModal',
+		'click #close-modal'				: 'closeModal',
+		'click .save-customer-changes' 		: 'saveCustomerChanges',
+		'click .add-order' 					: 'addOrder',
 	},
 
 	template: _.template($('.customer-list-view').text()),
@@ -27,6 +27,7 @@ var CustomerList = Parse.View.extend ({
 			this.phoneValidate();
 			this.render();
 		}
+
 	},
 
 	render: function() {
@@ -178,6 +179,8 @@ var CustomerList = Parse.View.extend ({
 		this.query = new Parse.Query('customer');
 		this.query.each(function(customer){
 			$('tbody.list').append(that.customerListTemplate({ customer: customer.attributes, model: customer }));
+		}).then(function(e){
+			that.listIt();
 		})
 	},
 
@@ -254,6 +257,27 @@ var CustomerList = Parse.View.extend ({
 				console.log("Error: " + error.code + " " + error.message);
 			}
 		})
+	},
+
+	addOrder: function(e){
+		var that = this;
+		// console.log($(e.currentTarget).attr('id'))
+		var query = new Parse.Query('customer');
+		query.equalTo('objectId', $(e.currentTarget).attr('id'));
+		query.first({
+			success: function(customer){
+				// console.log(customer)
+				that.shoppingCart = {cart: [], customer: customer};
+				that.showPlaceOrder();
+			},
+			error: function(error){
+				console.log(error)
+			}
+		})
+	},
+
+	showPlaceOrder: function(){
+		this.inventoryList = new CustomerOrderInventoryList();
 	}
 
 
@@ -265,6 +289,143 @@ var CustomerList = Parse.View.extend ({
 	// 	console.log(options);
 	// 	var userList = new List('list', options);
 	// },
+
+
+});
+
+var CustomerOrderInventoryList = Parse.View.extend ({
+
+	events: {
+		'click span.item-type' : 'itemTypeDetail',
+		'click .manufacturer' : 'activeManufacturer',
+		'click button.order-item' : 'addItemOrder',
+		'click .confirm-order-button' : 'swapConfirmView'
+
+	},
+
+	template: _.template($('.order-inventory-list-view').text()),
+	listItemTemplate: _.template($('.order-inventory-list-item-view').text()),
+	listItemDetailTemplate: _.template($('.order-inventory-list-detail-view').text()),
+	shoppingCartTemplate: _.template($('.order-shopping-cart-view').text()),
+
+	initialize: function() {
+		$('.app-container').html(this.el);
+		this.jankyAddCustomer();
+		// console.log('InventoryList')
+		this.render();
+	},
+
+	render: function() {
+		$(this.el).append(this.template());
+	},
+
+	jankyAddCustomer: function() {
+		var company = router.currentView.shoppingCart.customer.attributes.Company ? router.currentView.shoppingCart.customer.attributes.Company : '';
+		var address = router.currentView.shoppingCart.customer.attributes.Address1 ? router.currentView.shoppingCart.customer.attributes.Address1 : '';
+		var city = router.currentView.shoppingCart.customer.attributes.City ? router.currentView.shoppingCart.customer.attributes.City : '';
+		var state = router.currentView.shoppingCart.customer.attributes.State ? router.currentView.shoppingCart.customer.attributes.State : '';
+		$('.app-container').prepend('<div class="shopping-cart-bound"></div>');
+		
+		$('.app-container').prepend('<h2>' + company + '</h2><h4>' + address + '</h4><h4>' + city + ', ' + state + '</h4>');
+
+	},
+
+	swapConfirmView: function() {
+		router.swap( new ConfirmOrderView({ customer: router.currentView.shoppingCart.customer, items: router.currentView.shoppingCart.cart }) );
+	},
+
+	itemTypeDetail: function (location) {
+		var that = this;
+		$('.inventory-list-detail-bound').html('');
+
+		var query = new Parse.Query('itemType');
+		query.equalTo('typeName', location.currentTarget.innerHTML);
+		query.first({
+			success: function(itemType) {
+				// console.log(itemType)
+				var query = new Parse.Query('itemInstance');
+				query.equalTo('itemType', itemType);
+				query.equalTo('itemInstanceCode', undefined)
+				query.each(function(item){
+					// console.log(item.attributes)
+					$('.inventory-list-detail-bound').append(that.listItemDetailTemplate({ item: item.attributes }))
+				})
+				
+			},
+			error: function(error) {
+				console.log(error)
+			}
+		})
+
+
+
+	},
+
+	activeManufacturer: function(e){
+		$('.manufacturer').removeClass('active');
+		$(event.target).addClass('active');
+		$('.center-number').text('');
+		$('.center-number').text($(event.target).text());
+		$('.inventory-list-item-bound').html('');
+		var chosenManufacturer = e.currentTarget.attributes.name.value;
+		var that = this;
+		// var itemNumber = 0;
+		var listManufacturers = [];
+		// var thisModel = 0;
+		var query = new Parse.Query('itemType');
+		query.limit(1000)
+		query.equalTo('Manufacturer', chosenManufacturer)
+		query.find(function(itemTypes){
+
+			itemTypes.forEach(function(e){
+				if (e.attributes.Manufacturer == chosenManufacturer){
+					$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: e}))
+				}
+			})
+
+		})
+	},
+
+
+	addItemOrder: function(e){
+		var that = this;
+		var tog = false
+
+		var itemName = e.currentTarget.parentElement.parentElement.children[1].innerHTML;
+
+		router.currentView.shoppingCart.cart.forEach(function(item){
+			if(item[0] == e.currentTarget.getAttribute('value')){
+				tog = true;
+				item[1] += 1;
+				// console.log(router.currentView.shoppingCart.cart)
+				that.renderCart()
+			}
+		})
+		if(tog == false){
+			var cartItem = [ e.currentTarget.getAttribute('value'), 1, itemName];
+			router.currentView.shoppingCart.cart.push(cartItem);
+			// console.log(router.currentView.shoppingCart.cart)
+			that.renderCart()				
+		}
+			
+	},
+
+	renderCart: function(){
+		$('.shopping-cart-bound').html('');
+		var that = this;
+
+		router.currentView.shoppingCart.cart.forEach(function(item){
+			// if(item[3] == undefined){
+			// 	var query = new Parse.Query('itemType');
+			// 	query.
+			// }
+			$('.shopping-cart-bound').prepend(that.shoppingCartTemplate({ item: item}));
+			// console.log(item)
+		})
+		// $('.shopping-cart-bound').append('<button class="btn confirm-order-button">Check Out</button>');
+		$('.confirm-order-button').css('visibility', 'visible');
+
+	},
 
 
 });
