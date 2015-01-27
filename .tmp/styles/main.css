@@ -370,6 +370,21 @@ ul.inventory-list-item-bound li .item-type {
     background: #222222;
     font-weight: 400; }
 
+.inventory-item {
+  height: auto;
+  border: 1px solid #ccc;
+  border-bottom: 0;
+  box-sizing: border-box;
+  padding: 10px 0; }
+
+.inventory-page-container button {
+  margin-bottom: 20px; }
+.inventory-page-container #inventory-search, .inventory-page-container .manufacturer-names {
+  padding: 0; }
+
+.search-inv {
+  padding-bottom: 20px; }
+
 .all-inventory-number {
   border-left: 2px solid #ccc;
   border-right: 2px solid #ccc; }
