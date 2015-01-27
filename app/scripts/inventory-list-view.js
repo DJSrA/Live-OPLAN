@@ -26,6 +26,7 @@ var InventoryList = Parse.View.extend ({
 	template: _.template($('.inventory-list-view').text()),
 	listItemTemplate: _.template($('.inventory-list-item-view').text()),
 	listItemDetailTemplate: _.template($('.inventory-list-detail-view').text()),
+	titleTemplate: _.template($('.page-title').text()),
 
 	initialize: function() {
 		if((Parse.User.current() === null) === true){
@@ -43,6 +44,8 @@ var InventoryList = Parse.View.extend ({
 
 	render: function() {
 		$(this.el).append(this.template());
+		$('.put-title-here').html(this.titleTemplate());
+		$('.page-title').text('INVENTORY');
 		this.getItemTypes();
 		var Manufacturers = [];
 		var query = new Parse.Query('itemType');
@@ -64,6 +67,17 @@ var InventoryList = Parse.View.extend ({
 	},
 
 	getItemTypes: function() {
+	},
+
+	listIt: function(){
+		var options = {
+		  valueNames: [ 'product-id', 'item-type', 'item-description', 'all-inventory-number', 'backorder-number' ]
+		};
+
+			// Init list
+			
+		var contactList = new List('inventory-search', options);
+		// var options = {};
 	},
 
 	itemTypeDetail: function (location) {
@@ -104,7 +118,7 @@ var InventoryList = Parse.View.extend ({
 		$(event.target).addClass('active');
 		$('.center-number').text('');
 		$('.center-number').text($(event.target).text());
-		$('.inventory-list-item-bound').html('');
+		$('.list').html('');
 
 		var chosenManufacturer = e.currentTarget.attributes.name.value;
 		var that = this;
@@ -118,7 +132,7 @@ var InventoryList = Parse.View.extend ({
 				var thisItem = [];
 				if (e.attributes.Manufacturer == chosenManufacturer){
 					// var newItemView = new InventoryItemView({itemType: e});
-					$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: e}))
+					$('.list').append(that.listItemTemplate({ itemType: e}))
 					thisManufacturersItems.push(e);
 				}
 				return thisManufacturersItems
@@ -147,7 +161,10 @@ var InventoryList = Parse.View.extend ({
 				// setTimeout(console.log(ItemsList), 1500);
 		  	// return ItemsList;
 			};
+		}).then(function(e){
+					that.listIt();
 		})
+		// this.listIt()
 		// // this.setAppropriateHeight();
 	},
 
@@ -308,7 +325,6 @@ var FullBackorderList = Parse.View.extend({
 			}
  		})
 	},
-
 
 })
 

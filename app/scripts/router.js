@@ -1,18 +1,16 @@
 var AppRouter = Parse.Router.extend({
 	
 	routes: {
-		''						: 'frontPage',
-		'scan'					: 'scanItem',
-		'inventory' 			: 'inventoryList',
-		'inventory/fullstock'	: 'fullStockList',
-		'inventory/backorders'	: 'fullBackorderList',
-		'shelf' 				: 'shelfList',
-		'backorder' 			: 'backorderList',
-		'orders' 				: 'orderList',
-		'order'					: 'placeOrder',
-		'order/:id'				: 'finalOrder',
+		''					: 'frontPage',
+		'scan'				: 'scanItem',
+		'inventory' 		: 'inventoryList',
+		'shelf' 			: 'shelfList',
+		'backorder' 		: 'backorderList',
+		'orders' 			: 'orderList',
+		'order'				: 'placeOrder',
+		'order/:id'			: 'finalOrder',
 
-		'customers'				: 'customerList',
+		'customers'			: 'customerList',
 
 
 	},
@@ -33,14 +31,6 @@ var AppRouter = Parse.Router.extend({
 
 	inventoryList: function() {
 		this.swap( new InventoryList() );
-	},	
-
-	fullStockList: function() {
-		this.swap( new FullStockList() );
-	},	
-
-	fullBackorderList: function() {
-		this.swap( new FullBackorderList() );
 	},
 
 	shelfList: function() {

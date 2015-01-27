@@ -14,6 +14,7 @@ var PlaceOrder = Parse.View.extend ({
 	template: _.template($('.place-order-view').text()),
 	customersTemplate: _.template($('.customer-by-state-view').text()),
 	customerTemplate: _.template($('.customer-order-view').text()),
+	titleTemplate: _.template($('.page-title').text()),
 
 	shoppingCart: {
 		customer: {},
@@ -36,6 +37,8 @@ var PlaceOrder = Parse.View.extend ({
 
 	render: function() {
 		$(this.el).append(this.template());
+		$('.put-title-here').html(this.titleTemplate());
+		$('.page-title').text('PLACE ORDER');
 		this.showStates();
 
 	},

@@ -4,7 +4,6 @@ var CustomerList = Parse.View.extend ({
 		'click .create-customer'			: 'createCustomerContainer',
 		'click .new-customer-submit' 		: 'addCustomer',
 		'click .cancel-customer'		 	: 'cancelCustomerCreation',
-		'click .reset-search' 				: 'resetSearch',
 		'click .edit-customer' 				: 'editCustomerModal',
 		'click #close-modal'				: 'closeModal',
 		'click .save-customer-changes' 		: 'saveCustomerChanges',
@@ -14,6 +13,7 @@ var CustomerList = Parse.View.extend ({
 	template: _.template($('.customer-list-view').text()),
 	customerListTemplate: _.template($('.customer-list-item').text()),
 	customerModalTemplate: _.template($('.customer-modal-template').text()),
+	titleTemplate: _.template($('.page-title').text()),
 
 	initialize: function() {
 		if((Parse.User.current() === null) === true){
@@ -33,6 +33,8 @@ var CustomerList = Parse.View.extend ({
 	render: function() {
 		$(this.el).html('');
 		$(this.el).append(this.template());
+		$('.put-title-here').html(this.titleTemplate());
+		$('.page-title').text('CUSTOMER LIST');
 		this.phoneValidate();	
 		this.emailValidate();
 		this.getCustomers();
@@ -54,13 +56,6 @@ var CustomerList = Parse.View.extend ({
 		console.log('closing modal');
 		$('body').css('overflow', 'visible');
 		$('.modal-div').html('');
-	},
-
-	resetSearch: function () {
-		$('.list').html('');
-		$('.search').val('');
-		$('.search').focus();
-		this.getCustomers();
 	},
 
 	phoneValidate: function () {
@@ -322,7 +317,7 @@ var CustomerOrderInventoryList = Parse.View.extend ({
 	jankyAddCustomer: function() {
 		var company = router.currentView.shoppingCart.customer.attributes.Company ? router.currentView.shoppingCart.customer.attributes.Company : '';
 		var address = router.currentView.shoppingCart.customer.attributes.Address1 ? router.currentView.shoppingCart.customer.attributes.Address1 : '';
-		var city = router.currentView.shoppingCart.customer.attributes.City ? router.currentView.shoppingCart.customer.attributes.City : '';
+		var city = router.currentView.shoppingCart.customer.attributes.City ? router.currentView.shopapingCart.customer.attributes.City : '';
 		var state = router.currentView.shoppingCart.customer.attributes.State ? router.currentView.shoppingCart.customer.attributes.State : '';
 		$('.app-container').prepend('<div class="shopping-cart-bound"></div>');
 		

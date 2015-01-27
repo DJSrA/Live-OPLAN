@@ -31,6 +31,7 @@ var ScanItem = Parse.View.extend ({
 
 	template: _.template($('.scan-item-view').text()),
 	manualItemCreationTemplate: _.template($('.manual-item-creation-template').text()),
+	titleTemplate: _.template($('.page-title').text()),
 
 	initialize: function() {
 		if((Parse.User.current() === null) === true){
@@ -55,6 +56,8 @@ var ScanItem = Parse.View.extend ({
 
 	render: function() {
 		$(this.el).html(this.template());
+		$('.put-title-here').html(this.titleTemplate());
+		$('.page-title').text('SCANNING');
 	},
 
 	firstScan: function(e){
@@ -152,6 +155,7 @@ var ScanItem = Parse.View.extend ({
 	            UPC:                  item[0].attributes.UPC,
 	            itemType: 						item[0],
 	            itemInstanceCode: 		0,
+	            dateSaved: 						Date(),
 	          }).save()
 	          $('.scanned-item-list').append('<div class="col-md-6 scanned-item-container"><div class="scanned-item-attribute col-md-4"><p>' + item[0].attributes.Model + '</p></div><div class="scanned-item-attribute col-md-4"><p>' + item[0].attributes.UPC + '</div><div class="scanned-item-attribute col-md-4"><button id="' + item[0].id + '" class="btn btn-warning btn-delete-item">DELETE</button</div>');
 
@@ -266,6 +270,7 @@ var ScanItem = Parse.View.extend ({
 		   	  DealerPrice:          ("$" + $('.dealer-price').val()),
 		   	  MSRP:         				("$" + $('.msrp').val()),
 		   	  UPC:                  $('.upc').val(),
+		   	  dateSaved: 						Date(),
 		   	}).save()
 		   	console.log(itemType);
 				// itemType.save();
@@ -296,6 +301,7 @@ var ScanItem = Parse.View.extend ({
 	   	  DealerPrice:          ("$" + $('.generic-dealer-price').val()),
 	   	  MSRP:         				("$" + $('.generic-msrp').val()),
 	   	  UPC:                  $('.generic-upc').val(),
+	   	  dateSaved: 						Date(),
 	   	}).save()
 	   	console.log(itemType)
 	   	var allObjects = [];
@@ -314,6 +320,7 @@ var ScanItem = Parse.View.extend ({
 	   			  UPC:                  $('.generic-upc').val(),
 	   		  itemType: 						itemType,
 	   		  itemInstanceCode: 		0,
+	   		  dateSaved: 						Date(),
 	   		}).save()
 
 	   		allObjects.push(itemInstance);
@@ -363,7 +370,7 @@ var ScanItem = Parse.View.extend ({
 			   			  UPC:                  "NA",
 			   		  itemType: 						itemType,
 			   		  itemInstanceCode: 		0,
-			   		}).save()
+			   		}).save()	
 
 			   		allObjects.push(itemInstance);
 			   	}

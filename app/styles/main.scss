@@ -1,5 +1,45 @@
+@font-face {
+  font-family: 'Liberator';
+  src:
+    url('../webfonts/Liberator.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+    url('../webfonts/Liberator.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Venera';
+  src:
+    url('../webfonts/Venera-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+    url('../webfonts/Venera-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src:
+    url('../webfonts/Roboto-Medium.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+    url('../webfonts/Roboto-Medium.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Roboto-Thin';
+  src:
+    url('../webfonts/Roboto-Thin.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+    url('../webfonts/Roboto-Thin.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+* {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  h2{
+    font-family: 'Liberator' !important;
+  }
+  button {
+    font-family: Helvetica, Arial, sans-serif !important;
+  }
+}
+
 html {
-  background: #F7F7F7;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -15,6 +55,26 @@ body {
   margin: 0;
   padding: 0;
 }
+
+
+// BOOTSTRAP OVERRIDES_________________
+
+.btn-success {
+  color: #fff;
+  background-color: rgb(1,209,172);
+  border-color: rgb(0, 197, 162);
+  -webkit-transition: all ease 100ms;
+  -moz-transition: all ease 100ms;
+  -o-transition: all ease 100ms;
+  transition: all ease 100ms;
+}
+
+.btn-success:hover {
+  background-color: rgb(9,158,131);
+  border-color: rgb(9,158,131);
+}
+
+// END BOOTSTRAP OVERRIDES_____________
 
 .input-group-addon {
   min-width: 95px;
@@ -53,7 +113,7 @@ input[disabled] {
 }
 
 .app-container {
-  margin-top: 116px;
+  // margin-top: 116px;
   background: #FFFFFF;
 }
 .display-inline {
@@ -118,14 +178,30 @@ ul {
   line-height: 30px;
   color: #ffffff;
   padding: 0;
-  height: 116px;
+  height: auto;
   box-shadow: 0px 1px 4px 0px #848484;
+  .navbar {
+    background-color: rgb(25,25,33);
+    height: 100vh;
+    padding: 0;
+    margin-bottom: 0;
+    .nav {
+      margin-top: 0;
+      padding: 0;
+    }
+    li:first-child {
+      background-color: #15151D;
+      height: 100px;
+      padding-top: 16px;
+      border-bottom: 1px solid rgb(19, 19, 23);
+    }
+  }
   img {
     padding: 5px 0;
     width: 150px;
   }
   ul {
-    margin-top: 9px;
+    margin: 9px 0;
   }
   li {
     cursor: pointer;
@@ -294,6 +370,7 @@ ul.inventory-list-item-bound li .item-type {
   background: #2A3C51;
 }
 .nav-link {
+  margin-top: 25px;
   cursor: pointer;
 }
 
@@ -377,11 +454,21 @@ ul.inventory-list-item-bound li .item-type {
 
 
 // INVENTORY INVENTORY INVENTORY INVENTORY INVENTORY ___________________
-
+.put-title-here{
+  height: 100px;
+  padding-top: 13px;
+  .page-title-container {
+    hr {
+      margin-bottom: 0;
+      margin-top: 33px;
+    }
+  }
+}
 
 .page-title {
   text-align: center;
-  font-size: 20px;
+  font-size: 30px;
+  font-family: "Roboto-Thin", Helvetica !important;
   font-weight: bold;
 }
 .bold {
@@ -390,7 +477,7 @@ ul.inventory-list-item-bound li .item-type {
 
 .manufacturer-names {
   margin: 15px 0;
-  height: 40px;
+  height: auto;
   .manufacturers {
     .manufacturer {
       text-align: center;
@@ -466,6 +553,7 @@ ul.inventory-list-item-bound li .item-type {
 }
 
 .merchant {
+  cursor: pointer;
   height: 40px;
   box-sizing: border-box;
   padding: 10px 8px 0;
@@ -621,8 +709,14 @@ ul.inventory-list-item-bound li .item-type {
     display: inline-block;
   }
   .edit-customer {
-    position: absolute;
     right: 15px;
+    bottom: 15px;
+    font-size: 14px;
+    top: 166px;
+    padding: 4px;
+    background: none;
+    position: absolute;
+    height: 30px;
   }
 }
 
@@ -695,6 +789,14 @@ ul.inventory-list-item-bound li .item-type {
   border-top-right-radius: 4px !important;
   border-bottom-right-radius: 4px !important;
   border: 1px solid #ccc !important;
+}
+
+.add-order {
+  float: right;
+}
+
+.input-group-addon {
+  padding: 0;
 }
 
 .delete-customer {
