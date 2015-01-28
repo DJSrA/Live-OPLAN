@@ -317,7 +317,7 @@ var CustomerOrderInventoryList = Parse.View.extend ({
 	jankyAddCustomer: function() {
 		var company = router.currentView.shoppingCart.customer.attributes.Company ? router.currentView.shoppingCart.customer.attributes.Company : '';
 		var address = router.currentView.shoppingCart.customer.attributes.Address1 ? router.currentView.shoppingCart.customer.attributes.Address1 : '';
-		var city = router.currentView.shoppingCart.customer.attributes.City ? router.currentView.shopapingCart.customer.attributes.City : '';
+		var city = router.currentView.shoppingCart.customer.attributes.City ? router.currentView.shoppingCart.customer.attributes.City : '';
 		var state = router.currentView.shoppingCart.customer.attributes.State ? router.currentView.shoppingCart.customer.attributes.State : '';
 		$('.app-container').prepend('<div class="shopping-cart-bound"></div>');
 		
