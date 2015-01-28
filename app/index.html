@@ -6,19 +6,22 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <link rel="shortcut icon" href="/favicon.ico">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- Place favicon.ico and apple-touch-icon'.png in the root directory -->
         <!-- build:css styles/vendor.css -->
         <!-- bower:css -->
         <!-- endbower -->
         <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+
+        <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
+
         <!-- build:js scripts/vendor/modernizr.js -->
         <script src="../bower_components/modernizr/modernizr.js"></script>
         <!-- endbuild -->
-        <script src="//www.parsecdn.com/js/parse-1.3.1.js"></script>
 
     </head>
     <body>
@@ -26,51 +29,61 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="alan-arms-pos col-xs-12 bg-primary"><a class="home" href="#"><img src="http://imgur.com/lwT9J0X"></a>
-        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-            <ul class="nav navbar-nav col-md-12">
-                <li class="col-md-2 "><a class="nav-link" href="/#scan">SCAN</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#inventory">INVENTORY</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#shelf">SHELF</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#orders">ORDERS</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#order">PLACE ORDER</a></li>
-                <li class="col-md-2 "><a class="nav-link" href="/#customers">CUSTOMERS</a></li>
-            </ul>
-        </nav>
+        <div class="alan-arms-pos col-xs-2 bg-primary">
+            <div class="logo-container">
+                <nav class="navbar navbar-inverse navbar-static-top navbar-left" role="navigation">
+                    <ul class="nav navbar-nav col-md-12">
+                        <li class="col-md-12 home" id="scan" onClick="router.navigate('#',{trigger:true})"><img src="http://imgur.com/lwT9J0X.png"></a></li>
+                        <li class="col-md-12 nav-link" id="scan" onClick="router.navigate('scan',{trigger:true})">SCAN</a></li>
+                        <li class="col-md-12 nav-link" id="inventory" onClick="router.navigate('inventory',{trigger:true})">INVENTORY</li>
+                        <li class="col-md-12 nav-link" id="order" onClick="router.navigate('order',{trigger:true})">PLACE ORDER</li>
+                        <li class="col-md-12 nav-link" id="customers" onClick="router.navigate('customers',{trigger:true})">CUSTOMERS</li>
+                        <li class="col-md-12 nav-link" id="orders" onClick="router.navigate('orders',{trigger:true})">ORDERS</li>
+                        <!-- <li class="col-md-2 nav-link" id="shelf" onClick="router.navigate('shelf',{trigger:true})">SHELF</li> -->
+                    </ul>
+                </nav>
+            </div>
         </div>
 
+        <div class="put-title-here col-xs-10 col-md-offset-2"></div>
 
+        <div class="app-container col-xs-10 col-md-offset-2"></div>
 
-        <div class="app-container col-xs-10 col-md-offset-1"></div>
+        <script type="text/template" class="page-title">
+            <div class="page-title-container">
+                <h2 class="page-title"></h2>
+                <hr/>
+            </div>
+        </script>
 
         <script type="text/template" class="dashboard-view">
             <div class="sign-in-container col-md-4 col-md-offset-4">
-            <img class="col-md-12" src="http://imgur.com/lwT9J0X">
+            <img class="col-md-12" src="http://imgur.com/lwT9J0X.png">
             <div><h2>Sign In</h2></div>
                 <div class="form-group sign-in-form">
-                    <label>Username</label>
+                    <label>USERNAME</label>
                     <input id="item-info-block" class="form-control username-input"></input>
                 </div>
                 <div class="form-group sign-in-form">
-                    <label>Password</label>
+                    <label>PASSWORD</label>
                     <input type="password" id="item-info-block" class="form-control password-input"></input>
                 </div>
                     <form role="form" class="col-md-offset-4">
-                        <button type="button" class="col-md-6 btn btn-default submit-sign-in">Submit</button>  
+                        <button type="button" class="col-md-6 btn btn-default submit-sign-in">SUBMIT</button>  
                     </form>
                 </div>
             </div>
         </script>
-
         <!-- 
 
 
                         Scan Item Templates                                                             Scan Item Templates
 
 
+
          -->
         <script type="text/template" class="scan-item-view">
-            <div class="scanning col-md-4 col-md-offset-4">
+            <div class="scanning col-md-3">
             <button type="button" class="start-scanning btn btn-warning">START SCANNING</button>
             <div class="form-group">
                 <label>Item UPC</label>
@@ -87,45 +100,69 @@
                     <button type="button" class="btn btn-info add-item">ADD +</button>
                 </form>
             </div>
-            <div class="col-md-4 scanner-setup">
-                <button class="scanner-setup-button btn btn-default">Scanner Setup</button>
-            </div>
             <div class="display-scanned-item"></div>
-            <div class="add-here"></div>
-            <hr class="odd-hr"/>
-            <div class="scanned-item-counter col-md-3"><p class="col-md-10">Total Items Scanned : </p><p class="scanned-item-total col-md-2">0</p></div>
-            <div class="scanned-item-list col-md-12"></div>
+            <div class="right-content col-md-9">
+                <div class="add-here"></div>
+                <div class="scanned-item-counter col-md-5"><p class="col-md-10">Total Items Scanned : </p><p class="scanned-item-total col-md-2">0</p></div>
+                <div class="scanned-item-list col-md-12"></div>
+            </div>
         </script>
         
         <!-- Manual add item template -->
 
         <script type="text/template" class="manual-item-creation-template">
             <div class="new-item-creation col-md-12">
-            <hr/>
-                <div class="not-found"></div>
-                <label><h4>Please Fill In All Fields Below:</h4>
+                <ul class="new-item-nav col-md-11">
+                  <li class="standard-item-creation btn-info">STANDARD</li>
+                  <li class="generic-item-creation">GENERIC</li>
+                  <button type="button" class="btn btn-default no-upc">UPC ON</button> 
+                  <div class="enable-upc"></div>
+                </ul>
+
                 <div class="form-group new-item-form">
                     <label class="manual-input-title col-md-2">Manufacturer</label>
-                    <input class="col-md-3 manual-add-item manufacturer"></input>
+                    <input class="col-md-3 manual-add-item standard manufacturer"></input>
                     <label class="manual-input-title col-md-2">Caliber</label>
-                    <input class="col-md-3 manual-add-item caliber"></input>
+                    <input class="col-md-3 manual-add-item standard caliber"></input>
                     <label class="manual-input-title col-md-2">Cost</label>
-                    <input class="col-md-3 manual-add-item cost"></input>
+                    <input class="col-md-3 manual-add-item standard cost"></input>
                     <label class="manual-input-title col-md-2">Model</label>
-                    <input class="col-md-3 manual-add-item model"></input>
+                    <input class="col-md-3 manual-add-item standard model"></input>
                     <label class="manual-input-title col-md-2">Dealer Price</label>
-                    <input class="col-md-3 manual-add-item dealer-price"></input>
+                    <input class="col-md-3 manual-add-item standard dealer-price"></input>
                     <label class="manual-input-title col-md-2">UPC</label>
-                    <input class="col-md-3 manual-add-item upc"></input>
+                    <input class="col-md-3 manual-add-item standard upc"></input>
                     <label class="manual-input-title col-md-2">MSRP</label>
-                    <input class="col-md-3 manual-add-item msrp"></input>
+                    <input class="col-md-3 manual-add-item standard msrp"></input>
+                    <span class="col-md-5 filler-input"></span>
                     <label class="manual-input-title col-md-2">Description</label>
-                    <textarea class="col-md-3 manual-add-item description"></textarea>
+                    <textarea class="col-md-3 manual-add-item standard description"></textarea>
+                </div>
+                <div class="form-group generic-new-item-form"> 
+                    <label class="manual-input-title col-md-2">Manufacturer</label>
+                    <input class="col-md-3 manual-add-item generic generic-manufacturer"></input>
+                    <label class="manual-input-title col-md-2">Caliber</label>
+                    <input class="col-md-3 manual-add-item generic generic-caliber"></input>
+                    <label class="manual-input-title col-md-2">Cost</label>
+                    <input class="col-md-3 manual-add-item generic generic-cost"></input>
+                    <label class="manual-input-title col-md-2">Model</label>
+                    <input class="col-md-3 manual-add-item generic generic-model"></input>
+                    <label class="manual-input-title col-md-2">Dealer Price</label>
+                    <input class="col-md-3 manual-add-item generic generic-dealer-price"></input>
+                    <label class="manual-input-title col-md-2">UPC</label>
+                    <input class="col-md-3 manual-add-item generic generic-upc"></input>
+                    <label class="manual-input-title col-md-2">MSRP</label>
+                    <input class="col-md-3 manual-add-item generic generic-msrp"></input>
+                    <label class="manual-input-title col-md-2">AMOUNT</label>
+                    <input type="number" class="col-md-3 manual-add-item generic amount" placeholder="#"></input>
+                    <label class="manual-input-title col-md-2">Description</label>
+                    <textarea class="col-md-3 manual-add-item generic generic-description"></textarea>
 
                 </div>
-                </label>
-            <button type="button" class="btn btn-default add-new-item">Submit</button>  
-            <button type="button" class="btn btn-info cancel-new-item-creation">Cancel</button>
+                <div class="col-md-12 creation-button-holder">
+                    <button type="button" class="btn btn-default add-new-item">Submit</button>  
+                    <button type="button" class="btn btn-info cancel-new-item-creation">Cancel</button>
+                </div>
             </div>
         </script>
         <!-- 
@@ -136,28 +173,66 @@
 
          -->
         <script type="text/template" class="inventory-list-view">
-            <div class="page-title">INVENTORY</div>
-            <div class="manufacturer-names col-md-12">
-                <ul class="manufacturers">
-                  <li class="manufacturer col-md-2  btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
-                  <li class="manufacturer col-md-2  btn-default btn" name="Silencerco">SILENCERCO</li>
-                  <li class="manufacturer col-md-2  btn-default btn" name="Surefire">SUREFIRE</li>
-                  <li class="manufacturer col-md-2  btn-default btn" name="GEMTECH">GEMTECH</li>
-                  <li class="manufacturer col-md-2  btn-default btn" name="OSS Mission">OSS MISSION</li>
-                </ul>
+            <div class="inventory-page-container">
+                <button class="full-inventory btn-success btn">Full Stock</button>
+                <button class="full-backorders btn-danger btn">All Backorders</button>
+
+                <div class="manufacturer-title col-md-12">
+                    <div class='center-number'></div>
+                </div>
+                <div class="search-inventory-options col-md-12">
+                    <div class="search-it-all col-md-2">
+                        <button class="search-all-inventory form-control btn btn-success">SEARCH All</button>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="manufacturers form-control">
+                            <option class="non-select">Select Manufacturer</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="inventory-search" class="col-md-12">
+                <div class="input-group col-md-4 search-inv">
+                  <div class="input-group-addon">Search</div>
+                  <input class="form-control search">
+                </div>
+                <div class="col-md-10 inventory-section">ITEM TYPE</div><div class="inventory-section col-md-1">INVENTORY</div><div class="inventory-section col-md-1">BACKORDER</div>
+                <ul class="list"></ul>
+                </div>
             </div>
-            <div class="manufacturer-title col-md-12">
-                <div class='center-number'></div>
-            </div>
-            <div class="col-md-10 inventory-section">ITEM TYPE</div><div class="inventory-section col-md-1">INVENTORY</div><div class="inventory-section col-md-1">BACKORDER</div>
-            <ul class="inventory-list-item-bound col-xs-12"></ul>
-            <ul class="inventory-list-detail-bound"></ul>
-        </script>        
+        </script> 
+
         <script type="text/template" class="inventory-list-item-view">
-            <li class="col-md-12"><div class="try item-type col-md-4"><%=itemType.attributes.Model%></div><div class="try item-description item-type col-md-6"> <%=itemType.attributes.Description%></div><div class="try all-inventory-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="try backorder-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>
+            <li style="display: block;" class="col-md-12 inventory-item">
+                <div class="try product-id col-md-1">
+                    <div class="try glyphicon glyphicon-edit btn btn-default" aria-hidden="true" id="customerModal" data-toggle="modal" data-target="#basicModal"></div>
+                </div>
+                <div class="try item-type col-md-4"><%=itemType.attributes.Model%></div>
+                <div class="try item-description col-md-5"> <%=itemType.attributes.Description%></div>
+                <div class="try all-inventory-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div>
+                <div class="try backorder-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div>         
+            </li>
         </script>
+
         <script type="text/template" class="inventory-list-detail-view">
             <li class="item-instance"><span>Name: <%=item.itemName%></span><span> Serial Num: <%=item.serialNumber%></span></li>
+        </script>        
+
+        <script type="text/template" class="full-stock-list-template">
+            <h2>All Inventory In Stock</h2>
+            <ul class="inventory-list-bound"></ul>
+        </script>
+
+        <script type="text/template" class="stock-list-instance-template">
+            <li class="<%=model.id%>"><span><%=item.Model%></span>, <span><%=item.serialNumber%></span> <button id="<%=model.id%>" class="delete-item btn btn-danger">Delete</button></li>
+        </script>        
+
+        <script type="text/template" class="full-backorder-list-template">
+            <h2>Full Backorder List</h2>
+            <ul class="backorder-list-bound"></ul>
+
+        </script>        
+        <script type="text/template" class="backorder-list-instance-template">
+            <li class="<%=model.id%>"><span><%=item.itemType%></span><button id="<%=model.id%>" class="delete-item btn btn-danger">Delete</button></li>
         </script>
 
         <!-- 
@@ -202,18 +277,19 @@
 
          -->
         <script type="text/template" class="order-list-view">
-            <div>order List View</div>
             <ul class="order-list-item-bound"></ul>
             <ul class="order-detail-bound"></ul>
         </script>        
 
         <script type="text/template" class="order-list-item-view">
             <li class="order-instance" id="<%=order.id%>">
-                <div>Order : <%=order.attributes.orderNumber%></div>
+                <div><%=order.attributes.orderNumber%></div>
+                <div>Customer : <%=customer.attributes["Company"]%></div>
                 <div>Placed : <%=customer.createdAt%></div>
-                <div>Customer : <%=customer.attributes.name%></div>
+                <button class="btn" onClick="router.navigate('order/<%=order.id%>',{trigger:true})">View Order</button>
             </li>
-        </script>        
+        </script>   
+
 
         <script type="text/template" class="order-detail-view">
             <li>
@@ -230,10 +306,13 @@
 
          -->
         <script type="text/template" class="place-order-view">
-            <h2 class="page-title">Place Order</h2>
-            <hr/>
             <h4 class="page-title order-directions"></h4>
             <div class="select-customer col-md-12"></div>
+                        <div class="form-group float-right">
+              <div class="input-group">
+                  <div class="search-by-state"><button class="btn btn-default" onClick="router.navigate('customers',{trigger:true})">Search List</button></div>
+              </div>
+          </div>
             
         </script>
         <script type="text/template" class="customer-by-state-view">
@@ -249,10 +328,11 @@
             <div class="accept-merchant btn btn-default">ACCEPT</div>
             <div class="cancel-merchant btn btn-default">CANCEL</div>
         </div>
+
         </script> 
 
         <script type="text/template" class="order-inventory-list-view">
-            <div class="page-title">INVENTORY</div>
+        <button class="confirm-order-button">Check Out</button>
             <div class="manufacturer-names col-md-12">
               <ul class="manufacturers">
                 <li class="manufacturer col-md-2  btn-default btn" name="Advanced Armament Co">ADVANCED ARMAMENT CO</li>
@@ -271,7 +351,7 @@
         </script>   
 
         <script type="text/template" class="order-inventory-list-item-view">
-            <li class="col-md-12"><div class="product-id col-md-1"><button class="order-item" value="<%=itemType.id%>">Add</button></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="backorder-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>
+            <li class="col-md-12"><div class="product-id col-md-1"><button class="order-item" value="<%=itemType.id%>"><%=itemType.attributes.DealerPrice%></button></div><div class="item-type col-md-5"> <%=itemType.attributes.Model%></div><div class="all-inventory-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div><div class="backorder-number number-center col-md-3"><%if(itemType.attributes.totals && itemType.attributes.totals[1]){%><%=itemType.attributes.totals[1]%><%}else{%>0<%}%></div></li>
         </script>   
 
         <script type="text/template" class="order-inventory-list-detail-view">
@@ -285,7 +365,7 @@
         <script type="text/template" class="confirm-order-view">
         <div class="top-info-bound">
             <div class="merchant-info">
-                <div><%=customer.Company%></div>
+                <div class="bold"><%=customer.Company%></div>
                 <div><span><%=customer.FirstName%></span> <span><%=customer.LastName%></div>
                 <div><%=customer.Address1%></div>
                 <div><span><%=customer.City%></span> <span><%=customer.State%></span> <span><%=customer.Zip%></span></div>
@@ -294,9 +374,8 @@
 
             </div>
             <div class="seller-info">
-                <h1>☃</h1>
-                <div>Allen Arms</div>
-                <div>Greenville SC</div>
+                <img class="seller-icon" src="images/aa-tactical.png">
+                <div class="bold">Greenville SC</div>
             </div>  
         <div>
         <div class="item-list-bound">
@@ -312,16 +391,16 @@
 
         <script type="text/template" class="confirm-order-item-instance-view">
             <div>
-                <span><%=item.Manufacturer%> <%=item.Model%></span>
+                <span class="item-name  "><%=item.Manufacturer%> <%=item.Model%></span>
                 <span> x</span>
                 <span><input type ="number" id="<%=item.id%>"class="cart-item-instance" value="<%=item.quan%>"></span>
                 <span> <%=item.DealerPrice%> </span>
-                <span>=<span class="total-item-cost"><%= (parseInt(item.DealerPrice.replace(/\s+/g, '').substr(1)))*(item.quan) %></span></span>
+                <span>=<span class="total-item-cost"><%= (parseInt(item.DealerPrice.replace(/\s+/g, '').replace(/\,/g,'').substr(1)))*(item.quan) %></span></span>
             </div>
         </script>          
 
         <script type="text/template" class="update-order-total-view">
-            <span><%=sum%></span>
+            <div class="col-md-5 total-div">TOTAL</div><div class="sum-div col-md-7"><span><%=sum%></span></div>
         </script>  
 
 
@@ -329,7 +408,7 @@
         <script type="text/template" class="final-order-instance-view">
         <div class="final-order">
         <div class="order-heading">
-            <img class="aa-tactical"src="http://imgur.com/lwT9J0X">
+            <img class="aa-tactical"src="http://imgur.com/lwT9J0X.png">
             <ul class="seller-info">
                 <li>Allen Arms Indoor Range</li>
                 <li>1210 pointset Highway</li>
@@ -347,6 +426,8 @@
 
         <button class="btn btn-info print-sales noPrint">Print Sales Order</button>
         <button class="btn btn-info print-invoice noPrint">Print Invoice</button>
+        <div style="height:100px;"></div>
+        <button class="btn btn-danger void-invoice noPrint">Void Invoice</button>
 
         </div>
 
@@ -377,14 +458,15 @@
                 <%}%>
             </ul>
             <ul class="right-info">
-                <li>Invoice Num: <%=order.id%></li>
-                <li>Invoice Date: <%=order.createdAt%></li>
+                <li>Invoice Num: <%=order.createdAt.getFullYear()%>-<%=order.attributes.orderNumber%></li>
+                <li>Invoice Date: <%=(order.createdAt.getMonth()+1)%>/<%=order.createdAt.getDate()%>/<%=order.createdAt.getFullYear()%></li>
             </ul>
         </div>
         </script>  
 
         <script type="text/template" class="customer-info-order-items-template">
             <ul class="ordered-item">
+            <button class="btn-danger btn void-invoice-item noPrint">x</button>
             <li>
                 <span><%= type.get('Manufacturer') %></span>
                 <span> <%= type.get('Model') %></span>
@@ -399,10 +481,12 @@
                 <span class="item-price"><%=type.get('DealerPrice')%></span>
             </li>
             </ul>
+
         </script>        
 
         <script type="text/template" class="customer-info-backorder-template">
         <ul class="backordered-item">
+        <button class="btn-danger btn void-invoice-item noPrint">x</button>
             <li>
                 <span><%= type.get('Manufacturer') %></span>
                 <span> <%= type.get('Model') %></span>
@@ -446,19 +530,17 @@
         <!-- 
 
 
-                        Customer List Templates                                                        Customer List Templates
+                        customer- Templates                                                        Customer List Templates
 
 
          -->
         <script type="text/template" class="customer-list-view">
             <div class="modal-div"></div>
-            <div class="page-title">CUSTOMER LIST</div>
             <div id="contacts">
             <table class="col-md-12">
               <thead>
                 <tr>
                   <td class="col-md-12">
-                      <hr/>
                           <div class="customer-list-header col-md-10 col-md-offset-1">
                               <div class="search-add-customers">
                                   <form class="form-inline" role="form">
@@ -470,17 +552,17 @@
                                   </div>
                                   <div class="form-group">
                                       <div class="input-group">
-                                        <button class="btn btn-primary reset-search">RESET SEARCH</button>
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <div class="input-group">
                                           <div class="create-new-customer"><button class="btn btn-info create-customer">+ ADD CUSTOMER</button></div>
                                       </div>
                                   </div>
                                   <div class="form-group float-right">
                                       <div class="input-group">
                                           <div class="create-new-customer"><button disabled="disabled" class="btn btn-default scanner-setup-button create-customer">Delete</button></div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group float-right">
+                                      <div class="input-group">
+                                          <div class="search-by-state"><button class="btn btn-default" onClick="router.navigate('order',{trigger:true})">Search By State</button></div>
                                       </div>
                                   </div>
                               </form>
@@ -620,7 +702,8 @@
         <script type="text/template" class="customer-list-item">
                 <td style="display: block;" class="col-md-offset-1">
                     <div class="customer-container col-md-5">
-                        <div class="edit-customer btn btn-default" id="customerModal" data-toggle="modal" data-target="#basicModal" name="<%= customer.Company %>">edit</div>
+                        <div class="glyphicon glyphicon-edit edit-customer btn btn-default" aria-hidden="true" id="customerModal" data-toggle="modal" data-target="#basicModal" name="<%= customer.Company %>"></div>
+                        <div class="add-order btn btn-success" id="<%=model.id%>">order</div>
                         <div class="show company-name"><%=customer.Company%></div>
                         <hr class="customer-division"/>
                         <div class="show company-owner">OWNER: <%= customer.FirstName %> <%=customer.LastName%></div>
@@ -777,6 +860,8 @@
         <script src="../bower_components/underscore/underscore.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
+        <script src="../bower_components/list.pagination.js/dist/list.pagination.min.js"></script>
+        <script src="//www.parsecdn.com/js/parse-1.3.2.min.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -803,9 +888,11 @@
         <script src="../bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tab.js"></script>
         <!-- endbuild -->
 
-        <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="//www.parsecdn.com/js/parse-1.3.1.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js" />
+        <script src="http://listjs.com/no-cdn/list.pagination.js"></script>
+
+        <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/attach-form3-view.js"></script>
         <script src="scripts/backorder-list-view.js"></script>
         <script src="scripts/customer-list-view.js"></script>
@@ -821,7 +908,6 @@
         <script src="scripts/confirm-order-view.js"></script>
         <script src="scripts/final-order-view.js"></script>
         <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         
         <script src="scripts/router.js"></script>
         <script src="scripts/main.js"></script>
@@ -829,41 +915,3 @@
 
 </body>
 </html>
-
-
-<!-- <div id="contacts">
-  <table>
-    <thead>
-      <tr>
-        <th class="sort" data-sort="name">Name</th>
-        <th class="sort" data-sort="age">Age</th>
-        <th class="sort" data-sort="city">City</th>
-        <th colspan="2">
-          <input type="text" class="search" placeholder="Search contact" />
-        </th>
-      </tr>
-    </thead>
-    <tbody class="list">
-      <tr>
-      </tr>
-      <tr>
-        <td class="id" style="display:none;">2</td>
-        <td class="name">Jonas</td>
-        <td class="age">-132</td>
-        <td class="city">Berlin</td>
-      </tr>
-      <tr>
-        <td class="id" style="display:none;">3</td>
-        <td class="name">Gustaf</td>
-        <td class="age">-23</td>
-        <td class="city">Sundsvall</td>
-      </tr>
-      <tr>
-        <td class="id" style="display:none;">4</td>
-        <td class="name">Fredrik</td>
-        <td class="age">26</td>
-        <td class="city">Goteborg</td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->

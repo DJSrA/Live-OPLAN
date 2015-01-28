@@ -7,20 +7,26 @@ var OrderList = Parse.View.extend ({
 	template: _.template($('.order-list-view').text()),
 	orderInstanceTemplate: _.template($('.order-list-item-view').text()),
 	orderDetailTemplate: _.template($('.order-detail-view').text()),
+	titleTemplate: _.template($('.page-title').text()),
+
 
 	initialize: function() {
 		if((Parse.User.current() === null) === true){
 			window.location.href = '#';
 			router.swap( new FrontPage() );
 		} else {
+			$("html, body").scrollTop(0);
+			var thisLocation = window.location.hash.substring(1).toString();
+			_.each($('.nav-link'), function(e){if(e.id == thisLocation){$(e).css('color','#ffffff')}else{$(e).css('color', '#9d9d9d')}});
 			$('.app-container').html(this.el);
-			// console.log('OrderList')
 			this.render();
 		}
 	},
 
 	render: function() {
 		$(this.el).append(this.template());
+		$('.put-title-here').html(this.titleTemplate());
+		$('.page-title').text('ORDERS');
 		this.getOrders();
 	},
 

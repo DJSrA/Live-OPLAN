@@ -3,6 +3,7 @@ var OrderInstanceView = Parse.View.extend ({
 	events: {
 		'click .print-sales' : 'printSales',
 		'click .print-invoice' : 'printInvoice',
+		'click .void-invoice-item' : 'voidInvoiceItem'
 	},
 
 	template: _.template($('.final-order-instance-view').text()),
@@ -34,7 +35,7 @@ var OrderInstanceView = Parse.View.extend ({
 		query.first({
 			success: function(order){
 				that.order = order;
-				that.showCustomer();
+				that.showCustomer(order);
 			},
 			error: function(error){
 
@@ -45,9 +46,11 @@ var OrderInstanceView = Parse.View.extend ({
 		})
 	},
 
-	showCustomer: function() {
-		var customer = this.order.attributes.customer;
-		$('.customer-info').append(this.customerTemplate({customer: customer, order: this.order }));
+	showCustomer: function(order) {
+		console.log(order.attributes)
+		var customer = order.attributes.customer;
+		console.log(customer);
+		$('.customer-info').append(this.customerTemplate({customer: customer, order: order }));
 	},
 
 	getItems: function() {
@@ -124,7 +127,7 @@ var OrderInstanceView = Parse.View.extend ({
 	var costTotal = 0;
 		setTimeout(function(){
 		$('.item-price').each(function(index, price){
-			var cost = (parseInt(this.innerHTML.replace(/\s+/g, '').substr(1)));
+			var cost = (parseInt(this.innerHTML.replace(/\s+/g, '').replace(/\,/g, '').substr(1)));
 			costTotal += cost;
 		})
 		that.showTotal(costTotal);
@@ -142,6 +145,10 @@ var OrderInstanceView = Parse.View.extend ({
 
 	printInvoice: function() {
 		window.print()
+	},
+
+	voidInvoiceItem: function(e) {
+		console.log($(e.currentTarget).attr('id'))
 	},
 
 

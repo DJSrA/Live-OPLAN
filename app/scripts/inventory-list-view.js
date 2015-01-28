@@ -17,31 +17,73 @@
 var InventoryList = Parse.View.extend ({
 
 	events: {
-		'click span.item-type' : 'itemTypeDetail',
-		'click .manufacturer' : 'activeManufacturer',
+		'click span.item-type' 				: 'itemTypeDetail',
+		'change .manufacturers' 			: 'activeManufacturer',
+		'click .full-inventory' 			: 'showFullInventory',
+		'click .full-backorders' 			: 'showBackorderList',
+		'click .search-all-inventory' : 'getAllItemTypes',
 	},
 
 	template: _.template($('.inventory-list-view').text()),
 	listItemTemplate: _.template($('.inventory-list-item-view').text()),
 	listItemDetailTemplate: _.template($('.inventory-list-detail-view').text()),
+	titleTemplate: _.template($('.page-title').text()),
 
 	initialize: function() {
 		if((Parse.User.current() === null) === true){
 			window.location.href = '#';
 			router.swap( new FrontPage() );
 		} else {
+			$("html, body").scrollTop(0);
+			var thisLocation = window.location.hash.substring(1).toString();
+			_.each($('.nav-link'), function(e){if(e.id == thisLocation){$(e).css('color','#ffffff')}else{$(e).css('color', '#9d9d9d')}});
 			$('.app-container').html(this.el);
-			// console.log('InventoryList')
 			this.render();
 		}
 	},
 
 	render: function() {
 		$(this.el).append(this.template());
-		this.getItemTypes();
+		$('.put-title-here').html(this.titleTemplate());
+		$('.page-title').text('INVENTORY');
+		var Manufacturers = [];
+		var query = new Parse.Query('itemType');
+		query.limit(1500);
+		query.find(function(manufacturers){
+			manufacturers.forEach(function(manufacturer){
+				var newManufacturer = '';
+				newManufacturer = manufacturer.attributes.Manufacturer;
+				Manufacturers.push(newManufacturer);
+			})
+			var uniqueManufacturers = [];
+			$.each(Manufacturers, function(i, el){
+			    if($.inArray(el, uniqueManufacturers) === -1) uniqueManufacturers.push(el);
+			});
+			uniqueManufacturers.forEach(function(manufacturer){
+				$('.manufacturers').append("<option class='manufacturer col-md-2 btn-default btn' name='" + manufacturer + "'>" + manufacturer + "</option");
+			})
+		})
 	},
 
-	getItemTypes: function() {
+	listIt: function(){
+		var options = {
+		  valueNames: [ 'product-id', 'item-type', 'item-description', 'all-inventory-number', 'backorder-number' ]
+		};
+			
+		var contactList = new List('inventory-search', options);
+	},
+
+	getAllItemTypes: function(){
+		var that = this;
+		var query = new Parse.Query('itemType');
+		query.limit(1500);
+		query.find(function(itemTypes){
+			itemTypes.forEach(function(e){
+				$('.list').append(that.listItemTemplate({ itemType: e}))
+			});
+		}).then(function(e){
+					that.listIt();
+		})
 	},
 
 	itemTypeDetail: function (location) {
@@ -52,12 +94,10 @@ var InventoryList = Parse.View.extend ({
 		query.equalTo('typeName', location.currentTarget.innerHTML);
 		query.first({
 			success: function(itemType) {
-				// console.log(itemType)
 				var query = new Parse.Query('itemInstance');
 				query.equalTo('itemType', itemType);
 				query.equalTo('itemInstanceCode', undefined)
 				query.each(function(item){
-					// console.log(item.attributes)
 					$('.inventory-list-detail-bound').append(that.listItemDetailTemplate({ item: item.attributes }))
 				})
 				
@@ -66,9 +106,6 @@ var InventoryList = Parse.View.extend ({
 				console.log(error)
 			}
 		})
-
-
-
 	},
 
 	newItemView: function(e){
@@ -81,22 +118,25 @@ var InventoryList = Parse.View.extend ({
 		$('.manufacturer').removeClass('active');
 		$(event.target).addClass('active');
 		$('.center-number').text('');
-		$('.center-number').text($(event.target).text());
-		$('.inventory-list-item-bound').html('');
+		$('.center-number').text($('.manufacturers option:selected').text());
+		$('.list').html('');
 
-		var chosenManufacturer = e.currentTarget.attributes.name.value;
+		var chosenManufacturer = $('.manufacturers option:selected').text();
 		var that = this;
 		var listManufacturers = [];
 		var thisManufacturersItems = [];
-		
+		if(chosenManufacturer === 'Select Manufacturer'){
+			$('.center-number').text('');
+			this.getAllItemTypes();
+			this.listIt()
+		}
 		var query = new Parse.Query('itemType');
 		query.limit(1000)
 		query.find(function(itemTypes){
 			itemTypes.forEach(function(e){
 				var thisItem = [];
 				if (e.attributes.Manufacturer == chosenManufacturer){
-					// var newItemView = new InventoryItemView({itemType: e});
-					$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: e}))
+					$('.list').append(that.listItemTemplate({ itemType: e}))
 					thisManufacturersItems.push(e);
 				}
 				return thisManufacturersItems
@@ -113,49 +153,144 @@ var InventoryList = Parse.View.extend ({
 				})
 			console.log(UPCList);
 				return UPCList
-				// console.log(itemInstances.attributes.UPC);
 			})
 			for(i = 0; i < thisManufacturersItems.length; i++){
 			  _.each(thisManufacturersItems[i], function(){
-			  	// console.log(thisManufacturersItems);
-			  	// console.log(thisManufacturersItems[i].attributes.UPC);
 			  	ItemsList.push(thisManufacturersItems[i]);
-			    // $('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: thisManufacturersItems[i]}))
 			  });
-				// setTimeout(console.log(ItemsList), 1500);
-		  	// return ItemsList;
 			};
+		}).then(function(e){
+					that.listIt();
 		})
-		// // this.setAppropriateHeight();
+	},
+
+	showFullInventory: function() {
+		router.navigate('inventory/fullstock', {trigger:true});
+	},	
+
+	showBackorderList: function() {
+		router.navigate('inventory/backorders', {trigger:true});
+	},
+
+});
+
+var FullStockList = Parse.View.extend({
+
+	events: {
+		'click .delete-item' : 'deleteItem',
+	},
+
+	template: _.template($('.full-stock-list-template').text()),
+	instanceTemplate: _.template($('.stock-list-instance-template').text()),
+
+	initialize: function(e) {
+		if((Parse.User.current() === null) === true){
+			window.location.href = '#';
+			router.swap( new FrontPage() );
+		} else {
+			$('.app-container').html(this.el);
+			this.render();
+		}
+	},
+
+	render: function() {
+		$(this.el).append(this.template());
+		this.getItems();
+	},
+
+	getItems: function() {
+		var that = this;
+		var query = new Parse.Query('itemInstance');
+		query.equalTo('itemInstanceCode', 0);
+
+		query.each(function(item){
+			$('.inventory-list-bound').append(that.instanceTemplate({ item: item.attributes, model: item}));
+		})
+	},
+
+	deleteItem: function(e) {
+
+		var objId = $(e.currentTarget).attr('id');
+
+		var query = new Parse.Query('itemInstance');
+		query.equalTo('objectId', $(e.currentTarget).attr('id') );
+		query.first({
+			success: function(obj) {
+				obj.destroy({
+					success:function(e){
+						$('.' + objId).remove();
+					},
+					error:function(error){
+						console.log(error)
+					}
+				})
+			},
+			error: function(error) {
+				console.log(error)
+			}
+ 		})
 	},
 
 
-	// setAppropriateHeight: function () {
-	// 	$('li').forEach(function(){
-	// 		console.log($(this).height);
-	// 	})
-		// $('.try').css('height', $(this).parent().height());
-		// var children = []; 
-		// var outerContainer = $('.inventory-list-item-bound');
-		// console.log(outerContainer);
-		// console.log(this.$el);
-		// $('.inventory-list-item-bound').children().forEach(function(child){
-		// 	children.push(child);
-		// 	console.log(children);
-		// 	return children
-		// })
-		// // _.each($('.inventory-list-item-bound').children(), function(child){ 
-		// // 	children.push(child);
-		// // 	return children
-		// // }); 
-		// // console.log(children)
-		// _.each(children, function(child){
-		// 	$(child).children().css('height', $(child).height())
-		// });
-	// },
+})
 
+var FullBackorderList = Parse.View.extend({
 
-});
+	events: {
+		'click .delete-item' : 'deleteItem',
+	},
+
+	template: _.template($('.full-backorder-list-template').text()),
+	instanceTemplate: _.template($('.backorder-list-instance-template').text()),
+
+	initialize: function(e) {
+		if((Parse.User.current() === null) === true){
+			window.location.href = '#';
+			router.swap( new FrontPage() );
+		} else {
+			$('.app-container').html(this.el);
+			this.render();
+		}
+	},
+
+	render: function() {
+		$(this.el).append(this.template());
+		this.getItems();
+	},
+
+	getItems: function() {
+		var that = this;
+		var query = new Parse.Query('backOrder');
+		query.each(function(item){
+			$('.backorder-list-bound').append(that.instanceTemplate({ item: item.attributes, model: item}));
+		})
+	},
+
+	deleteItem: function(e) {
+
+		var objId = $(e.currentTarget).attr('id');
+
+		var query = new Parse.Query('itemInstance');
+		query.equalTo('objectId', $(e.currentTarget).attr('id') );
+		query.include('order');
+		query.first({
+			success: function(obj) {
+				obj.destroy({
+					success:function(e){
+						$('.' + objId).remove();
+					},
+					error:function(error){
+						console.log(error)
+					}
+				})
+			},
+			error: function(error) {
+				console.log(error)
+			}
+ 		})
+	},
+
+})
 
 // this is a list of all items that are not attached to a backorder or a shelf item, so all items with no item instance code.
 // these are all items instances that have been scanned in and not sold. there should be a list of all item types that have item
@@ -175,37 +310,3 @@ var InventoryList = Parse.View.extend ({
 // or it could an existing item that they want to sell for a different price, but only want to apply that price to that particular item. this 
 // could also be accomplished on the invoice, but this is a better way of tracking it. there are also other uses for the "special" item type,
 // but it is not a priority, just something that will likely need to be made. it will never take items automatically when scanned in.
-
-
-
-
-			// THIS IS HERE IN CASE I NEED SOMETHING OLD -------------
-
-			// itemTypes.forEach(function(itemType){
-			// 	var query = new Parse.Query('itemInstance');
-			// 	// query.equalTo('itemInstanceCode', undefined)
-			// 	query.equalTo('Manufacturer', chosenManufacturer);
-			// 	// $(itemType.attributes.ProductID).forEach(function(e){
-			// 	// 	var thisProductId = 0;
-			// 	// 	thisProductId = e;
-			// 	// 	ProductIdLength.push(thisProductId);
-			// 	// })
-			// console.log(query)
-			// // console.log(itemNumber)
-			// 	query.find({
-			// 		success:function(count){
-			// 				itemNumber = itemNumber + 1;
-			// 				// $('.product-id').text(itemNumber);
-			// 			// for(i = 0; i < ProductIdLength.length; i ++){
-			// 				$('.inventory-list-item-bound').append(that.listItemTemplate({ itemType: itemType, count: count}))
-			// 				// console.log(i);
-			// 				// console.log(itemNumber);
-			// 				// console.log(count)
-
-			// 				// i++	
-			// 			// }
-			// 		},
-			// 		error:function(error){
-			// 			console.log(error);
-			// 		}
-			// 	})

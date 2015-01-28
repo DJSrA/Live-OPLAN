@@ -1,5 +1,54 @@
+@font-face {
+  font-family: 'Liberator';
+  src:
+    url('../webfonts/Liberator.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+    url('../webfonts/Liberator.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Venera';
+  src:
+    url('../webfonts/Venera-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+    url('../webfonts/Venera-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src:
+    url('../webfonts/Roboto-Medium.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+    url('../webfonts/Roboto-Medium.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Roboto-Thin';
+  src:
+    url('../webfonts/Roboto-Thin.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+    url('../webfonts/Roboto-Thin.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+* {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  h2{
+    font-family: 'Liberator' !important;
+  }
+  button {
+    font-family: Helvetica, Arial, sans-serif !important;
+  }
+}
+
 html {
-  background: #F4F4F4;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  outline: none;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  text-decoration: none;
 }
 
 body {
@@ -7,8 +56,32 @@ body {
   padding: 0;
 }
 
+
+// BOOTSTRAP OVERRIDES_________________
+
+.btn-success {
+  color: #fff;
+  background-color: rgb(1,209,172);
+  border-color: rgb(0, 197, 162);
+  -webkit-transition: all ease 100ms;
+  -moz-transition: all ease 100ms;
+  -o-transition: all ease 100ms;
+  transition: all ease 100ms;
+}
+
+.btn-success:hover {
+  background-color: rgb(9,158,131);
+  border-color: rgb(9,158,131);
+}
+
+// END BOOTSTRAP OVERRIDES_____________
+
 .input-group-addon {
   min-width: 95px;
+}
+
+.confirm-order-button {
+  visibility: hidden;
 }
 
 .odd-hr {
@@ -19,9 +92,28 @@ body {
   float: right;
   margin-right: 20px !important;
 }
+.no-upc {
+  display: none;
+  float: right;
+}
+
+input[disabled] {
+  cursor: not-allowed !important;
+  background-color: #eee !important;
+  opacity: 1;
+}
+
+.enable-upc {
+  position: absolute;
+  height: 35px;
+  width: 82px;
+  right: 14px;
+  display: none;
+  cursor: pointer;
+}
 
 .app-container {
-  margin-top: 125px;
+  // margin-top: 116px;
   background: #FFFFFF;
 }
 .display-inline {
@@ -77,18 +169,42 @@ ul {
   right: 0;
   left: 0;
   z-index: 3;
-  background: #999999;
+  background: -moz-linear-gradient(-45deg, #515151 0%, #999999 28%, #bababa 50%, #bababa 50%, #999999 78%, #727272 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#515151), color-stop(28%,#999999), color-stop(50%,#bababa), color-stop(50%,#bababa), color-stop(78%,#999999), color-stop(100%,#727272)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, #515151 0%,#999999 28%,#bababa 50%,#bababa 50%,#999999 78%,#727272 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, #515151 0%,#999999 28%,#bababa 50%,#bababa 50%,#999999 78%,#727272 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, #515151 0%,#999999 28%,#bababa 50%,#bababa 50%,#999999 78%,#727272 100%); /* IE10+ */
+  background: linear-gradient(135deg, #515151 0%,#999999 28%,#bababa 50%,#bababa 50%,#999999 78%,#727272 100%); /* W3C */
   line-height: 30px;
   color: #ffffff;
   padding: 0;
-  height: 125px;
+  height: auto;
   box-shadow: 0px 1px 4px 0px #848484;
+  .navbar {
+    background-color: rgb(25,25,33);
+    height: 100vh;
+    padding: 0;
+    margin-bottom: 0;
+    .nav {
+      margin-top: 0;
+      padding: 0;
+    }
+    li:first-child {
+      background-color: #15151D;
+      height: 100px;
+      padding-top: 16px;
+      border-bottom: 1px solid rgb(19, 19, 23);
+    }
+  }
   img {
     padding: 5px 0;
     width: 150px;
   }
   ul {
-    margin-top: 9px;
+    margin: 9px 0;
+  }
+  li {
+    cursor: pointer;
   }
 }
 .alan-arms-pos ul {
@@ -149,7 +265,7 @@ ul.inventory-list-item-bound li .item-type {
   height: 100%;
   // border-left: 2px solid rgb(202, 202, 202);
   // border-right: 2px solid rgb(202, 202, 202);
-  box-shadow: 0px 1px 4px 0px #848484;
+  // box-shadow: 0px 1px 4px 0px #848484;
   //  #item-info-block {
   //   display: block;
   //   width: 150px;
@@ -170,10 +286,50 @@ ul.inventory-list-item-bound li .item-type {
   // }
 
   .new-item-creation {
-    margin: 20px 0 20px;
+    margin: 0 0 20px;
+    .new-item-nav {
+      margin-bottom: 27px;
+    }
+    .standard-item-creation, .generic-item-creation {
+      position: relative;
+      display: block;
+      padding: 10px 0;
+      width: 100px;
+      color: #000000;
+      cursor: pointer;
+      text-align: center;
+      display: inline-block;
+      float: left;
+      background: #F5F5F5;
+      // border: 2px solid #ccc;
+      text-decoration: none;
+    }
+    .standard-item-creation {
+      border-radius: 4px 0 0 4px;
+    }
+    .generic-item-creation {
+      border-radius: 0 4px 4px 0;
+    }
+    .active {
+      background-color: #31B0D5;
+      color: #FFFFFF;
+      // border: 2px solid #31B0D5;      // color: #ffffff;
+    }
+    .standard-item-creation:hover {
+      text-decoration: none;
+      // border: 2px solid #31B0D5;
+      background-color: #E5E5E5;
+    }
+    .generic-item-creation:hover {
+      text-decoration: none;
+      // border: 2px solid #31B0D5;
+      background-color: #E5E5E5;
+    }
+    .active:hover {
+      background-color: #2995B5;
+    }
     .manual-add-item {
       margin: 20px 50px 0 0;
-      // width: 380px;
       display: block;
       height: 34px;
       padding: 6px 12px;
@@ -187,7 +343,15 @@ ul.inventory-list-item-bound li .item-type {
       -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     }
-    .description {
+    .filler-input {
+      margin: 20px 50px 0 0;
+      display: block;
+      height: 34px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+    }
+    .description, .generic-description {
       height: 100px;
       resize: none;
     }
@@ -205,21 +369,28 @@ ul.inventory-list-item-bound li .item-type {
 .top-nav-button:hover {
   background: #2A3C51;
 }
+.nav-link {
+  margin-top: 25px;
+  cursor: pointer;
+}
 
 .scanning {
   padding: 20px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-right: none;
+  border-radius: 4px 0 0 4px;
 }
 
 .start-scanning {
   margin: 0 0 40px 0;
+  width: 95%;
   font-size: 20px;
 }
 
 .stop-scanning {
   margin: 0 0 40px 0;
+  width: 95%;
   font-size: 20px;
   background-color: #F07F4E;
 }
@@ -252,6 +423,7 @@ ul.inventory-list-item-bound li .item-type {
 .scanned-item-counter {
   height: 50px;
   border: 1px solid #ccc;
+  margin: 15px 0 0 15px;
   font-size: 20px;
   box-sizing: border-box;
   padding: 10px 20px;
@@ -272,19 +444,40 @@ ul.inventory-list-item-bound li .item-type {
   }
 }
 
+.right-content {
+  padding-top: 20px;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  height: 100%;
+  min-height: 675px;
+}
+
 
 // INVENTORY INVENTORY INVENTORY INVENTORY INVENTORY ___________________
-
+.put-title-here{
+  height: 100px;
+  padding-top: 13px;
+  .page-title-container {
+    hr {
+      margin-bottom: 0;
+      margin-top: 33px;
+    }
+  }
+}
 
 .page-title {
   text-align: center;
-  font-size: 20px;
+  font-size: 30px;
+  font-family: "Roboto-Thin", Helvetica !important;
+  font-weight: bold;
+}
+.bold {
   font-weight: bold;
 }
 
 .manufacturer-names {
   margin: 15px 0;
-  height: 40px;
+  height: auto;
   .manufacturers {
     .manufacturer {
       text-align: center;
@@ -306,9 +499,41 @@ ul.inventory-list-item-bound li .item-type {
     color: #ffffff;
     text-align: center;
     font-size: 20px;
-    background: #222222;
+    background: #191921;
     font-weight: 400;
   }
+}
+
+.search-inventory-options {
+  padding: 0;
+  margin: 20px 0 0;
+  .search-it-all {
+    padding-left: 0;
+  }
+}
+
+.inventory-item {
+  height: auto;
+  border: 1px solid #ccc;
+  border-bottom: 0;
+  box-sizing: border-box;
+  padding: 10px 0
+}
+.inventory-item:last-child {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 50px;
+}
+
+.inventory-page-container {
+  button {
+    margin-bottom: 20px;
+  }
+  #inventory-search, .manufacturer-names {
+    padding: 0;
+  }
+}
+.search-inv {
+  padding-bottom: 20px;
 }
 
 .all-inventory-number {
@@ -352,9 +577,15 @@ ul.inventory-list-item-bound li .item-type {
 
 .merchant-info {
   float: left;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .merchant {
+  cursor: pointer;
   height: 40px;
   box-sizing: border-box;
   padding: 10px 8px 0;
@@ -491,7 +722,7 @@ ul.inventory-list-item-bound li .item-type {
   border-radius: 3px;
   line-height: 24px;
   border: 1px solid gray;
-  background: #ececec;
+  background: #F4F4F4;
   box-sizing: border-box;
   padding: 10px 15px;
   box-shadow: 0px 1px 2px 0px rgb(126, 126, 126);
@@ -510,8 +741,14 @@ ul.inventory-list-item-bound li .item-type {
     display: inline-block;
   }
   .edit-customer {
-    position: absolute;
     right: 15px;
+    bottom: 15px;
+    font-size: 14px;
+    top: 166px;
+    padding: 4px;
+    background: none;
+    position: absolute;
+    height: 30px;
   }
 }
 
@@ -566,6 +803,11 @@ ul.inventory-list-item-bound li .item-type {
   display: none;
 }
 
+.creation-button-holder {
+  margin-top: 30px;
+  padding: 0;
+}
+
 .creation-button {
   display: inline-block;
   margin-left: 25px;
@@ -579,6 +821,14 @@ ul.inventory-list-item-bound li .item-type {
   border-top-right-radius: 4px !important;
   border-bottom-right-radius: 4px !important;
   border: 1px solid #ccc !important;
+}
+
+.add-order {
+  float: right;
+}
+
+.input-group-addon {
+  padding: 0;
 }
 
 .delete-customer {
@@ -611,6 +861,51 @@ ul.inventory-list-item-bound li .item-type {
   clear: both;
   width: 100%;
 }
+
+/*CART*/
+.cart-total {
+  width: 150px;
+  height: 40px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.total-div {
+  height: 100%;
+  padding: 10px;
+  border-right: 1px solid #ccc;
+  background: #ECECEC;
+}
+
+.sum-div {
+  height: 100%;
+  padding-top: 10px;
+}
+
+.seller-info {
+  text-align: center;
+  font-size: 16px;
+}
+
+.seller-icon {
+  width: 200px;
+  margin-bottom: 15px;
+}
+
+.item-name {
+  font-size: 17px;
+  min-width: 260px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.price-split {
+  width: auto;
+  padding: 0 20px;
+}
+
 @media print {
 .noPrint, .home {
     display:none;
