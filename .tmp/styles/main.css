@@ -367,8 +367,14 @@ ul.inventory-list-item-bound li .item-type {
     color: #ffffff;
     text-align: center;
     font-size: 20px;
-    background: #222222;
+    background: #191921;
     font-weight: 400; }
+
+.search-inventory-options {
+  padding: 0;
+  margin: 20px 0 0; }
+  .search-inventory-options .search-it-all {
+    padding-left: 0; }
 
 .inventory-item {
   height: auto;
@@ -376,6 +382,10 @@ ul.inventory-list-item-bound li .item-type {
   border-bottom: 0;
   box-sizing: border-box;
   padding: 10px 0; }
+
+.inventory-item:last-child {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 50px; }
 
 .inventory-page-container button {
   margin-bottom: 20px; }
@@ -534,7 +544,7 @@ ul.inventory-list-item-bound li .item-type {
   border-radius: 3px;
   line-height: 24px;
   border: 1px solid gray;
-  background: #ececec;
+  background: #F4F4F4;
   box-sizing: border-box;
   padding: 10px 15px;
   box-shadow: 0px 1px 2px 0px #7e7e7e;

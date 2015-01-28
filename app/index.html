@@ -180,9 +180,15 @@
                 <div class="manufacturer-title col-md-12">
                     <div class='center-number'></div>
                 </div>
-                <div class="manufacturer-names col-md-12">
-                    <ul class="manufacturers">
-                    </ul>
+                <div class="search-inventory-options col-md-12">
+                    <div class="search-it-all col-md-2">
+                        <button class="search-all-inventory form-control btn btn-success">SEARCH All</button>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="manufacturers form-control">
+                            <option class="non-select">Select Manufacturer</option>
+                        </select>
+                    </div>
                 </div>
                 <div id="inventory-search" class="col-md-12">
                 <div class="input-group col-md-4 search-inv">
@@ -197,7 +203,9 @@
 
         <script type="text/template" class="inventory-list-item-view">
             <li style="display: block;" class="col-md-12 inventory-item">
-                <div class="try product-id col-md-1"></div>
+                <div class="try product-id col-md-1">
+                    <div class="try glyphicon glyphicon-edit btn btn-default" aria-hidden="true" id="customerModal" data-toggle="modal" data-target="#basicModal"></div>
+                </div>
                 <div class="try item-type col-md-4"><%=itemType.attributes.Model%></div>
                 <div class="try item-description col-md-5"> <%=itemType.attributes.Description%></div>
                 <div class="try all-inventory-number number-center col-md-1"><%if(itemType.attributes.totals && itemType.attributes.totals[0]){%><%=itemType.attributes.totals[0]%><%}else{%>0<%}%></div>
